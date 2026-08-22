@@ -15,6 +15,11 @@ python3 - "$DASH" <<'PYV'
 import json, sys
 d = json.load(open(sys.argv[1]))
 assert d.get("schemaVersion") == "v6", f"expected schemaVersion v6, got {d.get('schemaVersion')!r}"
+img = d.get("image", "")
+assert img.startswith("/assets/Icons") or img.startswith("/assets/Logos") or img.startswith("data:"), \
+    f"image must be an /assets/Icons or /assets/Logos path, or base64 — got {img!r}. " \
+    "SigNoz validates this BEFORE the schema and rejects the file with a generic " \
+    "'Error loading JSON file' if it is missing."
 panels = d["spec"]["panels"]
 items = d["spec"]["layouts"][0]["spec"]["items"]
 refs = {i["content"]["$ref"].split("/")[-1] for i in items}

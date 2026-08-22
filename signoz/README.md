@@ -28,6 +28,20 @@ never reaches the server's route table. So import through the UI:
 then: http://localhost:8080/dashboard → **New dashboard** → **Import JSON** → paste
 `dashboard-factory-health.json`.
 
+## The `image` field is mandatory
+
+The importer validates `image` **before** it looks at the schema, and rejects the whole
+file with a generic *"Error loading JSON file"* if it is missing:
+
+```js
+let n = Ca(JSON.parse(i));
+if (!xn(n.image)) { /* rejected */ }
+```
+
+It must be an `/assets/Icons/...` or `/assets/Logos/...` path, or a base64 image. This
+file uses `/assets/Icons/eight-ball`. Two import attempts failed on this before the
+frontend bundle was read — the error message names neither the field nor the reason.
+
 ## Schema
 
 `schemaVersion: v6` — the format SigNoz v0.138 expects: `spec.panels` keyed by uuid,
