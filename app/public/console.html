@@ -1,0 +1,248 @@
+<!doctype html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mise OS — factory console</title>
+<style>
+ :root{--bg:#0d1117;--panel:#161b22;--line:#30363d;--fg:#e6edf3;--dim:#8b949e;
+       --robot:#58a6ff;--human:#d29922;--agent:#3fb950;--bad:#f85149}
+ *{box-sizing:border-box}
+ body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+ nav{border-bottom:1px solid var(--line);padding:.8rem 1.5rem;display:flex;gap:1.25rem;align-items:center;
+     position:sticky;top:0;background:rgba(13,17,23,.92);backdrop-filter:blur(8px);z-index:10;flex-wrap:wrap}
+ nav b{font-weight:700;margin-right:.5rem}
+ nav a{color:var(--dim);text-decoration:none;font-size:.87rem}
+ nav a:hover,nav a.on{color:var(--fg)}
+ .sp{flex:1}
+ .pill{font-size:.72rem;padding:.2rem .55rem;border-radius:99px;border:1px solid var(--line);color:var(--dim)}
+ .pill.ok{color:var(--agent);border-color:#1c5c33} .pill.bad{color:var(--bad);border-color:#6b2b28}
+ main{max-width:1000px;margin:0 auto;padding:1.5rem}
+ section{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:1.1rem 1.3rem;margin-bottom:1.1rem}
+ h2{font-size:1rem;margin:0 0 .2rem} .sub{color:var(--dim);font-size:.86rem;margin:0 0 .9rem}
+ .n{color:var(--dim);font-variant-numeric:tabular-nums;margin-right:.5rem}
+ button{font:inherit;font-weight:600;font-size:.87rem;padding:.5rem 1rem;border-radius:7px;cursor:pointer;
+        border:1px solid var(--line);background:#21262d;color:var(--fg)}
+ button:hover{border-color:#8b949e} button:disabled{opacity:.45;cursor:not-allowed}
+ button.primary{background:var(--robot);color:#04213f;border-color:transparent}
+ button.ok{background:var(--agent);color:#04260f;border-color:transparent}
+ button.danger{background:transparent;color:var(--bad);border-color:var(--bad)}
+ input[type=text]{font:inherit;padding:.5rem .7rem;border-radius:7px;border:1px solid var(--line);
+   background:#0d1117;color:var(--fg);width:min(420px,100%)}
+ .row{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap;margin-bottom:.6rem}
+ pre{background:#010409;border:1px solid var(--line);border-radius:8px;padding:.8rem .9rem;margin:.7rem 0 0;
+     font:12.5px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;max-height:280px;overflow:auto;white-space:pre-wrap}
+ pre:empty{display:none}
+ .err{color:var(--bad)} .good{color:var(--agent)} .warn{color:var(--human)}
+ .badge{font-size:.65rem;font-weight:700;text-transform:uppercase;padding:.18rem .5rem;border-radius:4px;min-width:56px;
+        text-align:center;display:inline-block}
+ .robot{background:#0d3a6b;color:var(--robot)} .human{background:#4a3a08;color:var(--human)} .agent{background:#0d3b1e;color:var(--agent)}
+ .task{display:flex;gap:.7rem;align-items:flex-start;padding:.5rem 0;border-top:1px solid var(--line)}
+ .task:first-child{border-top:0}
+ .sum{font-size:1.1rem;font-weight:700;margin-top:.7rem}
+ svg{width:100%;height:auto}
+ .kpi{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:.8rem}
+ .kpi div span{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--dim)}
+ .kpi div b{font-size:1.3rem;font-variant-numeric:tabular-nums}
+ a.ext{color:var(--robot)}
+</style>
+<nav>
+  <b>Mise OS</b>
+  <a href="/" >Overview</a>
+  <a href="#market">0 · Market</a>
+  <a href="#run" class="on">1 · Factory</a>
+  <a href="#rehearsal">2 · Rehearsal</a>
+  <a href="#contract">3 · Data contract</a>
+  <span class="sp"></span>
+  <span class="pill" id="feedPill">feed …</span>
+  <a class="ext" href="https://app.us.port.io" target="_blank">Port ↗</a>
+  <a class="ext" href="http://localhost:8080" target="_blank">SigNoz ↗</a>
+</nav>
+
+<main>
+  <section id="market">
+    <h2><span class="n">00</span>Market intelligence — the demand model</h2>
+    <p class="sub">Every routing decision is arithmetic over this data. It arrived from an
+      earlier scraping pipeline that failed silently on prices — the red bars are the hole
+      that nothing was watching.</p>
+    <div class="kpi">
+      <div><span>restaurants</span><b id="mRest">—</b></div>
+      <div><span>branches</span><b id="mBranch">—</b></div>
+      <div><span>dishes</span><b id="mDish">—</b></div>
+      <div><span>ingredients</span><b id="mIng">—</b></div>
+      <div><span>price null-rate</span><b id="mNull" class="err">—</b></div>
+    </div>
+    <div id="mBars"></div>
+    <p class="sub" style="margin:.9rem 0 .3rem">Most-demanded ingredients, exploded from dish recipes</p>
+    <div id="mIngList" class="sub" style="margin:0"></div>
+  </section>
+
+  <section id="run">
+    <h2><span class="n">01</span>Run the factory</h2>
+    <p class="sub">Two entry points, one pipeline. A human brief, or a signal. Stages stream live —
+      each one is a span under a single <code>factory.run</code> trace and an entity in Port.</p>
+    <div class="row">
+      <input type="text" id="brief" value="Route the Downtown tomato shortage">
+      <button class="primary" onclick="runFactory('brief')">Submit brief</button>
+      <button onclick="runFactory('incident')">Trigger incident</button>
+    </div>
+    <pre id="runOut"></pre>
+  </section>
+
+  <section id="rehearsal">
+    <h2><span class="n">02</span>Approve the rehearsal</h2>
+    <p class="sub">Generated from the dispatch the factory just produced — this donor branch, this
+      crate, this expiry window. You approve what the robot will do, not a JSON diff.</p>
+    <div id="sim"><span class="sub">Run the factory to generate a dispatch.</span></div>
+    <div id="tasks"></div><div class="sum" id="summary"></div>
+    <div class="row" style="margin-top:.9rem">
+      <button class="ok" onclick="decide('approve')">Approve dispatch</button>
+      <button class="danger" onclick="decide('reject')">Reject</button>
+      <span id="approvalStatus" class="sub" style="margin:0"></span>
+    </div>
+  </section>
+
+  <section id="contract">
+    <h2><span class="n">03</span>Data contract &amp; self-repair</h2>
+    <p class="sub">The supplier feed is what routing depends on. Change the source page and the
+      contract catches it; Bright Data repairs the collector behind a human gate.</p>
+    <div class="kpi">
+      <div><span>supplier null-rate</span><b id="kNull">—</b></div>
+      <div><span>rows</span><b id="kRows">—</b></div>
+      <div><span>contract</span><b id="kOk">—</b></div>
+    </div>
+    <div class="row">
+      <button class="danger" onclick="feed('break')">Change the source page</button>
+      <button onclick="feed('restore')">Restore it</button>
+      <button onclick="rescrape()">Re-scrape now</button>
+      <button class="ok" onclick="heal()">Repair with Bright Data</button>
+    </div>
+    <p class="sub" style="margin:.2rem 0 0">Page edits publish through GitHub Pages and take ~90s to go live.
+      Re-scrape after that to see the contract flip.</p>
+    <pre id="feedOut"></pre>
+  </section>
+</main>
+
+<script>
+let RUN = null;
+const $ = id => document.getElementById(id);
+
+/** Stream an SSE endpoint into a <pre>, colouring the lines that matter. */
+async function stream(url, body, target, onDone) {
+  const el = $(target); el.textContent = '';
+  document.querySelectorAll('button').forEach(b => b.disabled = true);
+  try {
+    const r = await fetch(url, { method: 'POST', headers: {'Content-Type':'application/json'},
+                                 body: JSON.stringify(body || {}) });
+    const reader = r.body.getReader(); const dec = new TextDecoder(); let buf = '';
+    for (;;) {
+      const { value, done } = await reader.read(); if (done) break;
+      buf += dec.decode(value, { stream: true });
+      const parts = buf.split('\n\n'); buf = parts.pop();
+      for (const p of parts) {
+        if (!p.startsWith('data: ')) continue;
+        const { kind, line } = JSON.parse(p.slice(6));
+        if (kind === 'done') continue;
+        const cls = /FAIL|SKIPPED|error|ERROR|BROKEN/.test(line) ? 'err'
+                  : /PASS|RECOVERED|HOLDS|release/.test(line) ? 'good' : '';
+        const span = document.createElement('span');
+        span.className = cls; span.textContent = line + '\n';
+        el.appendChild(span); el.scrollTop = el.scrollHeight;
+      }
+    }
+  } finally {
+    document.querySelectorAll('button').forEach(b => b.disabled = false);
+    if (onDone) onDone();
+  }
+}
+
+const runFactory = (mode) =>
+  stream('/api/run', { mode, brief: $('brief').value }, 'runOut', () => { loadDispatch(); status(); });
+const heal      = () => stream('/api/heal', {}, 'feedOut', status);
+const rescrape  = () => stream('/api/rescrape', {}, 'feedOut', status);
+const feed      = (action) => stream('/api/feed', { action }, 'feedOut');
+
+async function status() {
+  try {
+    const s = await (await fetch('/api/feed/status')).json();
+    $('kNull').textContent = (s.null_rate * 100).toFixed(1) + '%';
+    $('kRows').textContent = s.rows;
+    $('kOk').textContent = s.contract_ok ? 'holds' : 'breached';
+    $('kOk').className = s.contract_ok ? 'good' : 'err';
+    const p = $('feedPill');
+    p.textContent = s.contract_ok ? 'feed healthy' : 'feed degraded';
+    p.className = 'pill ' + (s.contract_ok ? 'ok' : 'bad');
+  } catch {}
+}
+
+async function loadDispatch() {
+  const r = await fetch('/api/dispatch'); if (!r.ok) return;
+  const d = await r.json(); RUN = d.run;
+  $('summary').textContent = d.summary;
+  $('tasks').innerHTML = d.tasks.map(t =>
+    `<div class="task"><span class="badge ${t.executor}">${t.executor}</span>
+       <div><strong>${t.kind}</strong> — ${t.rationale}</div></div>`).join('');
+  drawSim(d);
+}
+
+function drawSim(d) {
+  const tr = (d.transfers || [])[0], need = d.need || {}, buy = d.buy || {};
+  const cap = s => (s||'').charAt(0).toUpperCase() + (s||'').slice(1);
+  const donor = tr ? cap(tr.from) : '—', recip = cap(need.id || (tr && tr.to));
+  const qty = tr ? tr.qty : 0, exp = tr ? tr.expiryDays : null;
+  $('sim').innerHTML = `
+  <svg viewBox="0 0 880 250" role="img" aria-label="Simulated transfer">
+   <defs><marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+     <path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/></marker></defs>
+   <rect x="30" y="60" width="200" height="120" rx="10" fill="#0d1117" stroke="#3fb950"/>
+   <text x="130" y="92" text-anchor="middle" fill="#e6edf3" font-size="15" font-weight="700">${donor}</text>
+   <text x="130" y="114" text-anchor="middle" fill="#8b949e" font-size="12">surplus donor</text>
+   <text x="130" y="138" text-anchor="middle" fill="#d29922" font-size="12" font-weight="600">${exp!=null?'expires in '+exp+' days':''}</text>
+   <text x="130" y="162" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">${qty} kg</text>
+   <rect x="650" y="60" width="200" height="120" rx="10" fill="#0d1117" stroke="#f85149"/>
+   <text x="750" y="92" text-anchor="middle" fill="#e6edf3" font-size="15" font-weight="700">${recip}</text>
+   <text x="750" y="114" text-anchor="middle" fill="#8b949e" font-size="12">shortage</text>
+   <text x="750" y="138" text-anchor="middle" fill="#f85149" font-size="13" font-weight="700">${need.gap!=null?need.gap+' kg short':''}</text>
+   <text x="750" y="162" text-anchor="middle" fill="#8b949e" font-size="12">${need.onHand!=null?'on hand '+need.onHand+' / par '+need.par:''}</text>
+   <line x1="240" y1="120" x2="640" y2="120" stroke="#30363d" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#a)"/>
+   <text x="440" y="108" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">robot carries ${qty} kg ${d.ingredient||''}</text>
+   <g><rect x="-16" y="-14" width="32" height="28" rx="5" fill="#0d3a6b" stroke="#58a6ff"/>
+      <rect x="-9" y="-22" width="18" height="12" rx="2" fill="#3fb950"/>
+      <animateMotion dur="4s" repeatCount="indefinite" path="M250,120 L630,120"/></g>
+   <circle cx="750" cy="208" r="7" fill="#d29922"/>
+   <text x="766" y="213" fill="#d29922" font-size="12" font-weight="600">human handoff at the service pass</text>
+   <text x="30" y="230" fill="#3fb950" font-size="12">agent procures net ${buy.qty??0} kg @ $${buy.unitPrice??0}/kg = $${buy.cost??0}</text>
+  </svg>`;
+}
+
+async function decide(decision) {
+  if (!RUN) return;
+  $('approvalStatus').textContent = 'recording…';
+  const r = await fetch('/api/approve', { method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ run: RUN, decision }) });
+  const j = await r.json();
+  $('approvalStatus').innerHTML = r.ok
+    ? `plan <code>${RUN}</code> → <strong>${j.approval_status}</strong> in Port`
+    : `<span class="err">${j.error}</span>`;
+}
+
+async function loadMarket() {
+  const m = await (await fetch('/api/market')).json();
+  const t = m.totals;
+  $('mRest').textContent = t.restaurants; $('mBranch').textContent = t.branches;
+  $('mDish').textContent = t.dishes; $('mIng').textContent = t.ingredients;
+  $('mNull').textContent = (t.nullRate * 100).toFixed(2) + '%';
+  $('mBars').innerHTML = m.cuisines.map(c => {
+    const pct = Math.round(c.nullPrices / c.dishes * 100);
+    return `<div style="display:flex;align-items:center;gap:.7rem;margin:.3rem 0">
+      <div style="width:120px;font-size:.85rem">${c.cuisine}</div>
+      <div style="flex:1;height:16px;background:#0d1117;border:1px solid var(--line);border-radius:4px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${pct > 50 ? 'var(--bad)' : pct > 0 ? 'var(--human)' : 'var(--agent)'}"></div>
+      </div>
+      <div style="width:96px;text-align:right;font-size:.8rem;color:var(--dim);font-variant-numeric:tabular-nums">
+        ${c.nullPrices}/${c.dishes} null</div></div>`;
+  }).join('');
+  $('mIngList').innerHTML = m.topIngredients.map(i =>
+    `<span style="display:inline-block;margin:0 .5rem .35rem 0;padding:.15rem .5rem;border:1px solid var(--line);border-radius:5px">
+       ${i.name} <b style="color:var(--fg)">${i.demand}</b></span>`).join('');
+}
+
+loadMarket(); loadDispatch(); status(); setInterval(status, 20000);
+</script>

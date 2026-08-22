@@ -1,7 +1,7 @@
 // The LIVE data contract. This is the feed routing actually depends on, and the one
 // that breaks, alerts, heals, and recovers. Distinct from menu.price_null_rate, which
 // is static evidence of the legacy defect — see docs/CONTRACTS.md C3.
-const { execFileSync } = require('child_process');
+const { execFileSync, execFile } = require('child_process');
 const fs = require('fs'), path = require('path');
 
 const FEED = path.join(__dirname, '..', 'data', 'supplier-feed.json');
@@ -63,8 +63,32 @@ function nullRate(rows) {
   return { rate: worst / items.length, total: items.length, missing, failingFields, errors };
 }
 
+/**
+ * Async twin of scrape(). The sync version blocks the whole event loop for the length
+ * of a live scrape, which freezes the server and makes the console look dead — so
+ * anything serving HTTP must use this one.
+ */
+function scrapeAsync({ timeoutMs = 90000 } = {}) {
+  const id = process.env.SCRAPER_MIRROR_COLLECTOR_ID;
+  const url = process.env.SCRAPER_MIRROR_TARGET_URL;
+  return new Promise((resolve, reject) => {
+    if (!id || !url) return reject(new Error('SCRAPER_MIRROR_COLLECTOR_ID / _TARGET_URL not set'));
+    execFile('npx', ['--yes', '--package', '@brightdata/cli', 'brightdata',
+      'scraper', 'run', id, url, '--sync', '--sync-timeout', '50', '--pretty'],
+      { encoding: 'utf8', timeout: timeoutMs, maxBuffer: 1 << 24 },
+      (err, stdout) => {
+        if (err && !stdout) return reject(err);
+        try {
+          const rows = JSON.parse(stdout.slice(stdout.indexOf('[')));
+          fs.writeFileSync(FEED, JSON.stringify(rows, null, 2));
+          resolve(rows);
+        } catch (e) { reject(e); }
+      });
+  });
+}
+
 function load() {
   try { return JSON.parse(fs.readFileSync(FEED, 'utf8')); } catch { return null; }
 }
 
-module.exports = { scrape, nullRate, components, collectorErrors, load, FEED, REQUIRED };
+module.exports = { scrape, scrapeAsync, nullRate, components, collectorErrors, load, FEED, REQUIRED };
