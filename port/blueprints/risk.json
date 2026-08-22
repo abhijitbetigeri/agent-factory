@@ -1,0 +1,74 @@
+{
+  "identifier": "risk",
+  "title": "Risk",
+  "icon": "Alert",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "likelihood": {
+        "type": "string",
+        "title": "Likelihood",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "impact": {
+        "type": "string",
+        "title": "Impact",
+        "enum": [
+          "low",
+          "medium",
+          "high"
+        ]
+      },
+      "score": {
+        "type": "number",
+        "title": "Score",
+        "description": "likelihood x impact, 1-9"
+      },
+      "stage_threatened": {
+        "type": "string",
+        "title": "Stage Threatened",
+        "enum": [
+          "brief",
+          "plan",
+          "build",
+          "verify",
+          "approve",
+          "release",
+          "audit"
+        ]
+      },
+      "mitigation": {
+        "type": "string",
+        "title": "Mitigation"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "open",
+          "mitigated",
+          "accepted",
+          "realized"
+        ]
+      }
+    },
+    "required": [
+      "description",
+      "status"
+    ]
+  },
+  "relations": {
+    "threatens_goal": {
+      "target": "goal",
+      "required": false,
+      "many": true
+    }
+  }
+}

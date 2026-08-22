@@ -1,0 +1,55 @@
+{
+  "identifier": "data_source",
+  "title": "Data Source",
+  "icon": "Database",
+  "schema": {
+    "properties": {
+      "collector_id": {
+        "type": "string",
+        "title": "Bright Data Collector ID"
+      },
+      "target_url": {
+        "type": "string",
+        "title": "Target URL",
+        "format": "url"
+      },
+      "required_fields": {
+        "type": "array",
+        "title": "Required Fields"
+      },
+      "null_rate_threshold": {
+        "type": "number",
+        "title": "Null Rate Threshold"
+      },
+      "record_count": {
+        "type": "number",
+        "title": "Records Last Scrape"
+      },
+      "last_scraped_at": {
+        "type": "string",
+        "title": "Last Scraped At",
+        "format": "date-time"
+      },
+      "health": {
+        "type": "string",
+        "title": "Health",
+        "enum": [
+          "healthy",
+          "degraded",
+          "broken",
+          "unknown"
+        ]
+      }
+    },
+    "required": [
+      "collector_id"
+    ]
+  },
+  "relations": {
+    "feeds_service": {
+      "target": "service",
+      "required": false,
+      "many": true
+    }
+  }
+}

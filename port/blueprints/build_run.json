@@ -1,0 +1,56 @@
+{
+  "identifier": "build_run",
+  "title": "Build Run",
+  "icon": "Deployment",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "running",
+          "succeeded",
+          "failed"
+        ]
+      },
+      "attempt": {
+        "type": "number",
+        "title": "Attempt",
+        "description": "2+ means this is a retry with failure context"
+      },
+      "commit_sha": {
+        "type": "string",
+        "title": "Commit SHA"
+      },
+      "duration_ms": {
+        "type": "number",
+        "title": "Duration (ms)"
+      },
+      "started_at": {
+        "type": "string",
+        "title": "Started At",
+        "format": "date-time"
+      },
+      "trace_id": {
+        "type": "string",
+        "title": "Trace ID",
+        "description": "Links this entity to its SigNoz trace. Every entity carries one."
+      }
+    },
+    "required": [
+      "status"
+    ]
+  },
+  "relations": {
+    "executes_plan": {
+      "target": "plan",
+      "required": true,
+      "many": false
+    },
+    "builds_service": {
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+}

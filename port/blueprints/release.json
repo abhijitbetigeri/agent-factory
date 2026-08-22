@@ -1,0 +1,51 @@
+{
+  "identifier": "release",
+  "title": "Release",
+  "icon": "Rocket",
+  "schema": {
+    "properties": {
+      "version": {
+        "type": "string",
+        "title": "Version"
+      },
+      "environment": {
+        "type": "string",
+        "title": "Environment",
+        "enum": [
+          "dev",
+          "staging",
+          "prod"
+        ]
+      },
+      "approved_by": {
+        "type": "string",
+        "title": "Approved By"
+      },
+      "released_at": {
+        "type": "string",
+        "title": "Released At",
+        "format": "date-time"
+      },
+      "trace_id": {
+        "type": "string",
+        "title": "Trace ID",
+        "description": "Links this entity to its SigNoz trace. Every entity carries one."
+      }
+    },
+    "required": [
+      "version"
+    ]
+  },
+  "relations": {
+    "gated_by": {
+      "target": "verification",
+      "required": true,
+      "many": false
+    },
+    "releases_service": {
+      "target": "service",
+      "required": false,
+      "many": false
+    }
+  }
+}

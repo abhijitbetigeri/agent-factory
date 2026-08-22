@@ -1,0 +1,45 @@
+{
+  "identifier": "service",
+  "title": "Service",
+  "icon": "Service",
+  "schema": {
+    "properties": {
+      "kind": {
+        "type": "string",
+        "title": "Kind",
+        "enum": [
+          "app",
+          "orchestrator",
+          "collector",
+          "worker"
+        ]
+      },
+      "repo_url": {
+        "type": "string",
+        "title": "Repository",
+        "format": "url"
+      },
+      "language": {
+        "type": "string",
+        "title": "Language"
+      },
+      "health": {
+        "type": "string",
+        "title": "Health",
+        "enum": [
+          "healthy",
+          "degraded",
+          "broken",
+          "unknown"
+        ]
+      },
+      "owner": {
+        "type": "string",
+        "title": "Owner"
+      }
+    },
+    "required": [
+      "kind"
+    ]
+  }
+}

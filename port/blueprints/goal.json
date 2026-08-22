@@ -1,0 +1,39 @@
+{
+  "identifier": "goal",
+  "title": "Goal",
+  "icon": "Target",
+  "schema": {
+    "properties": {
+      "description": {
+        "type": "string",
+        "title": "Description"
+      },
+      "success_metric": {
+        "type": "string",
+        "title": "Success Metric"
+      },
+      "priority": {
+        "type": "string",
+        "title": "Priority",
+        "enum": [
+          "p0",
+          "p1",
+          "p2"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "proposed",
+          "active",
+          "met",
+          "dropped"
+        ]
+      }
+    },
+    "required": [
+      "status"
+    ]
+  }
+}

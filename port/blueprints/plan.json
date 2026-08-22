@@ -1,0 +1,59 @@
+{
+  "identifier": "plan",
+  "title": "Plan",
+  "icon": "Blueprint",
+  "schema": {
+    "properties": {
+      "steps": {
+        "type": "array",
+        "title": "Steps"
+      },
+      "risk_summary": {
+        "type": "string",
+        "title": "Risk Summary"
+      },
+      "estimated_steps": {
+        "type": "number",
+        "title": "Estimated Steps"
+      },
+      "approval_status": {
+        "type": "string",
+        "title": "Approval Status",
+        "enum": [
+          "pending",
+          "approved",
+          "rejected"
+        ]
+      },
+      "approved_by": {
+        "type": "string",
+        "title": "Approved By"
+      },
+      "trace_id": {
+        "type": "string",
+        "title": "Trace ID",
+        "description": "Links this entity to its SigNoz trace. Every entity carries one."
+      }
+    },
+    "required": [
+      "approval_status"
+    ]
+  },
+  "relations": {
+    "from_brief": {
+      "target": "brief",
+      "required": true,
+      "many": false
+    },
+    "supersedes": {
+      "target": "plan",
+      "required": false,
+      "many": false
+    },
+    "considered": {
+      "target": "technical_decision",
+      "required": false,
+      "many": true
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "identifier": "agent_invocation",
+  "title": "Agent Invocation",
+  "icon": "AI",
+  "schema": {
+    "properties": {
+      "agent": {
+        "type": "string",
+        "title": "Agent",
+        "description": "planner | coder | triager"
+      },
+      "model": {
+        "type": "string",
+        "title": "Model"
+      },
+      "tokens_in": {
+        "type": "number",
+        "title": "Tokens In"
+      },
+      "tokens_out": {
+        "type": "number",
+        "title": "Tokens Out"
+      },
+      "duration_ms": {
+        "type": "number",
+        "title": "Duration (ms)"
+      },
+      "outcome": {
+        "type": "string",
+        "title": "Outcome",
+        "enum": [
+          "success",
+          "failure",
+          "refused"
+        ]
+      },
+      "trace_id": {
+        "type": "string",
+        "title": "Trace ID",
+        "description": "Links this entity to its SigNoz trace. Every entity carries one."
+      }
+    },
+    "required": [
+      "agent"
+    ]
+  },
+  "relations": {
+    "during_build": {
+      "target": "build_run",
+      "required": false,
+      "many": false
+    },
+    "produced_plan": {
+      "target": "plan",
+      "required": false,
+      "many": false
+    }
+  }
+}

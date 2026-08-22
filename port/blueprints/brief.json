@@ -1,0 +1,49 @@
+{
+  "identifier": "brief",
+  "title": "Brief",
+  "icon": "Book",
+  "schema": {
+    "properties": {
+      "body": {
+        "type": "string",
+        "title": "Brief Body"
+      },
+      "constraints": {
+        "type": "array",
+        "title": "Constraints"
+      },
+      "source": {
+        "type": "string",
+        "title": "Source",
+        "enum": [
+          "human",
+          "automation"
+        ]
+      },
+      "submitted_by": {
+        "type": "string",
+        "title": "Submitted By"
+      },
+      "submitted_at": {
+        "type": "string",
+        "title": "Submitted At",
+        "format": "date-time"
+      },
+      "trace_id": {
+        "type": "string",
+        "title": "Trace ID",
+        "description": "Links this entity to its SigNoz trace. Every entity carries one."
+      }
+    },
+    "required": [
+      "body"
+    ]
+  },
+  "relations": {
+    "targets_goal": {
+      "target": "goal",
+      "required": false,
+      "many": true
+    }
+  }
+}

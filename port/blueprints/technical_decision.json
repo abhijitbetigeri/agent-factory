@@ -1,0 +1,56 @@
+{
+  "identifier": "technical_decision",
+  "title": "Technical Decision",
+  "icon": "Docs",
+  "schema": {
+    "properties": {
+      "context": {
+        "type": "string",
+        "title": "Context",
+        "description": "What forced a decision"
+      },
+      "decision": {
+        "type": "string",
+        "title": "Decision"
+      },
+      "alternatives_considered": {
+        "type": "array",
+        "title": "Alternatives Considered"
+      },
+      "rationale": {
+        "type": "string",
+        "title": "Rationale"
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "proposed",
+          "accepted",
+          "superseded"
+        ]
+      },
+      "decided_at": {
+        "type": "string",
+        "title": "Decided At",
+        "format": "date-time"
+      }
+    },
+    "required": [
+      "decision",
+      "status"
+    ]
+  },
+  "relations": {
+    "supports_goal": {
+      "target": "goal",
+      "required": false,
+      "many": true
+    },
+    "affects_service": {
+      "target": "service",
+      "required": false,
+      "many": true
+    }
+  }
+}

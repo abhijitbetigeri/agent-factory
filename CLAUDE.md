@@ -26,8 +26,15 @@ verified, what is blocked.
 
 ```
 BRIGHTDATA_CLI="npx --yes --package @brightdata/cli brightdata"
-SCRAPER_STUDIO_COLLECTOR_ID=<c_xxxxxxxxxxxx>     # TODO: fill after `scraper create`
-SCRAPER_TARGET_URL=<https://...>                 # TODO
+# ⚠️ USE CASE NOT YET CHOSEN. Targets below are placeholders.
+# The two-collector pattern (c_real + c_mirror) is a PROPOSAL in docs/plan-12h.md,
+# not a decision. Fill these in once the idea is settled — see docs/idea-options.md.
+SCRAPER_REAL_COLLECTOR_ID=<c_xxxxxxxxxxxx>       # TODO: after `scraper create`
+SCRAPER_REAL_TARGET_URL=<https://...>            # TODO: depends on chosen use case
+
+SCRAPER_MIRROR_COLLECTOR_ID=<c_xxxxxxxxxxxx>     # TODO: only if using the mirror harness
+SCRAPER_MIRROR_TARGET_URL=<https://USER.github.io/agentic-factory/mirror/>  # TODO
+
 SCRAPER_REQUIRED_FIELDS=<field_a,field_b>        # drives the null-rate health check
 SCRAPER_NULL_RATE_THRESHOLD=0.05
 ```
@@ -63,13 +70,17 @@ Never inline a key into a command that gets committed.
 
 ## Port
 
-- Region: `<EU|US>` — TODO, locks the MCP URL below.
-- MCP: `claude mcp add --transport http port https://mcp.port.io/v1` (US: `mcp.us.port.io`).
+- Region: **US** (decided 2026-08-22). Locks the MCP URL below and `ingest.us.signoz.cloud`.
+- MCP: `claude mcp add --transport http port https://mcp.us.port.io/v1` (EU would be `mcp.port.io`).
 - Query the Context Lake through MCP before proposing changes — do not invent entity
   shapes that already exist.
 - Use **AI Builder Plan mode first**, capture the plan, then Build. Never Build unreviewed.
-- Blueprints: `Brief`, `Plan`, `BuildRun`, `Verification`, `Release`, `AgentInvocation`,
-  `DataSource`, `HealEvent`. Every entity carries `trace_id`.
+- Blueprints — **12 total**. Every entity carries `trace_id`.
+  - *Pipeline:* `Brief`, `Plan`, `BuildRun`, `Verification`, `Release`, `AgentInvocation`,
+    `DataSource`, `HealEvent`
+  - *Workspace (these win the Port track — do not skip them):* `Goal`, `TechnicalDecision`,
+    `Risk`, `Service`. The track criterion is literally "project goals, technical choices,
+    risk factors, and cataloged services." An empty workspace loses this prize.
 
 ## SigNoz
 
@@ -79,7 +90,16 @@ Never inline a key into a command that gets committed.
   `stage.verify`, `stage.approve`, `stage.release`, under a root `factory.run` span.
 - Emit span **events** for `scraper.heal.requested|approved|failed`.
 - Set span status to ERROR on failure so stage failures are filterable.
-- `console.log` is not observability. If you're tempted to add one, add a span event.
+- **All three signals are required, not just traces.** The track criterion names traces,
+  metrics, *and* logs. Ship the OTel **logs** pipeline with `trace_id` correlation so a
+  log line jumps straight to its span.
+- Instrument **data endpoints and background jobs** specifically: the tracker's
+  `/api/prices` endpoint and the scheduled re-scrape worker. Stage spans alone do not
+  satisfy this criterion.
+- The dashboard must let an operator diagnose a failure **in under 30 seconds** — latency,
+  throughput, errors, and `scraper.field_null_rate` with its threshold drawn on it.
+- `console.log` is not observability. If you're tempted to add one, add a span event —
+  or a real OTel log record, now that we have that pipeline.
 
 ## Secrets
 All keys live in `.env` (gitignored). Never commit a key, never paste one into a command

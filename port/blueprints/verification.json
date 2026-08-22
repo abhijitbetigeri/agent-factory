@@ -1,0 +1,54 @@
+{
+  "identifier": "verification",
+  "title": "Verification",
+  "icon": "Cluster",
+  "schema": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "pass",
+          "fail"
+        ]
+      },
+      "tests_passed": {
+        "type": "number",
+        "title": "Tests Passed"
+      },
+      "tests_failed": {
+        "type": "number",
+        "title": "Tests Failed"
+      },
+      "contract_ok": {
+        "type": "boolean",
+        "title": "Data Contract Holds"
+      },
+      "null_rate": {
+        "type": "number",
+        "title": "Field Null Rate",
+        "description": "Drives scraper.field_null_rate metric + SigNoz alert"
+      },
+      "trace_id": {
+        "type": "string",
+        "title": "Trace ID",
+        "description": "Links this entity to its SigNoz trace. Every entity carries one."
+      }
+    },
+    "required": [
+      "status"
+    ]
+  },
+  "relations": {
+    "verifies": {
+      "target": "build_run",
+      "required": true,
+      "many": false
+    },
+    "checked_source": {
+      "target": "data_source",
+      "required": false,
+      "many": true
+    }
+  }
+}

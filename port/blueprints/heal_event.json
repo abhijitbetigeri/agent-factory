@@ -1,0 +1,71 @@
+{
+  "identifier": "heal_event",
+  "title": "Heal Event",
+  "icon": "Bug",
+  "schema": {
+    "properties": {
+      "trigger": {
+        "type": "string",
+        "title": "Trigger",
+        "description": "Which SigNoz alert fired this"
+      },
+      "failing_fields": {
+        "type": "array",
+        "title": "Failing Fields"
+      },
+      "diff": {
+        "type": "string",
+        "title": "Proposed Diff"
+      },
+      "auto_approved": {
+        "type": "boolean",
+        "title": "Auto Approved"
+      },
+      "approver": {
+        "type": "string",
+        "title": "Approver"
+      },
+      "outcome": {
+        "type": "string",
+        "title": "Outcome",
+        "enum": [
+          "requested",
+          "approved",
+          "rejected",
+          "failed",
+          "resolved"
+        ]
+      },
+      "requested_at": {
+        "type": "string",
+        "title": "Requested At",
+        "format": "date-time"
+      },
+      "resolved_at": {
+        "type": "string",
+        "title": "Resolved At",
+        "format": "date-time"
+      },
+      "trace_id": {
+        "type": "string",
+        "title": "Trace ID",
+        "description": "Links this entity to its SigNoz trace. Every entity carries one."
+      }
+    },
+    "required": [
+      "outcome"
+    ]
+  },
+  "relations": {
+    "repairs": {
+      "target": "data_source",
+      "required": true,
+      "many": false
+    },
+    "triggered_by": {
+      "target": "verification",
+      "required": false,
+      "many": false
+    }
+  }
+}
