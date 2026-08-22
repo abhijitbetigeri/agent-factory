@@ -63,7 +63,11 @@
    vertical-align:middle}
 
  figure{margin:0}
- figure svg{display:block;width:100%;height:auto}
+ /* Below ~620px the 880-wide viewBox would scale labels down to unreadable.
+    Scroll the diagram inside its own box instead of shrinking it — the page
+    itself must never scroll horizontally. */
+ .diagram{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ figure svg{display:block;width:100%;min-width:620px;height:auto}
  figcaption{color:var(--dim);font-size:.82rem;margin-top:.7rem}
 
  .steps{display:grid;gap:.6rem;margin:0;padding:0;list-style:none}
@@ -127,6 +131,7 @@
     dashboard bolted on at the end — an alert is what <em>starts</em> the factory.</p>
 
   <figure>
+  <div class="diagram">
   <svg viewBox="0 0 880 260" role="img"
        aria-label="SigNoz alert triggers Port governance, which triages to a fix path, through a human gate to release; Bright Data repairs the scraper and re-verify closes the loop.">
     <defs>
@@ -182,6 +187,7 @@
       <text x="8" y="150" fill="#8b949e" font-size="11">detection is ours — the CLI never decides a scraper is broken</text>
     </g>
   </svg>
+  </div>
   <figcaption>Bright Data is not a garnish: the feed it scrapes is the thing that fails,
     and <code>scraper heal</code> is what fixes it.</figcaption>
   </figure>

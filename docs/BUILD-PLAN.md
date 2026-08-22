@@ -21,10 +21,10 @@ not points. Never start it while 3, 2 or 4 are open.
 | Slice | Owns (exclusive) | Depends on | Priority | Status |
 |---|---|---|---|---|
 | **1. Factory core** | `factory/` | — | — | ✅ **DONE** |
-| **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | C3, C4 | **1st** | 🟡 **PARTIAL** — break + detect proven live; heal on c_mirror blocked by BD `409 refactor in progress`. Repair itself proven on c_real. |
+| **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | C3, C4 | **1st** | ✅ **DONE** — full loop closed: break → detect → heal → **null-rate 100% → 0%** → re-verify PASS → release created |
 | **2. Sim + approval** | `app/` | C1, C2 | **2nd** | ✅ **DONE** — verified: endpoints, approve→Port (`approved_by: human (via simulation rehearsal)`), falsifiability check passed |
-| **4. Dashboard + README** | `README.md`, `docs/`, SigNoz dashboard | C5 | 3rd | 🟡 **PARTIAL** — README + DEMO.md done; **SigNoz dashboard NOT built** (Beat 4 films the raw trace view instead) |
-| **5. Landing page** | `site/` | C1 | 4th (unscored) | ⬜ not started |
+| **4. Dashboard + README** | `README.md`, `docs/`, SigNoz dashboard | C5 | 3rd | ✅ **DONE** — README, DEMO.md, 4-panel dashboard + `scripts/import-dashboard.sh` |
+| **5. Landing page** | `site/` | C1 | 4th (unscored) | ✅ **DONE** — `site/index.html`, static, no deps, `mirror/` untouched |
 
 **Known dead ends — do not retry:**
 - `fsis.usda.gov` — Bright Data rejects it, "Domain not allowed"
