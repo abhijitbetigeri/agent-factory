@@ -19,8 +19,8 @@ is the pitch; slice 4 is evidence. If time runs out, it runs out on slice 4.
 | Slice | Owns (exclusive) | Depends on | Priority | Status |
 |---|---|---|---|---|
 | **1. Factory core** | `factory/` | — | — | ✅ **DONE** |
-| **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | C3, C4 | **1st** | ⬜ not started |
-| **2. Sim + approval** | `app/` | C1, C2 | **2nd** | ⬜ not started |
+| **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | C3, C4 | **1st** | ✅ **DONE** — break + detect proven; heal verified |
+| **2. Sim + approval** | `app/` | C1, C2 | **2nd** | ✅ **DONE** — sim renders from dispatch.json, approve writes to Port |
 | **4. Dashboard + README** | `README.md`, `docs/`, SigNoz dashboard | C5 | 3rd | ⬜ not started |
 
 **Known dead ends — do not retry:**
@@ -145,4 +145,46 @@ opens an incident, Bright Data repairs it, a human approves, re-verify goes gree
 
 Add a bullet here instead of editing another slice's files.
 
-- _(none yet)_
+- **The four workspace blueprints are empty and no slice owns filling them.**
+  Verified 2026-08-22 against the live US org: pipeline blueprints populate correctly
+  (`brief`/`plan`/`build_run`/`verification`/`agent_invocation` at 5 each, `release` and
+  `incident` at 1, `trace_id` on every one), but `goal`, `technical_decision`, `risk`
+  and `factory_service` are all at **0**. `factory/run.js` never writes them, C2 does not
+  list them, and no slice claims them — so on current trajectory they ship empty.
+
+  This is not cosmetic. `CLAUDE.md` records the Port track criterion as literally
+  "project goals, technical choices, risk factors, and cataloged services", and that
+  *"an empty workspace loses this prize"*. Four empty blueprints is a visible zero on a
+  judged criterion, not a missing nice-to-have.
+
+  **Do not fold this into slice 4.** Slice 4 is explicitly the one that gets cut if time
+  runs out; attaching a scored criterion to the droppable slice is how it gets lost.
+
+  **Proposed shape — deliberately conflict-free, so it can run in parallel with 2 and 3:**
+  - New exclusive path `port/workspace/*.json` + `scripts/seed-workspace.sh`. Touches no
+    file any slice owns, so it needs no coordination and cannot cause a merge conflict.
+  - Seed from decisions this repo has *already made* rather than inventing content —
+    they are sitting in `SESSION.md` and `CLAUDE.md` and just need entity form:
+    - `technical_decision` — US region over EU; self-hosted SigNoz over Cloud; the
+      mirror-collector harness; polling alert state instead of webhooks.
+    - `risk` — `scraper create` takes 5-25 min and cannot sit on the demo critical path;
+      menu prices render in JS behind a location picker (the 56.25% null-rate defect);
+      Docker Desktop does not auto-start, so the stack is down after any reboot.
+    - `goal` — the factory is the deliverable, not the app it produces; a judge must be
+      able to diagnose a failure from the dashboard in under 30 seconds.
+    - `factory_service` — the catalog: `factory-orchestrator`, the slice-2 app and its
+      background scrape worker, the SigNoz stack, the Bright Data collector.
+  - Relate them where the blueprint schemas already allow it (`brief.targets_goal` is
+    live and currently `[]` on every brief), so the workspace connects to the pipeline
+    instead of sitting beside it as decoration.
+
+  **Done when:** all four blueprints are non-empty in the US org, at least one `brief`
+  has a non-empty `targets_goal`, and re-running `seed-workspace.sh` is idempotent
+  (it upserts, so a second run must not duplicate).
+
+- **`incident` blueprint is live-only and not version-controlled.** It exists in the org
+  (HTTP 200, 1 entity) and `factory/run.js:84` writes to it, but there is no
+  `port/blueprints/incident.json`. `apply-blueprints.sh` rebuilding from files into a
+  fresh org would therefore omit it and the incident path would 404 at runtime. Export
+  it to a file alongside the other 12. Low effort, and it only bites during a rebuild —
+  which is exactly when there is no time to debug it.
