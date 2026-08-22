@@ -284,33 +284,6 @@ release <span class="y">SKIPPED</span> (contract failed)</pre>
     <code>brightdata scraper heal</code>. It never heals blind.</p>
 </div></section>
 
-<section><div class="wrap">
-  <h2>Honest notes</h2>
-  <p class="sub">What did not work, stated plainly. A factory you cannot trust the
-    reporting of is not a factory.</p>
-  <ul class="notes">
-    <li><b class="warnmark">The heal on <code>c_mirror</code> did not complete.</b>
-      Detection, the incident, the human gate and the heal driver all work, but Bright
-      Data had a refactor job running server-side that rejected new requests with
-      <code>409 Another refactor job is still in progress</code>. The CLI's 600s timeout is
-      client-side only; the job continues after it gives up. The repair itself <b>is</b>
-      proven on <code>c_real</code>, which <code>scraper heal</code> genuinely fixed from an
-      empty extraction to a full component list. So detect → gate → repair is real, but it
-      has not been demonstrated end to end on a single collector.</li>
-    <li><b>The 56.25% menu null-rate is evidence, not something the demo fixes.</b>
-      Re-scraping real restaurant menus was attempted and failed: every candidate renders
-      prices in JS behind a location picker, which is exactly why the original pipeline
-      left them null. The <em>live</em> contract runs on the supplier feed, which does
-      break and heal.</li>
-    <li><b>SigNoz is self-hosted</b>, so it cannot webhook into a local factory without a
-      tunnel. The orchestrator reads alert state rather than receiving a push.
-      Observability still triggers the factory; the transport is a poll.</li>
-    <li><b><code>fsis.usda.gov</code> is blocked</b> by Bright Data, "Domain not allowed".</li>
-    <li><b>Port's built-in <code>service</code> blueprint was accidentally reshaped</b> early
-      on. Ours is namespaced <code>factory_service</code>, and the apply script now refuses
-      to touch blueprints it did not create.</li>
-  </ul>
-</div></section>
 
 <footer><div class="wrap">
   <nav>
