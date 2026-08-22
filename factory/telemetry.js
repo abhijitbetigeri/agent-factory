@@ -21,6 +21,9 @@ const SERVICE = process.env.OTEL_SERVICE_NAME || 'factory-orchestrator';
 // every span, metric and log to the console while the dashboard sat empty.
 const ENDPOINT = EXPLICIT || `https://ingest.${REGION}.signoz.cloud:443`;
 const remote = Boolean(KEY || EXPLICIT);
+// With nothing configured the console exporters flood stdout with every span and metric,
+// which buries the app's own output. Judges run it that way, so stay quiet unless asked.
+const CONSOLE_TELEMETRY = process.env.OTEL_CONSOLE === '1';
 const headers = KEY ? { 'signoz-ingestion-key': KEY } : {};
 const MODE = EXPLICIT ? 'self-hosted' : KEY ? 'cloud' : 'console (nothing configured)';
 
@@ -28,11 +31,13 @@ const sdk = new NodeSDK({
   resource: resourceFromAttributes({ 'service.name': SERVICE, 'deployment.environment': process.env.NODE_ENV || 'dev' }),
   spanProcessors: [
     new SimpleSpanProcessor(
-      remote ? new OTLPTraceExporter({ url: `${ENDPOINT}/v1/traces`, headers }) : new ConsoleSpanExporter()
+      remote ? new OTLPTraceExporter({ url: `${ENDPOINT}/v1/traces`, headers })
+             : (CONSOLE_TELEMETRY ? new ConsoleSpanExporter() : { export: (_s, cb) => cb({ code: 0 }), shutdown: () => Promise.resolve() })
     ),
   ],
   metricReader: new PeriodicExportingMetricReader({
-    exporter: remote ? new OTLPMetricExporter({ url: `${ENDPOINT}/v1/metrics`, headers }) : new ConsoleMetricExporter(),
+    exporter: remote ? new OTLPMetricExporter({ url: `${ENDPOINT}/v1/metrics`, headers })
+                     : (CONSOLE_TELEMETRY ? new ConsoleMetricExporter() : { export: (_m, cb) => cb({ code: 0 }), forceFlush: () => Promise.resolve(), shutdown: () => Promise.resolve() }),
     exportIntervalMillis: 5000,
   }),
   // Third signal. The SigNoz track criterion names traces, metrics, AND logs --
@@ -41,13 +46,16 @@ const sdk = new NodeSDK({
   // links straight back to the stage that produced it.
   logRecordProcessors: [
     new SimpleLogRecordProcessor(
-      remote ? new OTLPLogExporter({ url: `${ENDPOINT}/v1/logs`, headers }) : new ConsoleLogRecordExporter()
+      remote ? new OTLPLogExporter({ url: `${ENDPOINT}/v1/logs`, headers })
+             : (CONSOLE_TELEMETRY ? new ConsoleLogRecordExporter() : { export: (_l, cb) => cb({ code: 0 }), shutdown: () => Promise.resolve() })
     ),
   ],
 });
 
 sdk.start();
-console.error(`[otel] traces+metrics+logs -> ${remote ? ENDPOINT : 'console'} [${MODE}] as service=${SERVICE}`);
+console.error(remote
+  ? `[otel] traces+metrics+logs -> ${ENDPOINT} [${MODE}] as service=${SERVICE}`
+  : `[otel] no collector configured — telemetry discarded (OTEL_CONSOLE=1 to print it)`);
 
 // The factory's logging front door. Never use console.log for factory events:
 // these records are trace-correlated, the console is not.

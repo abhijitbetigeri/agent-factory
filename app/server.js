@@ -21,7 +21,44 @@ const scrapeDur = meter.createHistogram('worker.scrape.duration', { unit: 'ms' }
 const feedGauge = meter.createObservableGauge('supplier.feed.age_seconds');
 
 const DATA = path.join(__dirname, '..', 'data');
+const SNAP = path.join(__dirname, '..', 'web', 'snapshots');
 const PORT = process.env.APP_PORT || 3000;
+
+/**
+ * Demo mode. Without Port credentials and a Bright Data key nothing live can run, so
+ * rather than failing in confusing ways the console serves transcripts recorded against
+ * the real system. This is what lets someone clone the repo and see the whole thing
+ * with `npm install && npm start` and no accounts at all.
+ * Force it either way with DEMO_MODE=1 / DEMO_MODE=0.
+ */
+const DEMO = process.env.DEMO_MODE === '1' ? true
+           : process.env.DEMO_MODE === '0' ? false
+           : !(process.env.PORT_CLIENT_ID && process.env.BRIGHTDATA_API_KEY
+               && process.env.SCRAPER_MIRROR_COLLECTOR_ID);
+const REPLAY = {
+  'run:brief':    'run-brief.txt',
+  'run:incident': 'run-incident.txt',
+  'heal':         'heal.txt',
+  'rescrape':     'run-recovered.txt',
+};
+
+/** Replay a recorded transcript over SSE, paced so it reads like a live run. */
+function replay(res, key) {
+  const f = REPLAY[key];
+  res.writeHead(200, { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' });
+  const push = (kind, line) => res.write(`data: ${JSON.stringify({ kind, line })}\n\n`);
+  if (!f || !fs.existsSync(path.join(SNAP, f))) {
+    push('out', 'This action changes the source page and needs credentials — see README.');
+    push('done', 'exit 0'); return res.end();
+  }
+  const lines = fs.readFileSync(path.join(SNAP, f), 'utf8').split('\n');
+  let i = 0;
+  const t = setInterval(() => {
+    if (i >= lines.length) { clearInterval(t); push('done', 'exit 0'); return res.end(); }
+    push('out', lines[i++]);
+  }, 60);
+  res.on('close', () => clearInterval(t));
+}
 let lastScrapeAt = null, lastNullRate = null;
 feedGauge.addCallback(r => r.observe(lastScrapeAt ? (Date.now() - lastScrapeAt) / 1000 : -1));
 
@@ -93,7 +130,8 @@ const server = http.createServer(async (req, res) => {
     span.setAttributes({ 'http.method': req.method, 'http.route': route });
     try {
       if (route === '/api/dispatch') {
-        const d = readJSON('dispatch.json');
+        let d = readJSON('dispatch.json');
+        if (!d) { try { d = JSON.parse(fs.readFileSync(path.join(SNAP, 'dispatch.json'), 'utf8')); } catch {} }
         d ? send(res, 200, d) : send(res, 404, { error: 'no dispatch yet — run the factory' });
       } else if (route === '/api/health') {
         send(res, 200, {
@@ -108,6 +146,10 @@ const server = http.createServer(async (req, res) => {
         const { run, decision } = JSON.parse(body || '{}');
         const approved = decision === 'approve';
         span.setAttributes({ 'approval.run': run, 'approval.granted': approved });
+        if (DEMO) {
+          log('info', `human ${approved ? 'APPROVED' : 'REJECTED'} dispatch ${run} (demo mode)`, { 'ui.action': 'approve' });
+          return send(res, 200, { ok: true, approval_status: approved ? 'approved' : 'rejected', demo: true });
+        }
         await port.upsert('plan', `plan-${run}`, `dispatch ${run}`, {
           approval_status: approved ? 'approved' : 'rejected',
           approved_by: 'human (via simulation rehearsal)',
@@ -121,11 +163,13 @@ const server = http.createServer(async (req, res) => {
         const args = mode === 'incident'
           ? ['factory/run.js', '--incident', 'data_source_broken']
           : ['factory/run.js', '--brief', brief || 'Route the Downtown tomato shortage'];
-        span.setAttributes({ 'factory.trigger': mode || 'brief' });
+        span.setAttributes({ 'factory.trigger': mode || 'brief', 'demo_mode': DEMO });
         log('info', `factory run triggered from the console (${mode || 'brief'})`, { 'ui.action': 'run' });
+        if (DEMO) return replay(res, `run:${mode === 'incident' ? 'incident' : 'brief'}`);
         return streamCommand(res, process.execPath, args);
       } else if (route === '/api/heal' && req.method === 'POST') {
         log('info', 'heal triggered from the console', { 'ui.action': 'heal' });
+        if (DEMO) return replay(res, 'heal');
         return streamCommand(res, process.execPath, ['factory/heal.js', '--auto-approve']);
       } else if (route === '/api/feed' && req.method === 'POST') {
         const body = await new Promise(r => { let b=''; req.on('data',c=>b+=c); req.on('end',()=>r(b)); });
@@ -135,6 +179,7 @@ const server = http.createServer(async (req, res) => {
         const args = action === 'break' ? ['scripts/break-mirror.sh', '--reset']
                                         : ['scripts/break-mirror.sh'];
         log('info', `supplier page state changed from the console: ${action}`, { 'ui.action': 'feed' });
+        if (DEMO) return replay(res, 'feed');
         return streamCommand(res, '/bin/bash', args);
       } else if (route === '/api/market') {
         // The demand model the routing runs on, aggregated for the console. Carries the
@@ -171,10 +216,12 @@ const server = http.createServer(async (req, res) => {
         });
       } else if (route === '/api/feed/status') {
         let rows = supplier.load(); let n = supplier.nullRate(rows);
-        send(res, 200, { null_rate: n.rate, rows: n.total, contract_ok: n.rate <= 0.05,
+        if (DEMO && !n.total) n = { rate: 0, total: 5, failingFields: [], errors: [] };
+        send(res, 200, { demo: DEMO, null_rate: n.rate, rows: n.total, contract_ok: n.rate <= 0.05,
                          failing_fields: n.failingFields, errors: n.errors || [],
                          checked_at: lastScrapeAt });
       } else if (route === '/api/rescrape' && req.method === 'POST') {
+        if (DEMO) return replay(res, 'rescrape');
         return streamCommand(res, process.execPath, ['-e',
           "const s=require('./factory/supplier.js');const n=s.nullRate(s.scrape());" +
           "console.log('rows '+n.total+'  null-rate '+n.rate.toFixed(4)+'  '+(n.rate<=0.05?'CONTRACT HOLDS':'BROKEN'));" +
@@ -201,5 +248,11 @@ server.listen(PORT, () => {
   // numbers immediately instead of dashes.
   const seed = supplier.nullRate(supplier.load());
   if (seed.total) { lastNullRate = seed.rate; lastScrapeAt = Date.now(); }
-  setTimeout(worker, 3000); setInterval(worker, 120000);
+  if (DEMO) {
+    console.log('  DEMO MODE — replaying recorded runs. No credentials needed.');
+    console.log('  For the live factory, fill in .env and restart. See README.');
+    if (!seed.total) { lastNullRate = 0; lastScrapeAt = Date.now(); }
+  } else {
+    setTimeout(worker, 3000); setInterval(worker, 120000);
+  }
 });

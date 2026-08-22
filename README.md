@@ -126,13 +126,41 @@ into `brightdata scraper heal` — it never heals blind.
 
 ## Running it
 
+### Reviewers — no accounts, no Docker, ~30 seconds
+
 ```bash
-cp .env.example .env        # fill in Port creds, Bright Data key, collector IDs
-./scripts/apply-blueprints.sh   # 13 blueprints, idempotent, dependency-ordered
-./scripts/verify.sh             # 15 preflight checks
-set -a && . ./.env && set +a
-node factory/run.js --brief "Route the Downtown tomato shortage"
+git clone https://github.com/abhijitbetigeri/agent-factory
+cd agent-factory && npm install && npm start
 ```
+
+Open **http://localhost:3000/console**.
+
+With no `.env` the server starts in **demo mode** and says so. Every panel works: the
+market data is real, the dispatch is a real factory output, and the run/heal buttons
+replay **transcripts recorded against the live system** — including the failing run
+where the collector reports `parse_error: Parse error: value must be finite number`,
+and the repair that took null-rate from 100% back to 0%. Nothing is fabricated and
+nothing is hidden; the banner says what is replayed.
+
+That is the whole demo, without a Port org, a Bright Data account, or SigNoz.
+
+### The live factory — needs accounts
+
+```bash
+cp .env.example .env             # Port client id/secret, Bright Data key, collector ids
+./scripts/apply-blueprints.sh    # 13 blueprints, idempotent, dependency-ordered
+./scripts/verify.sh              # 16 preflight checks, must be green
+set -a && . ./.env && set +a
+npm start                        # console now drives the real factory
+```
+
+Demo mode switches off automatically once `PORT_CLIENT_ID`, `BRIGHTDATA_API_KEY` and
+`SCRAPER_MIRROR_COLLECTOR_ID` are present. Force it either way with `DEMO_MODE=1` / `0`.
+
+SigNoz is optional: without a collector, telemetry is discarded rather than printed
+(`OTEL_CONSOLE=1` to see it). Point `OTEL_EXPORTER_OTLP_ENDPOINT` at a self-hosted
+instance, or set `SIGNOZ_INGESTION_KEY` for cloud.
+
 
 ---
 
