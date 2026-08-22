@@ -1,0 +1,49 @@
+{
+  "cuisine": "Italian",
+  "restaurants": [
+    {
+      "name": "Maggiano's Little Italy",
+      "rank": 1,
+      "website": "https://www.maggianos.com/",
+      "summary": "Large-scale Italian-American chain known for family-style classics and banquet dining across the U.S.",
+      "branches": [
+        {"name": "Maggiano's Little Italy - Chicago", "city": "Chicago", "region": "Illinois"},
+        {"name": "Maggiano's Little Italy - New York", "city": "New York", "region": "New York"},
+        {"name": "Maggiano's Little Italy - Las Vegas", "city": "Las Vegas", "region": "Nevada"},
+        {"name": "Maggiano's Little Italy - Houston", "city": "Houston", "region": "Texas"}
+      ],
+      "dishes": [
+        {"name": "Mom's Lasagna", "section": "main", "description": "Layers of pasta with beef, pork, ricotta, mozzarella, and marinara sauce, baked until bubbly.", "price": null, "ingredients": [{"name": "pasta sheets", "is_core": true, "derived": true}, {"name": "ground beef", "is_core": true, "derived": true}, {"name": "ground pork", "is_core": true, "derived": true}, {"name": "ricotta cheese", "is_core": true, "derived": true}, {"name": "mozzarella cheese", "is_core": true, "derived": true}, {"name": "marinara sauce", "is_core": true, "derived": true}]},
+        {"name": "Chicken Parmesan", "section": "main", "description": "Breaded chicken breast topped with marinara and melted mozzarella, served over spaghetti.", "price": null, "ingredients": [{"name": "chicken breast", "is_core": true, "derived": true}, {"name": "breadcrumbs", "is_core": true, "derived": true}, {"name": "marinara sauce", "is_core": true, "derived": true}, {"name": "mozzarella cheese", "is_core": true, "derived": true}, {"name": "spaghetti", "is_core": true, "derived": true}]},
+        {"name": "Fried Zucchini", "section": "appetizer", "description": "Crispy fried zucchini sticks served with a side of marinara and ranch dressing.", "price": null, "ingredients": [{"name": "zucchini", "is_core": true, "derived": true}, {"name": "flour batter", "is_core": true, "derived": true}, {"name": "marinara sauce", "is_core": false, "derived": true}, {"name": "ranch dressing", "is_core": false, "derived": true}]},
+        {"name": "Rigatoni \"D\"", "section": "main", "description": "Rigatoni pasta tossed with grilled chicken, sun-dried tomatoes, mushrooms, and prosciutto in a light cream sauce.", "price": null, "ingredients": [{"name": "rigatoni pasta", "is_core": true, "derived": true}, {"name": "grilled chicken", "is_core": true, "derived": true}, {"name": "sun-dried tomatoes", "is_core": true, "derived": true}, {"name": "mushrooms", "is_core": true, "derived": true}, {"name": "prosciutto", "is_core": true, "derived": true}, {"name": "cream sauce", "is_core": true, "derived": true}]},
+        {"name": "Four Meat Ravioli", "section": "main", "description": "House-made ravioli filled with beef, veal, pork, and prosciutto, served in a light marinara sauce.", "price": null, "ingredients": [{"name": "pasta dough", "is_core": true, "derived": true}, {"name": "beef", "is_core": true, "derived": true}, {"name": "veal", "is_core": true, "derived": true}, {"name": "pork", "is_core": true, "derived": true}, {"name": "prosciutto", "is_core": true, "derived": true}, {"name": "marinara sauce", "is_core": true, "derived": true}]},
+        {"name": "Shrimp Scampi", "section": "main", "description": "Sauteed shrimp in a garlic butter white wine sauce tossed with angel hair pasta.", "price": null, "ingredients": [{"name": "shrimp", "is_core": true, "derived": true}, {"name": "garlic", "is_core": true, "derived": true}, {"name": "butter", "is_core": true, "derived": true}, {"name": "white wine", "is_core": true, "derived": true}, {"name": "angel hair pasta", "is_core": true, "derived": true}]},
+        {"name": "Chopped Salad", "section": "side", "description": "Chopped romaine, salami, provolone, tomatoes, and chickpeas tossed in a red wine vinaigrette.", "price": null, "ingredients": [{"name": "romaine lettuce", "is_core": true, "derived": true}, {"name": "salami", "is_core": true, "derived": true}, {"name": "provolone cheese", "is_core": true, "derived": true}, {"name": "tomatoes", "is_core": true, "derived": true}, {"name": "chickpeas", "is_core": true, "derived": true}, {"name": "red wine vinaigrette", "is_core": true, "derived": true}]},
+        {"name": "Chocolate Zuccotto Cake", "section": "dessert", "description": "Rich chocolate cake layered with chocolate mousse and fudge, dome-shaped and decadent.", "price": null, "ingredients": [{"name": "chocolate cake", "is_core": true, "derived": true}, {"name": "chocolate mousse", "is_core": true, "derived": true}, {"name": "fudge", "is_core": true, "derived": true}]}
+      ]
+    },
+    {
+      "name": "Biaggi's Ristorante Italiano",
+      "rank": 2,
+      "website": "https://biaggis.com/",
+      "summary": "Midwest-based Italian restaurant chain offering scratch-made pasta, wood-fired dishes, and a full bar menu.",
+      "branches": [
+        {"name": "Biaggi's - Peoria", "city": "Peoria", "region": "Illinois"},
+        {"name": "Biaggi's - Omaha", "city": "Omaha", "region": "Nebraska"},
+        {"name": "Biaggi's - Kansas City", "city": "Kansas City", "region": "Missouri"},
+        {"name": "Biaggi's - Rockford", "city": "Rockford", "region": "Illinois"}
+      ],
+      "dishes": [
+        {"name": "Bruschetta Al Pomodoro", "section": "appetizer", "description": "Toasted crostini topped with diced tomatoes, basil, garlic, and olive oil.", "price": null, "ingredients": [{"name": "baguette", "is_core": true, "derived": true}, {"name": "tomatoes", "is_core": true, "derived": true}, {"name": "basil", "is_core": true, "derived": true}, {"name": "garlic", "is_core": true, "derived": true}, {"name": "olive oil", "is_core": true, "derived": true}]},
+        {"name": "Tortelloni Alla Panna", "section": "main", "description": "Cheese-filled tortelloni tossed in a creamy Parmesan sauce with peas and prosciutto.", "price": null, "ingredients": [{"name": "tortelloni pasta", "is_core": true, "derived": true}, {"name": "ricotta cheese", "is_core": true, "derived": true}, {"name": "cream sauce", "is_core": true, "derived": true}, {"name": "parmesan cheese", "is_core": true, "derived": true}, {"name": "peas", "is_core": true, "derived": true}, {"name": "prosciutto", "is_core": true, "derived": true}]},
+        {"name": "Chicken Marsala", "section": "main", "description": "Sauteed chicken breast in a Marsala wine and mushroom sauce, served with mashed potatoes.", "price": null, "ingredients": [{"name": "chicken breast", "is_core": true, "derived": true}, {"name": "marsala wine", "is_core": true, "derived": true}, {"name": "mushrooms", "is_core": true, "derived": true}, {"name": "mashed potatoes", "is_core": true, "derived": true}]},
+        {"name": "Steak Gorgonzola", "section": "main", "description": "Grilled steak medallions topped with gorgonzola cream sauce, served over pasta and spinach.", "price": null, "ingredients": [{"name": "beef steak", "is_core": true, "derived": true}, {"name": "gorgonzola cheese", "is_core": true, "derived": true}, {"name": "cream sauce", "is_core": true, "derived": true}, {"name": "pasta", "is_core": true, "derived": true}, {"name": "spinach", "is_core": true, "derived": true}]},
+        {"name": "Wood-Fired Margherita Flatbread", "section": "appetizer", "description": "Thin-crust flatbread topped with fresh mozzarella, tomatoes, and basil, baked in a wood-fired oven.", "price": null, "ingredients": [{"name": "flatbread dough", "is_core": true, "derived": true}, {"name": "mozzarella cheese", "is_core": true, "derived": true}, {"name": "tomatoes", "is_core": true, "derived": true}, {"name": "basil", "is_core": true, "derived": true}]},
+        {"name": "Baked Lasagna Bolognese", "section": "main", "description": "Layered pasta with slow-cooked Bolognese meat sauce, bechamel, and melted cheese.", "price": null, "ingredients": [{"name": "pasta sheets", "is_core": true, "derived": true}, {"name": "ground beef", "is_core": true, "derived": true}, {"name": "bolognese sauce", "is_core": true, "derived": true}, {"name": "bechamel sauce", "is_core": true, "derived": true}, {"name": "mozzarella cheese", "is_core": true, "derived": true}]},
+        {"name": "Limoncello Cream Cake", "section": "dessert", "description": "Light sponge cake soaked in limoncello liqueur, layered with lemon cream filling.", "price": null, "ingredients": [{"name": "sponge cake", "is_core": true, "derived": true}, {"name": "limoncello liqueur", "is_core": true, "derived": true}, {"name": "lemon cream", "is_core": true, "derived": true}]},
+        {"name": "Italian Martini", "section": "drink", "description": "A house cocktail blending vodka, amaretto, and pineapple juice.", "price": null, "ingredients": [{"name": "vodka", "is_core": true, "derived": true}, {"name": "amaretto liqueur", "is_core": true, "derived": true}, {"name": "pineapple juice", "is_core": true, "derived": true}]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,563 @@
+{
+ "cuisine": "Middle Eastern",
+ "restaurants": [
+  {
+   "name": "Naf Naf Grill",
+   "rank": 1,
+   "website": "https://nafnafgrill.com/",
+   "summary": "Fast-casual Middle Eastern chain known for pitas, bowls, and hummus with numerous locations across the U.S.",
+   "branches": [
+    {
+     "name": "Naf Naf Grill - Chicago",
+     "city": "Chicago",
+     "region": "Illinois"
+    },
+    {
+     "name": "Naf Naf Grill - Naperville",
+     "city": "Naperville",
+     "region": "Illinois"
+    },
+    {
+     "name": "Naf Naf Grill - Columbus",
+     "city": "Columbus",
+     "region": "Ohio"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Original Pita",
+     "section": "main",
+     "description": "Warm pita filled with a choice of protein, garlic sauce, hummus, and fresh toppings.",
+     "price": 9.5,
+     "ingredients": [
+      {
+       "name": "pita bread",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chicken or beef",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "hummus",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lettuce",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "tomato",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Double Trouble Pita",
+     "section": "main",
+     "description": "Pita stuffed with two proteins (chicken and steak) plus garlic sauce and toppings.",
+     "price": 10.5,
+     "ingredients": [
+      {
+       "name": "pita bread",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "steak",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pickles",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Chicken Shawarma Pita",
+     "section": "main",
+     "description": "Marinated shawarma-spiced chicken wrapped in pita with garlic sauce and fresh vegetables.",
+     "price": 9.75,
+     "ingredients": [
+      {
+       "name": "chicken thigh",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "shawarma spice blend",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pita bread",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onion",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Falafel Pita",
+     "section": "main",
+     "description": "Crispy chickpea falafel balls in pita with tahini sauce and salad toppings.",
+     "price": 8.75,
+     "ingredients": [
+      {
+       "name": "chickpeas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "parsley",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pita bread",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tahini sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cucumber",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Hummus Trio",
+     "section": "appetizer",
+     "description": "Sampler of classic, spicy, and roasted garlic hummus served with pita chips.",
+     "price": 6.5,
+     "ingredients": [
+      {
+       "name": "chickpeas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tahini",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "olive oil",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pita chips",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Naf Fries",
+     "section": "side",
+     "description": "Crispy fries topped with garlic sauce, feta, and herbs.",
+     "price": 4.5,
+     "ingredients": [
+      {
+       "name": "potatoes",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "feta cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "parsley",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Baklava",
+     "section": "dessert",
+     "description": "Layered phyllo pastry filled with chopped nuts and sweet syrup.",
+     "price": 3.25,
+     "ingredients": [
+      {
+       "name": "phyllo dough",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "walnuts",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "honey syrup",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Fresh Lemonade",
+     "section": "drink",
+     "description": "Refreshing house-made lemonade with a hint of mint.",
+     "price": 2.75,
+     "ingredients": [
+      {
+       "name": "lemon juice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "water",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "mint leaves",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Pita Inn",
+   "rank": 2,
+   "website": "https://pitainn.com/",
+   "summary": "Popular Mediterranean and Middle Eastern eatery chain offering fresh pitas, shawarma, and falafel across multiple Chicago-area branches.",
+   "branches": [
+    {
+     "name": "Pita Inn - Skokie",
+     "city": "Skokie",
+     "region": "Illinois"
+    },
+    {
+     "name": "Pita Inn - Wheeling",
+     "city": "Wheeling",
+     "region": "Illinois"
+    },
+    {
+     "name": "Pita Inn - Hoffman Estates",
+     "city": "Hoffman Estates",
+     "region": "Illinois"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Falafel Sandwich",
+     "section": "main",
+     "description": "Golden-fried falafel balls served in fresh pita with tahini and pickled vegetables.",
+     "price": 6.99,
+     "ingredients": [
+      {
+       "name": "chickpeas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "parsley",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pita bread",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tahini sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pickled turnips",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Chicken Shawarma Plate",
+     "section": "main",
+     "description": "Sliced marinated chicken shawarma served over rice with salad and garlic sauce.",
+     "price": 11.99,
+     "ingredients": [
+      {
+       "name": "chicken thigh",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "shawarma spices",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "salad greens",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Hummus",
+     "section": "appetizer",
+     "description": "Creamy chickpea dip drizzled with olive oil, served with warm pita bread.",
+     "price": 5.49,
+     "ingredients": [
+      {
+       "name": "chickpeas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tahini",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lemon juice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "olive oil",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Baba Ghanouj",
+     "section": "appetizer",
+     "description": "Smoky roasted eggplant dip blended with tahini and lemon.",
+     "price": 5.99,
+     "ingredients": [
+      {
+       "name": "eggplant",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tahini",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lemon juice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "olive oil",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Tabbouleh",
+     "section": "side",
+     "description": "Fresh parsley salad with bulgur wheat, tomatoes, and lemon dressing.",
+     "price": 4.99,
+     "ingredients": [
+      {
+       "name": "parsley",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "bulgur wheat",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tomato",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lemon juice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "olive oil",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Fattoush Salad",
+     "section": "side",
+     "description": "Crisp mixed greens with toasted pita chips, tomatoes, and sumac dressing.",
+     "price": 6.49,
+     "ingredients": [
+      {
+       "name": "romaine lettuce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pita chips",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tomato",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sumac",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cucumber",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Baklava",
+     "section": "dessert",
+     "description": "Sweet layered pastry with pistachios and honey syrup.",
+     "price": 3.5,
+     "ingredients": [
+      {
+       "name": "phyllo dough",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pistachios",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "honey syrup",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Fresh-Squeezed Lemonade",
+     "section": "drink",
+     "description": "Tangy house-made lemonade served chilled.",
+     "price": 2.99,
+     "ingredients": [
+      {
+       "name": "lemon juice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "water",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ice",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

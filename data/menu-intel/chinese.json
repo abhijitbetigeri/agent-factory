@@ -1,0 +1,583 @@
+{
+ "cuisine": "Chinese",
+ "restaurants": [
+  {
+   "name": "P.F. Chang's",
+   "rank": 1,
+   "website": "https://www.pfchangs.com/",
+   "summary": "Nationwide Chinese-American chain known for dishes like lettuce wraps, Mongolian beef, and dan dan noodles.",
+   "branches": [
+    {
+     "name": "P.F. Chang's Scottsdale",
+     "city": "Scottsdale",
+     "region": "Arizona"
+    },
+    {
+     "name": "P.F. Chang's New York",
+     "city": "New York",
+     "region": "New York"
+    },
+    {
+     "name": "P.F. Chang's Chicago",
+     "city": "Chicago",
+     "region": "Illinois"
+    },
+    {
+     "name": "P.F. Chang's Los Angeles",
+     "city": "Los Angeles",
+     "region": "California"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Chang's Chicken Lettuce Wraps",
+     "section": "appetizer",
+     "description": "Minced chicken, mushrooms, and water chestnuts served with crisp lettuce cups for wrapping.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "mushrooms",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "water chestnuts",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "iceberg lettuce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "soy sauce",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "rice noodles",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Dynamite Shrimp",
+     "section": "appetizer",
+     "description": "Crispy shrimp tossed in a spicy dynamite sauce, topped with scallions.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "shrimp",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "mayonnaise",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chili sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cornstarch",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "scallions",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Mongolian Beef",
+     "section": "main",
+     "description": "Stir-fried flank steak with scallions in a savory-sweet soy garlic sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "flank steak",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "scallions",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "soy sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "brown sugar",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Dan Dan Noodles",
+     "section": "main",
+     "description": "Spicy Szechuan noodles tossed with minced pork, chili oil, and peanuts.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "wheat noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ground pork",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chili oil",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "peanuts",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sichuan peppercorn",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Kung Pao Chicken",
+     "section": "main",
+     "description": "Wok-tossed chicken with peanuts, chili peppers, and vegetables in a spicy sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "peanuts",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "dried chili peppers",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "bell peppers",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "soy sauce",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Chang's Spare Ribs",
+     "section": "appetizer",
+     "description": "Slow-cooked pork ribs glazed with a sweet and savory house sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "pork ribs",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "hoisin sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "soy sauce",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "five-spice powder",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Singapore Street Noodles",
+     "section": "main",
+     "description": "Curry-spiced thin rice noodles stir-fried with shrimp, chicken, and vegetables.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "rice noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "shrimp",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "curry powder",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "bean sprouts",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Great Wall of Chocolate",
+     "section": "dessert",
+     "description": "Warm chocolate cake with a molten center, served with vanilla ice cream.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "chocolate",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "eggs",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "flour",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "vanilla ice cream",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Panda Express",
+   "rank": 2,
+   "website": "https://www.pandaexpress.com/",
+   "summary": "Largest American Chinese fast-casual chain offering orange chicken, chow mein, and other Americanized Chinese staples.",
+   "branches": [
+    {
+     "name": "Panda Express Rosemead",
+     "city": "Rosemead",
+     "region": "California"
+    },
+    {
+     "name": "Panda Express Houston",
+     "city": "Houston",
+     "region": "Texas"
+    },
+    {
+     "name": "Panda Express Orlando",
+     "city": "Orlando",
+     "region": "Florida"
+    },
+    {
+     "name": "Panda Express Seattle",
+     "city": "Seattle",
+     "region": "Washington"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Orange Chicken",
+     "section": "main",
+     "description": "Crispy chicken bites wok-tossed in a sweet and tangy orange sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "orange sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cornstarch",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Beijing Beef",
+     "section": "main",
+     "description": "Crispy beef strips stir-fried with bell peppers and onions in a sweet-tangy sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "beef",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "bell peppers",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onions",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sweet chili sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cornstarch",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Kung Pao Chicken",
+     "section": "main",
+     "description": "Chicken, peanuts, vegetables, and chili peppers in a savory chili sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "peanuts",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "zucchini",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chili peppers",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "soy sauce",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Chow Mein",
+     "section": "side",
+     "description": "Stir-fried wheat noodles with cabbage, celery, and onions.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "wheat noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cabbage",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "celery",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onions",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "soy sauce",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Fried Rice",
+     "section": "side",
+     "description": "Wok-fried rice with peas, carrots, eggs, and green onions.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "white rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "eggs",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "peas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "carrots",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "soy sauce",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Broccoli Beef",
+     "section": "main",
+     "description": "Tender beef and broccoli stir-fried in a mild ginger soy sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "beef",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "broccoli",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "soy sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ginger",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Chicken Egg Roll",
+     "section": "appetizer",
+     "description": "Crispy fried roll filled with cabbage, carrots, and chicken.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "egg roll wrapper",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cabbage",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "carrots",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Cream Cheese Rangoon",
+     "section": "appetizer",
+     "description": "Crispy wontons filled with a sweet cream cheese filling.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "wonton wrapper",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cream cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "garlic powder",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

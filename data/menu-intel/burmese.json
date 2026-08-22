@@ -1,0 +1,573 @@
+{
+ "cuisine": "Burmese",
+ "restaurants": [
+  {
+   "name": "Burma Superstar",
+   "rank": 1,
+   "website": "https://www.burmasuperstar.co/",
+   "summary": "Well-known Bay Area Burmese restaurant group famous for tea leaf salad and multiple locations.",
+   "branches": [
+    {
+     "name": "Burma Superstar Oakland",
+     "city": "Oakland",
+     "region": "California"
+    },
+    {
+     "name": "Burma Superstar Alameda",
+     "city": "Alameda",
+     "region": "California"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Tea Leaf Salad (Lahpet Thoke)",
+     "section": "appetizer",
+     "description": "Signature fermented tea leaf salad tossed with crunchy fried lentils, nuts, cabbage, and tomatoes.",
+     "price": 14.95,
+     "ingredients": [
+      {
+       "name": "fermented tea leaves",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cabbage",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tomato",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "fried garlic",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "split peas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "peanuts",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sesame seeds",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Samusa Soup",
+     "section": "appetizer",
+     "description": "Savory broth with crushed vegetable samosas, cabbage, and a blend of curry spices.",
+     "price": 9.95,
+     "ingredients": [
+      {
+       "name": "vegetable samosas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cabbage",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "curry spices",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onion",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tamarind",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Rainbow Salad",
+     "section": "appetizer",
+     "description": "Colorful mix of glass noodles, seasonal vegetables, and a tangy tamarind dressing.",
+     "price": 12.95,
+     "ingredients": [
+      {
+       "name": "glass noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "mixed vegetables",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tamarind sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "peanuts",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "lime",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Ohn No Khao Sw\u00e8 (Coconut Chicken Noodle Soup)",
+     "section": "main",
+     "description": "Rich coconut curry noodle soup with tender chicken, egg noodles, and crispy toppings.",
+     "price": 18.95,
+     "ingredients": [
+      {
+       "name": "coconut milk",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "egg noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "curry powder",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "fried shallots",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "hard-boiled egg",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Nan Gyi Thoke",
+     "section": "main",
+     "description": "Thick rice noodle salad tossed with chicken curry, chickpea flour, and boiled egg.",
+     "price": 17.95,
+     "ingredients": [
+      {
+       "name": "thick rice noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chicken curry",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chickpea flour",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "hard-boiled egg",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "fried onions",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Burmese Pork Curry",
+     "section": "main",
+     "description": "Slow-braised pork in a fragrant curry of onions, garlic, ginger, and Burmese spices.",
+     "price": 19.95,
+     "ingredients": [
+      {
+       "name": "pork",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onion",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ginger",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "turmeric",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chili",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Garlic Noodles",
+     "section": "side",
+     "description": "Egg noodles tossed in garlic oil with scallions, a simple savory side dish.",
+     "price": 10.95,
+     "ingredients": [
+      {
+       "name": "egg noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "scallion",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "soy sauce",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Burmese Milk Tea",
+     "section": "drink",
+     "description": "Sweet, creamy black tea infused with condensed milk, a classic Burmese beverage.",
+     "price": 5.5,
+     "ingredients": [
+      {
+       "name": "black tea",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "condensed milk",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "evaporated milk",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Top Burmese Restaurant Group",
+   "rank": 2,
+   "website": "https://topburmese.com/",
+   "summary": "A growing Burmese restaurant group offering authentic Myanmar dishes across multiple branches.",
+   "branches": [
+    {
+     "name": "Top Burmese",
+     "city": "Unknown",
+     "region": "United States"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Lahpet Thoke (Tea Leaf Salad)",
+     "section": "appetizer",
+     "description": "Traditional fermented tea leaf salad with crispy fried beans, nuts, and fresh vegetables.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "fermented tea leaves",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "fried garlic",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "peanuts",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "split peas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cabbage",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tomato",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Mohinga",
+     "section": "main",
+     "description": "Myanmar's national dish: a hearty fish-based broth with rice noodles, banana stem, and boiled egg.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "catfish",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "rice noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "banana stem",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lemongrass",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "fish sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "hard-boiled egg",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Ohn No Khao Sw\u00e8",
+     "section": "main",
+     "description": "Coconut chicken noodle soup, a beloved comfort dish with rich curry flavor.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "coconut milk",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "egg noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "curry powder",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "fried shallots",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Shan Noodles",
+     "section": "main",
+     "description": "Noodles from the Shan region served with seasoned pork or chicken and a tangy tomato-based sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "rice noodles",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pork",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tomato",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic oil",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "peanuts",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Samusa",
+     "section": "appetizer",
+     "description": "Crispy fried pastries filled with spiced potatoes and onions, served with tamarind dip.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "potato",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onion",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pastry wrapper",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "curry spices",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tamarind sauce",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Burmese Chicken Curry",
+     "section": "main",
+     "description": "Bone-in chicken simmered in a fragrant onion-based curry with turmeric and chili.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onion",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "turmeric",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chili powder",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Falooda",
+     "section": "dessert",
+     "description": "Sweet layered dessert drink with rose syrup, basil seeds, jelly, and milk.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "rose syrup",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "basil seeds",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "milk",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "jelly",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "vermicelli",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Burmese Milk Tea",
+     "section": "drink",
+     "description": "Strong black tea sweetened with condensed and evaporated milk.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "black tea",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "condensed milk",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "evaporated milk",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

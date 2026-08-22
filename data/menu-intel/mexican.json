@@ -1,0 +1,498 @@
+{
+ "cuisine": "Mexican",
+ "restaurants": [
+  {
+   "name": "Abuelo's Mexican Restaurant",
+   "rank": 1,
+   "website": "https://abuelos.com/",
+   "summary": "Upscale Mexican chain known for authentic recipes, fresh ingredients, and a wide variety of regional dishes across multiple U.S. locations.",
+   "branches": [
+    {
+     "name": "Abuelo's - Amarillo",
+     "city": "Amarillo",
+     "region": "Texas"
+    },
+    {
+     "name": "Abuelo's - Oklahoma City",
+     "city": "Oklahoma City",
+     "region": "Oklahoma"
+    },
+    {
+     "name": "Abuelo's - Little Rock",
+     "city": "Little Rock",
+     "region": "Arkansas"
+    },
+    {
+     "name": "Abuelo's - Wichita",
+     "city": "Wichita",
+     "region": "Kansas"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Queso Dip",
+     "section": "appetizer",
+     "description": "Creamy melted cheese dip served warm with tortilla chips, a signature starter at Abuelo's.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "white cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "milk",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "green chilies",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tortilla chips",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Mamacita's Enchiladas",
+     "section": "main",
+     "description": "Signature enchiladas filled with seasoned chicken, topped with a creamy poblano sauce and cheese.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "corn tortillas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "shredded chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "poblano cream sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cheese",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Camarones a la Diabla",
+     "section": "main",
+     "description": "Spicy shrimp saut\u00e9ed in a fiery diabla sauce, served with rice and tortillas.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "shrimp",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "diabla chile sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "rice",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Chile Relleno",
+     "section": "main",
+     "description": "Roasted poblano pepper stuffed with cheese, lightly battered and fried, topped with ranchero sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "poblano pepper",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "egg batter",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ranchero sauce",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Fajitas Grill",
+     "section": "main",
+     "description": "Sizzling platter of marinated grilled beef or chicken with peppers, onions, and tortillas.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "beef or chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "bell peppers",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onions",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "flour tortillas",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Tortilla Soup",
+     "section": "appetizer",
+     "description": "Traditional Mexican soup with shredded chicken, tomato broth, and crispy tortilla strips.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "chicken broth",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "shredded chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tomato",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tortilla strips",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Sopapillas",
+     "section": "dessert",
+     "description": "Warm, puffy fried pastries dusted with cinnamon sugar and drizzled with honey.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "flour dough",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cinnamon sugar",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "honey",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "House Margarita",
+     "section": "drink",
+     "description": "Classic frozen or on-the-rocks margarita made with fresh lime juice and premium tequila.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "tequila",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lime juice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "triple sec",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ice",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "El Fenix",
+   "rank": 2,
+   "website": "https://www.elfenix.com/",
+   "summary": "Historic Tex-Mex chain founded in 1918, serving classic combination plates and enchiladas across Texas.",
+   "branches": [
+    {
+     "name": "El Fenix - Downtown Dallas",
+     "city": "Dallas",
+     "region": "Texas"
+    },
+    {
+     "name": "El Fenix - Fort Worth",
+     "city": "Fort Worth",
+     "region": "Texas"
+    },
+    {
+     "name": "El Fenix - Plano",
+     "city": "Plano",
+     "region": "Texas"
+    },
+    {
+     "name": "El Fenix - Arlington",
+     "city": "Arlington",
+     "region": "Texas"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Original Chile con Queso",
+     "section": "appetizer",
+     "description": "El Fenix's founding recipe queso dip, made with melted cheese and diced tomatoes, served with chips.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "diced tomatoes",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "jalape\u00f1os",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tortilla chips",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Cheese Enchiladas with Chili Gravy",
+     "section": "main",
+     "description": "Classic Tex-Mex cheese enchiladas smothered in a rich, spiced chili gravy sauce.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "corn tortillas",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "shredded cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chili gravy",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onions",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Tex-Mex Combination Plate",
+     "section": "main",
+     "description": "A hearty plate combining enchiladas, tamale, rice, and beans, representing classic Tex-Mex comfort food.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "beef enchilada",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tamale",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "refried beans",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "Mexican rice",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Beef Tamales",
+     "section": "main",
+     "description": "Traditional masa dough filled with seasoned shredded beef, steamed in corn husks.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "masa dough",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "shredded beef",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "corn husk",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "red chili sauce",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Chicken Chalupas",
+     "section": "main",
+     "description": "Crispy corn tortillas topped with refried beans, chicken, lettuce, cheese, and sour cream.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "crispy corn tortilla",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "shredded chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "refried beans",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lettuce and cheese",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Queso Flameado",
+     "section": "appetizer",
+     "description": "Melted cheese flamb\u00e9ed tableside with chorizo, served with warm tortillas.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "melted cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chorizo",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "flour tortillas",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Sopapillas",
+     "section": "dessert",
+     "description": "Golden fried pastry puffs served with honey, a beloved El Fenix dessert since 1918.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "flour dough",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "honey",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cinnamon sugar",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Frozen Margarita",
+     "section": "drink",
+     "description": "El Fenix's popular frozen margarita, blending tequila and lime in a smooth icy texture.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "tequila",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lime juice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "triple sec",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ice",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

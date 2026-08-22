@@ -1,0 +1,9 @@
+{
+  "dishes": 128,
+  "null_prices": 72,
+  "null_rate": 0.5625,
+  "distinct_ingredients": 297,
+  "restaurants": 16,
+  "branches": 53,
+  "source": "Project-SCIM mise/data/menu-intel, Exa+Firecrawl+LLM pipeline"
+}

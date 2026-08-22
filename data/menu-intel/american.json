@@ -1,0 +1,528 @@
+{
+ "cuisine": "American",
+ "restaurants": [
+  {
+   "name": "The Cheesecake Factory",
+   "rank": 1,
+   "website": "https://www.thecheesecakefactory.com/",
+   "summary": "Popular American casual-dining chain known for its extensive menu and signature cheesecakes.",
+   "branches": [
+    {
+     "name": "The Cheesecake Factory - Beverly Hills",
+     "city": "Beverly Hills",
+     "region": "California"
+    },
+    {
+     "name": "The Cheesecake Factory - Chicago Water Tower",
+     "city": "Chicago",
+     "region": "Illinois"
+    },
+    {
+     "name": "The Cheesecake Factory - Times Square",
+     "city": "New York",
+     "region": "New York"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Original Cheesecake",
+     "section": "dessert",
+     "description": "The one and only. Rich, creamy cheesecake in a graham cracker crust, the recipe that started it all.",
+     "price": 8.95,
+     "ingredients": [
+      {
+       "name": "cream cheese",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "eggs",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "graham cracker crust",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "sour cream",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Chicken Madeira",
+     "section": "main",
+     "description": "Saut\u00e9ed chicken breast topped with fresh asparagus and melted mozzarella, covered with Madeira wine sauce and mushrooms.",
+     "price": 20.95,
+     "ingredients": [
+      {
+       "name": "chicken breast",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "asparagus",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "mozzarella cheese",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "madeira wine",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "mushrooms",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    },
+    {
+     "name": "Avocado Egg Rolls",
+     "section": "appetizer",
+     "description": "Crispy rolls stuffed with avocado, sun-dried tomatoes, and spices, served with a creamy tamarind-cashew dipping sauce.",
+     "price": 12.95,
+     "ingredients": [
+      {
+       "name": "avocado",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "sun-dried tomatoes",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "egg roll wrapper",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cashews",
+       "is_core": false,
+       "derived": false
+      },
+      {
+       "name": "tamarind sauce",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    },
+    {
+     "name": "Bang-Bang Chicken and Shrimp",
+     "section": "main",
+     "description": "Crispy chicken breast strips, shrimp, veggies, and spicy cream sauce tossed with rice noodles.",
+     "price": 21.95,
+     "ingredients": [
+      {
+       "name": "chicken breast",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "shrimp",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "rice noodles",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "spicy cream sauce",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "mixed vegetables",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Louisiana Chicken Pasta",
+     "section": "main",
+     "description": "Spicy Cajun-seasoned crispy chicken breast served over pasta with mushrooms, bell peppers, and onions in a spicy new Orleans sauce.",
+     "price": 21.95,
+     "ingredients": [
+      {
+       "name": "chicken breast",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "pasta",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "mushrooms",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "bell peppers",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "cajun seasoning",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Fried Macaroni and Cheese",
+     "section": "appetizer",
+     "description": "Crispy fried mac and cheese balls served with marinara sauce for dipping.",
+     "price": 11.95,
+     "ingredients": [
+      {
+       "name": "macaroni pasta",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "cheddar cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "breadcrumbs",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "marinara sauce",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    },
+    {
+     "name": "SkinnyLicious Grilled Salmon",
+     "section": "main",
+     "description": "Grilled salmon served with fresh asparagus and mixed vegetables, a lighter menu option.",
+     "price": 22.95,
+     "ingredients": [
+      {
+       "name": "salmon",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "asparagus",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "mixed vegetables",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lemon",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Oreo Dream Extreme Cheesecake",
+     "section": "dessert",
+     "description": "Chocolate cake, Oreo cookies, chocolate chip cookie dough, and creamy cheesecake, all covered in chocolate icing.",
+     "price": 9.95,
+     "ingredients": [
+      {
+       "name": "cream cheese",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "oreo cookies",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "chocolate cake",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "cookie dough",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "chocolate icing",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Chili's Grill & Bar",
+   "rank": 2,
+   "website": "https://www.chilis.com/",
+   "summary": "Widely recognized American grill and bar chain offering classic Tex-Mex and American comfort food.",
+   "branches": [
+    {
+     "name": "Chili's - Dallas Uptown",
+     "city": "Dallas",
+     "region": "Texas"
+    },
+    {
+     "name": "Chili's - Orlando I-Drive",
+     "city": "Orlando",
+     "region": "Florida"
+    },
+    {
+     "name": "Chili's - Atlanta Midtown",
+     "city": "Atlanta",
+     "region": "Georgia"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Original Baby Back Ribs",
+     "section": "main",
+     "description": "Fall-off-the-bone ribs slow-cooked and basted with signature BBQ sauce.",
+     "price": 18.99,
+     "ingredients": [
+      {
+       "name": "pork ribs",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "bbq sauce",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "spice rub",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Awesome Blossom Petals",
+     "section": "appetizer",
+     "description": "Crispy fried onion petals served with a bold seasoned dipping sauce.",
+     "price": 9.99,
+     "ingredients": [
+      {
+       "name": "onion",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "batter",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "seasoned dipping sauce",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    },
+    {
+     "name": "Classic Nachos",
+     "section": "appetizer",
+     "description": "Crispy tortilla chips topped with melted cheese, jalape\u00f1os, pico de gallo, and sour cream.",
+     "price": 10.99,
+     "ingredients": [
+      {
+       "name": "tortilla chips",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "cheese blend",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "jalapenos",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "pico de gallo",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "sour cream",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    },
+    {
+     "name": "Chicken Fajitas",
+     "section": "main",
+     "description": "Sizzling grilled chicken with bell peppers and onions, served with tortillas, cheese, and pico de gallo.",
+     "price": 16.99,
+     "ingredients": [
+      {
+       "name": "chicken breast",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "bell peppers",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "onions",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "flour tortillas",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "cheese",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Southwestern Eggrolls",
+     "section": "appetizer",
+     "description": "Crispy eggrolls filled with chicken, black beans, corn, jalape\u00f1o Jack cheese, and spinach, served with avocado ranch.",
+     "price": 10.49,
+     "ingredients": [
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "black beans",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "corn",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "jack cheese",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "avocado ranch dressing",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    },
+    {
+     "name": "Molten Chocolate Cake",
+     "section": "dessert",
+     "description": "Warm chocolate cake with a molten center, topped with vanilla ice cream.",
+     "price": 7.99,
+     "ingredients": [
+      {
+       "name": "chocolate cake",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "chocolate sauce",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "vanilla ice cream",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    },
+    {
+     "name": "Presidente Margarita",
+     "section": "drink",
+     "description": "Premium tequila margarita with fresh lime juice and orange liqueur, served on the rocks.",
+     "price": 9.99,
+     "ingredients": [
+      {
+       "name": "tequila",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "lime juice",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "orange liqueur",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    },
+    {
+     "name": "Loaded Mashed Potatoes",
+     "section": "side",
+     "description": "Creamy mashed potatoes topped with cheese, bacon, and green onions.",
+     "price": 5.99,
+     "ingredients": [
+      {
+       "name": "potatoes",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "cheese",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "bacon",
+       "is_core": true,
+       "derived": false
+      },
+      {
+       "name": "green onions",
+       "is_core": true,
+       "derived": false
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

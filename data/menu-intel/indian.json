@@ -1,0 +1,593 @@
+{
+ "cuisine": "Indian",
+ "restaurants": [
+  {
+   "name": "Saravanaa Bhavan",
+   "rank": 1,
+   "website": "https://www.saravanaabhavan.us/",
+   "summary": "World-renowned South Indian vegetarian chain famous for dosas, idlis, and traditional Tamil cuisine with multiple US locations.",
+   "branches": [
+    {
+     "name": "Saravanaa Bhavan Chicago",
+     "city": "Chicago",
+     "region": "Illinois"
+    },
+    {
+     "name": "Saravanaa Bhavan New Jersey",
+     "city": "Edison",
+     "region": "New Jersey"
+    },
+    {
+     "name": "Saravanaa Bhavan New York",
+     "city": "New York",
+     "region": "New York"
+    },
+    {
+     "name": "Saravanaa Bhavan California",
+     "city": "San Jose",
+     "region": "California"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Ghee Roast Dosa",
+     "section": "main",
+     "description": "Crispy fermented rice-and-lentil crepe cooked with ghee until golden and roasted on the edges.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "urad dal",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ghee",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "fenugreek seeds",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Mysore Masala Dosa",
+     "section": "main",
+     "description": "Dosa spread with spicy red chutney and filled with a lightly spiced potato masala.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "urad dal",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "potato",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "red chili chutney",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "mustard seeds",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "curry leaves",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Idli",
+     "section": "main",
+     "description": "Soft steamed rice-and-lentil cakes served with sambar and coconut chutney.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "urad dal",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sambar",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "coconut chutney",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Medu Vada",
+     "section": "appetizer",
+     "description": "Deep-fried crispy lentil doughnuts with a soft interior, served with chutney and sambar.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "urad dal",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ginger",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "green chili",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "curry leaves",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "oil",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Uttapam",
+     "section": "main",
+     "description": "Thick savory rice-and-lentil pancake topped with onions, tomatoes, and chilies.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "urad dal",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "onion",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tomato",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "green chili",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Ven Pongal",
+     "section": "main",
+     "description": "Savory rice and moong dal porridge tempered with pepper, cumin, and ghee.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "moong dal",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ghee",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "black pepper",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "cumin",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "cashew",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Rava Kesari",
+     "section": "dessert",
+     "description": "Sweet semolina pudding flavored with saffron, cardamom, and ghee, garnished with cashews.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "semolina (rava)",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ghee",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "saffron",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "cardamom",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "cashew",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Filter Coffee",
+     "section": "drink",
+     "description": "Traditional South Indian decoction coffee brewed with chicory and blended with hot milk.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "coffee decoction",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "milk",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Bawarchi Biryanis",
+   "rank": 2,
+   "website": "https://www.bawarchibiryanis.com/",
+   "summary": "Popular Indian restaurant chain specializing in authentic biryanis and North/South Indian cuisine with multiple franchise locations across the US.",
+   "branches": [
+    {
+     "name": "Bawarchi Frisco",
+     "city": "Frisco",
+     "region": "Texas"
+    },
+    {
+     "name": "Bawarchi Houston",
+     "city": "Houston",
+     "region": "Texas"
+    },
+    {
+     "name": "Bawarchi Alpharetta",
+     "city": "Alpharetta",
+     "region": "Georgia"
+    },
+    {
+     "name": "Bawarchi Naperville",
+     "city": "Naperville",
+     "region": "Illinois"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "Hyderabadi Chicken Dum Biryani",
+     "section": "main",
+     "description": "Fragrant basmati rice layered and slow-cooked with marinated chicken, saffron, and fried onions.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "basmati rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "saffron",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "yogurt",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "fried onions",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "biryani masala",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Mutton Biryani",
+     "section": "main",
+     "description": "Slow-cooked dum-style biryani with tender mutton pieces and aromatic basmati rice.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "basmati rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "mutton",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "yogurt",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "ginger garlic paste",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "saffron",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "biryani masala",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Veg Dum Biryani",
+     "section": "main",
+     "description": "Basmati rice dum-cooked with mixed vegetables and aromatic whole spices.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "basmati rice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "mixed vegetables",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "yogurt",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "biryani masala",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "fried onions",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Chicken 65",
+     "section": "appetizer",
+     "description": "Spicy deep-fried chicken bites marinated with red chili, curry leaves, and yogurt.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "yogurt",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "red chili powder",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "curry leaves",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "ginger garlic paste",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "corn starch",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Paneer Butter Masala",
+     "section": "main",
+     "description": "Soft paneer cubes simmered in a creamy tomato-butter gravy with mild spices.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "paneer",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "tomato",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cream",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cashew paste",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "garam masala",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Butter Naan",
+     "section": "side",
+     "description": "Soft leavened flatbread baked in a tandoor and brushed with butter.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "maida (flour)",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "yogurt",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "yeast",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Gulab Jamun",
+     "section": "dessert",
+     "description": "Soft fried milk-solid dumplings soaked in rose-cardamom flavored sugar syrup.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "khoya (milk solids)",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar syrup",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cardamom",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "rose water",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Mango Lassi",
+     "section": "drink",
+     "description": "Chilled yogurt-based drink blended with sweet mango pulp.",
+     "price": null,
+     "ingredients": [
+      {
+       "name": "yogurt",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "mango pulp",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "milk",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

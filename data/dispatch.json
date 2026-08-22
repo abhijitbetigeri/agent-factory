@@ -1,0 +1,57 @@
+{
+  "run": "run-1787431041226",
+  "trace_id": "89edf10ffe3404835956545d9e148072",
+  "ingredient": "tomato",
+  "need": {
+    "id": "downtown",
+    "name": "Downtown",
+    "onHand": 4,
+    "par": 40,
+    "expiryDays": null,
+    "gap": 36
+  },
+  "transfers": [
+    {
+      "from": "marina",
+      "to": "downtown",
+      "qty": 10,
+      "expiryDays": 2
+    }
+  ],
+  "tasks": [
+    {
+      "kind": "transfer",
+      "ingredient": "tomato",
+      "qty": 10,
+      "from": "marina",
+      "to": "downtown",
+      "executor": "robot",
+      "rationale": "10kg from Marina (expires in 2d, use first)"
+    },
+    {
+      "kind": "handoff",
+      "ingredient": "tomato",
+      "qty": 10,
+      "at": "downtown",
+      "executor": "human",
+      "rationale": "Crate handed to the cook at the service pass"
+    },
+    {
+      "kind": "procure",
+      "ingredient": "tomato",
+      "qty": 26,
+      "unitPrice": 2.05,
+      "cost": 53.3,
+      "executor": "agent",
+      "rationale": "Only the NET shortage is bought: 26kg @ $2.05/kg"
+    }
+  ],
+  "buy": {
+    "qty": 26,
+    "unitPrice": 2.05,
+    "cost": 53.3
+  },
+  "risk": 4,
+  "requiresHumanApproval": true,
+  "summary": "Transfer 10kg, buy net 26kg @ $2.05 = $53.3"
+}

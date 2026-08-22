@@ -1,0 +1,498 @@
+{
+ "cuisine": "French",
+ "restaurants": [
+  {
+   "name": "Boucherie",
+   "rank": 1,
+   "website": "https://www.boucherieus.com/",
+   "summary": "A French brasserie group offering classic bistro fare and steakhouse favorites across multiple U.S. locations.",
+   "branches": [
+    {
+     "name": "Boucherie Union Square",
+     "city": "New York",
+     "region": "New York"
+    },
+    {
+     "name": "Boucherie West Village",
+     "city": "New York",
+     "region": "New York"
+    },
+    {
+     "name": "La Grande Boucherie",
+     "city": "Miami",
+     "region": "Florida"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "French Onion Soup",
+     "section": "appetizer",
+     "description": "Classic slow-caramelized onion soup topped with a thick layer of melted Gruy\u00e8re cheese and crusty bread.",
+     "price": 16,
+     "ingredients": [
+      {
+       "name": "onions",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "beef broth",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "Gruy\u00e8re cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "baguette",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Escargot de Bourgogne",
+     "section": "appetizer",
+     "description": "Snails baked in garlic-herb butter, served bubbling hot with bread for dipping.",
+     "price": 18,
+     "ingredients": [
+      {
+       "name": "snails",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "parsley",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Steak Frites",
+     "section": "main",
+     "description": "Grilled hanger steak served with a mound of crispy golden fries and a side of herb butter or peppercorn sauce.",
+     "price": 34,
+     "ingredients": [
+      {
+       "name": "hanger steak",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "potatoes",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "peppercorn sauce",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Duck Confit",
+     "section": "main",
+     "description": "Slow-cooked duck leg with crispy skin, served over fris\u00e9e salad or with roasted potatoes.",
+     "price": 32,
+     "ingredients": [
+      {
+       "name": "duck leg",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "duck fat",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "thyme",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "fris\u00e9e",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Coq au Vin",
+     "section": "main",
+     "description": "Braised chicken in red wine sauce with mushrooms, pearl onions, and lardons.",
+     "price": 29,
+     "ingredients": [
+      {
+       "name": "chicken",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "red wine",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "mushrooms",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "pearl onions",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "bacon lardons",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Pommes Frites",
+     "section": "side",
+     "description": "Classic thin-cut French fries, crispy and golden, served with aioli or ketchup.",
+     "price": 9,
+     "ingredients": [
+      {
+       "name": "potatoes",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "vegetable oil",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "salt",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Cr\u00e8me Br\u00fbl\u00e9e",
+     "section": "dessert",
+     "description": "Rich vanilla custard topped with a crackling layer of caramelized sugar.",
+     "price": 12,
+     "ingredients": [
+      {
+       "name": "egg yolks",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "heavy cream",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "vanilla",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Kir Royale",
+     "section": "drink",
+     "description": "A festive French cocktail of cr\u00e8me de cassis topped with sparkling champagne.",
+     "price": 14,
+     "ingredients": [
+      {
+       "name": "cr\u00e8me de cassis",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "champagne",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Mon Ami Gabi",
+   "rank": 2,
+   "website": "https://www.lettuce.com/restaurants/mon-ami-gabi/",
+   "summary": "A classic French bistro chain by Lettuce Entertain You known for steak frites and onion soup, with multiple locations across the U.S.",
+   "branches": [
+    {
+     "name": "Mon Ami Gabi Chicago",
+     "city": "Chicago",
+     "region": "Illinois"
+    },
+    {
+     "name": "Mon Ami Gabi Las Vegas",
+     "city": "Las Vegas",
+     "region": "Nevada"
+    },
+    {
+     "name": "Mon Ami Gabi Reston",
+     "city": "Reston",
+     "region": "Virginia"
+    }
+   ],
+   "dishes": [
+    {
+     "name": "French Onion Soup Gratin\u00e9e",
+     "section": "appetizer",
+     "description": "Traditional bistro onion soup with caramelized onions, rich beef broth, and melted Gruy\u00e8re on top.",
+     "price": 11,
+     "ingredients": [
+      {
+       "name": "onions",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "beef broth",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "Gruy\u00e8re cheese",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "baguette",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Escargots \u00e0 la Bourguignonne",
+     "section": "appetizer",
+     "description": "Snails baked in garlic parsley butter, a Mon Ami Gabi signature starter.",
+     "price": 14,
+     "ingredients": [
+      {
+       "name": "snails",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "garlic",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "parsley",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Steak Frites",
+     "section": "main",
+     "description": "The restaurant's most famous dish \u2014 a perfectly grilled steak served with crispy, hand-cut French fries.",
+     "price": 32,
+     "ingredients": [
+      {
+       "name": "sirloin steak",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "potatoes",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": false,
+       "derived": true
+      },
+      {
+       "name": "herbs",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Steak au Poivre",
+     "section": "main",
+     "description": "Peppercorn-crusted steak finished with a creamy cognac peppercorn sauce.",
+     "price": 36,
+     "ingredients": [
+      {
+       "name": "filet mignon",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "black peppercorns",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "cognac",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "heavy cream",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Salmon en Papillote",
+     "section": "main",
+     "description": "Salmon fillet baked in parchment with vegetables and herbs, served with a light lemon butter sauce.",
+     "price": 28,
+     "ingredients": [
+      {
+       "name": "salmon",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lemon",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "butter",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "seasonal vegetables",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Pommes Frites",
+     "section": "side",
+     "description": "Crispy, thin-cut fries served alongside steak or as a side, a bistro staple.",
+     "price": 7,
+     "ingredients": [
+      {
+       "name": "potatoes",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "vegetable oil",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "salt",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "Cr\u00e8me Br\u00fbl\u00e9e",
+     "section": "dessert",
+     "description": "Silky vanilla custard with a crisp caramelized sugar crust, a bistro classic dessert.",
+     "price": 10,
+     "ingredients": [
+      {
+       "name": "egg yolks",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "heavy cream",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "vanilla",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": true,
+       "derived": true
+      }
+     ]
+    },
+    {
+     "name": "French 75",
+     "section": "drink",
+     "description": "A refreshing cocktail combining gin, lemon juice, sugar, and champagne.",
+     "price": 13,
+     "ingredients": [
+      {
+       "name": "gin",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "lemon juice",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "champagne",
+       "is_core": true,
+       "derived": true
+      },
+      {
+       "name": "sugar",
+       "is_core": false,
+       "derived": true
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
