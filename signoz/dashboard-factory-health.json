@@ -9,16 +9,16 @@
   "spec": {
     "display": {
       "name": "Mise OS \u2014 factory health",
-      "description": "Built to answer 'what broke?' in under 30 seconds: the data contract, stage latency, endpoint and worker throughput, and feed freshness."
+      "description": "Answers 'what broke?' in under 30 seconds: the data contract, stage latency, endpoint and worker throughput, and feed freshness."
     },
     "variables": [],
     "panels": {
-      "0be02d14-989d-4cc4-83dd-861bcbb8eb40": {
+      "bfc46635-50b6-4ddd-920b-8dfaaad0ad5b": {
         "kind": "Panel",
         "spec": {
           "display": {
             "name": "Data contract \u2014 supplier price null-rate",
-            "description": "THE sensor. Crossing 0.05 opens an incident and blocks release. The legacy menu null-rate (0.5625) is shown alongside as the defect that motivated the project."
+            "description": "THE sensor. Crossing 0.05 opens an incident and blocks release. The legacy menu null-rate (0.5625) is alongside as the defect that motivated the project."
           },
           "plugin": {
             "kind": "signoz/TimeSeriesPanel",
@@ -66,11 +66,16 @@
                         "type": "builder_query",
                         "spec": {
                           "name": "A",
+                          "stepInterval": 60,
                           "signal": "metrics",
                           "source": "",
                           "aggregations": [
                             {
-                              "expression": "avg(supplier.price_null_rate)"
+                              "metricName": "supplier.price_null_rate",
+                              "temporality": "Unspecified",
+                              "timeAggregation": "avg",
+                              "spaceAggregation": "avg",
+                              "reduceTo": "avg"
                             }
                           ],
                           "disabled": false,
@@ -79,6 +84,7 @@
                           },
                           "groupBy": [],
                           "order": [],
+                          "selectFields": [],
                           "having": {
                             "expression": ""
                           },
@@ -90,11 +96,16 @@
                         "type": "builder_query",
                         "spec": {
                           "name": "B",
+                          "stepInterval": 60,
                           "signal": "metrics",
                           "source": "",
                           "aggregations": [
                             {
-                              "expression": "avg(menu.price_null_rate)"
+                              "metricName": "menu.price_null_rate",
+                              "temporality": "Unspecified",
+                              "timeAggregation": "avg",
+                              "spaceAggregation": "avg",
+                              "reduceTo": "avg"
                             }
                           ],
                           "disabled": false,
@@ -103,6 +114,7 @@
                           },
                           "groupBy": [],
                           "order": [],
+                          "selectFields": [],
                           "having": {
                             "expression": ""
                           },
@@ -119,11 +131,11 @@
           "links": []
         }
       },
-      "18dcc72d-8115-4c70-adc6-3f68625bddd1": {
+      "dad147bc-a753-4f48-ba6f-9b439be43c64": {
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Factory stage latency (p95)",
+            "name": "Factory stage latency",
             "description": "Per-stage duration. A stage that suddenly dominates is where the run is stuck."
           },
           "plugin": {
@@ -172,11 +184,16 @@
                         "type": "builder_query",
                         "spec": {
                           "name": "A",
+                          "stepInterval": 60,
                           "signal": "metrics",
                           "source": "",
                           "aggregations": [
                             {
-                              "expression": "p95(factory.stage.duration)"
+                              "metricName": "factory.stage.duration.max",
+                              "temporality": "Unspecified",
+                              "timeAggregation": "max",
+                              "spaceAggregation": "max",
+                              "reduceTo": "max"
                             }
                           ],
                           "disabled": false,
@@ -192,6 +209,7 @@
                             }
                           ],
                           "order": [],
+                          "selectFields": [],
                           "having": {
                             "expression": ""
                           },
@@ -208,7 +226,7 @@
           "links": []
         }
       },
-      "89cffa0d-aeac-4cc4-98f3-9249420357de": {
+      "283b38af-32f5-4836-b0d0-1818e832369f": {
         "kind": "Panel",
         "spec": {
           "display": {
@@ -261,11 +279,16 @@
                         "type": "builder_query",
                         "spec": {
                           "name": "A",
+                          "stepInterval": 60,
                           "signal": "metrics",
                           "source": "",
                           "aggregations": [
                             {
-                              "expression": "sum(http.server.requests)"
+                              "metricName": "http.server.requests",
+                              "temporality": "Cumulative",
+                              "timeAggregation": "rate",
+                              "spaceAggregation": "sum",
+                              "reduceTo": "sum"
                             }
                           ],
                           "disabled": false,
@@ -281,6 +304,7 @@
                             }
                           ],
                           "order": [],
+                          "selectFields": [],
                           "having": {
                             "expression": ""
                           },
@@ -292,11 +316,16 @@
                         "type": "builder_query",
                         "spec": {
                           "name": "B",
+                          "stepInterval": 60,
                           "signal": "metrics",
                           "source": "",
                           "aggregations": [
                             {
-                              "expression": "max(worker.scrape.duration)"
+                              "metricName": "worker.scrape.duration.max",
+                              "temporality": "Unspecified",
+                              "timeAggregation": "max",
+                              "spaceAggregation": "max",
+                              "reduceTo": "max"
                             }
                           ],
                           "disabled": false,
@@ -305,6 +334,7 @@
                           },
                           "groupBy": [],
                           "order": [],
+                          "selectFields": [],
                           "having": {
                             "expression": ""
                           },
@@ -321,12 +351,12 @@
           "links": []
         }
       },
-      "11e39ede-eb78-4acc-9362-92abbec48fa5": {
+      "36cc4cac-2cf3-479d-b2a5-d9b763ae2c2a": {
         "kind": "Panel",
         "spec": {
           "display": {
             "name": "Supplier feed freshness",
-            "description": "Age of the last successful scrape. Climbing without bound means the background job is dead."
+            "description": "Age of the last successful scrape. Climbing without bound means the worker is dead."
           },
           "plugin": {
             "kind": "signoz/TimeSeriesPanel",
@@ -374,11 +404,16 @@
                         "type": "builder_query",
                         "spec": {
                           "name": "A",
+                          "stepInterval": 60,
                           "signal": "metrics",
                           "source": "",
                           "aggregations": [
                             {
-                              "expression": "max(supplier.feed.age_seconds)"
+                              "metricName": "supplier.feed.age_seconds",
+                              "temporality": "Unspecified",
+                              "timeAggregation": "max",
+                              "spaceAggregation": "max",
+                              "reduceTo": "max"
                             }
                           ],
                           "disabled": false,
@@ -387,6 +422,7 @@
                           },
                           "groupBy": [],
                           "order": [],
+                          "selectFields": [],
                           "having": {
                             "expression": ""
                           },
@@ -415,7 +451,7 @@
               "width": 6,
               "height": 5,
               "content": {
-                "$ref": "#/spec/panels/0be02d14-989d-4cc4-83dd-861bcbb8eb40"
+                "$ref": "#/spec/panels/bfc46635-50b6-4ddd-920b-8dfaaad0ad5b"
               }
             },
             {
@@ -424,7 +460,7 @@
               "width": 6,
               "height": 5,
               "content": {
-                "$ref": "#/spec/panels/18dcc72d-8115-4c70-adc6-3f68625bddd1"
+                "$ref": "#/spec/panels/dad147bc-a753-4f48-ba6f-9b439be43c64"
               }
             },
             {
@@ -433,7 +469,7 @@
               "width": 6,
               "height": 5,
               "content": {
-                "$ref": "#/spec/panels/89cffa0d-aeac-4cc4-98f3-9249420357de"
+                "$ref": "#/spec/panels/283b38af-32f5-4836-b0d0-1818e832369f"
               }
             },
             {
@@ -442,7 +478,7 @@
               "width": 6,
               "height": 5,
               "content": {
-                "$ref": "#/spec/panels/11e39ede-eb78-4acc-9362-92abbec48fa5"
+                "$ref": "#/spec/panels/36cc4cac-2cf3-479d-b2a5-d9b763ae2c2a"
               }
             }
           ]

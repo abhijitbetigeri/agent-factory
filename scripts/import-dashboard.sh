@@ -24,11 +24,18 @@ panels = d["spec"]["panels"]
 items = d["spec"]["layouts"][0]["spec"]["items"]
 refs = {i["content"]["$ref"].split("/")[-1] for i in items}
 assert refs == set(panels), "layout items and panels disagree"
-exprs = sorted({a["expression"]
-                for p in panels.values()
-                for qq in p["spec"]["queries"]
-                for bq in qq["spec"]["plugin"]["spec"]["queries"]
-                for a in bq["spec"]["aggregations"]})
+aggs = [a for p in panels.values()
+          for qq in p["spec"]["queries"]
+          for bq in qq["spec"]["plugin"]["spec"]["queries"]
+          for a in bq["spec"]["aggregations"]]
+# Metric queries take metricName/temporality/timeAggregation/spaceAggregation.
+# An "expression" here is the traces/logs form and the API rejects the whole dashboard
+# with: unknown field "expression" in query spec for MetricAggregation.
+for a in aggs:
+    assert "expression" not in a, 'metric aggregations must not use "expression"'
+    missing = {"metricName","temporality","timeAggregation","spaceAggregation"} - set(a)
+    assert not missing, f"aggregation missing {missing}"
+exprs = sorted({f'{a["timeAggregation"]}({a["metricName"]}) [{a["temporality"]}]' for a in aggs})
 print(f"  OK {sys.argv[1]} — schemaVersion v6, {len(panels)} panels, layout consistent")
 for e in exprs:
     print(f"     {e}")

@@ -42,6 +42,25 @@ It must be an `/assets/Icons/...` or `/assets/Logos/...` path, or a base64 image
 file uses `/assets/Icons/eight-ball`. Two import attempts failed on this before the
 frontend bundle was read — the error message names neither the field nor the reason.
 
+## Metric queries are not expression queries
+
+The traces/logs form — `aggregations: [{"expression": "avg(x)"}]` — is rejected for the
+metrics signal:
+
+```
+unknown field "expression" in query spec for MetricAggregation
+```
+
+Metric aggregations take `metricName`, `temporality`, `timeAggregation`,
+`spaceAggregation`, `reduceTo`. Temporality must match what is actually stored, or the
+panel renders empty. Checked in ClickHouse rather than assumed:
+
+| Metric | Type | Temporality |
+|---|---|---|
+| `supplier.price_null_rate`, `menu.price_null_rate`, `supplier.feed.age_seconds` | Gauge | Unspecified |
+| `factory.stage.duration.max`, `worker.scrape.duration.max` | Gauge | Unspecified |
+| `http.server.requests` | Sum | Cumulative |
+
 ## Schema
 
 `schemaVersion: v6` — the format SigNoz v0.138 expects: `spec.panels` keyed by uuid,
