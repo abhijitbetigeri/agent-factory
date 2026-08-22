@@ -11,11 +11,25 @@ M=mirror/index.html
 
 # mirror/index.baseline.html is the pristine copy. Restoring from it is exact, which
 # matters when rehearsing: the break must be the only break on camera.
+B=mirror/index.baseline.html
+
 if [[ "${1:-}" == "--reset" ]]; then
-  cp mirror/index.baseline.html "$M"
+  # Guard: the baseline was previously only *referenced*, never created, so --reset
+  # died on a missing file and the break was irreversible. Fail loudly instead.
+  [[ -f "$B" ]] || { echo "!! $B missing — cannot reset. Recover with:"; \
+                     echo "   git show 76d8e66:mirror/index.html > $B"; exit 1; }
+  cp "$B" "$M"
   MSG="Supplier site: revert to previous markup"
   echo "==> mirror restored from baseline"
 else
+  # Snapshot the pristine markup BEFORE the first break, so --reset always has a
+  # target. Never overwrite it — a second break must not baseline a broken page.
+  if [[ ! -f "$B" ]]; then
+    cp "$M" "$B"; git add "$B"
+    echo "==> baseline snapshotted -> $B"
+  fi
+  grep -q 'class="price"' "$M" || { echo "!! $M already broken (no .price nodes) — nothing to break."; \
+                                    echo "   run: $0 --reset"; exit 1; }
   python3 -c "
 import re,sys
 s=open('mirror/index.html').read()
