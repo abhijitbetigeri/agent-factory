@@ -43,7 +43,7 @@
       "many": false
     },
     "releases_service": {
-      "target": "service",
+      "target": "factory_service",
       "required": false,
       "many": false
     }

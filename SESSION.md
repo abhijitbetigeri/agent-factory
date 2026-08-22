@@ -15,6 +15,12 @@ Then the two remaining credential chores: `PORT_CLIENT_ID`/`PORT_CLIENT_SECRET` 
 Port UI -> org settings -> Credentials (app.us.getport.io) into `.env`, and
 `./scripts/setup-brightdata.sh` + SigNoz key. Then `./scripts/apply-blueprints.sh`.
 
+**⚠️ TWO Port orgs exist on this account.** We build in the **US** org
+`org_ZYv2lWwJzrARBLVA` (app.us.port.io). The EU org `org_qEYkxdqqRbulG5Dj`
+(app.port.io) is abandoned. Client credentials MUST be created while inside the US
+org — creds from the EU org authenticate successfully and silently write to the wrong
+place. `.mcp.json` already points at `mcp.us.port.io`.
+
 **The use case is still undecided** — see `docs/idea-options.md`. It gates only
 `brightdata scraper create` (5-25 min), which is the schedule long pole.
 

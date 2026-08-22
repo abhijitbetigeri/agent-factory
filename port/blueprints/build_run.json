@@ -48,7 +48,7 @@
       "many": false
     },
     "builds_service": {
-      "target": "service",
+      "target": "factory_service",
       "required": false,
       "many": false
     }

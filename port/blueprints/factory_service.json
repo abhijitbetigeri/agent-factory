@@ -1,6 +1,6 @@
 {
-  "identifier": "service",
-  "title": "Service",
+  "identifier": "factory_service",
+  "title": "Factory Service",
   "icon": "Service",
   "schema": {
     "properties": {

@@ -48,7 +48,7 @@
       "many": true
     },
     "affects_service": {
-      "target": "service",
+      "target": "factory_service",
       "required": false,
       "many": true
     }
