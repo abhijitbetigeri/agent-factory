@@ -12,14 +12,18 @@ const { log } = require('./telemetry');            // must load first: starts th
 const { trace, metrics, SpanStatusCode, context } = require('@opentelemetry/api');
 const port = require('./port');
 const mise = require('./mise');
+const supplier = require('./supplier');
 const crypto = require('crypto');
 
 const tracer = trace.getTracer('mise-os-factory');
 const meter = metrics.getMeter('mise-os-factory');
 const nullRateGauge = meter.createObservableGauge('menu.price_null_rate');
+// The LIVE contract. This is what the SigNoz alert watches and what heal must fix.
+const supplierGauge = meter.createObservableGauge('supplier.price_null_rate');
 const stageDuration = meter.createHistogram('factory.stage.duration', { unit: 'ms' });
-let LAST_NULL_RATE = 0;
+let LAST_NULL_RATE = 0, LAST_SUPPLIER_RATE = 0;
 nullRateGauge.addCallback(r => r.observe(LAST_NULL_RATE));
+supplierGauge.addCallback(r => r.observe(LAST_SUPPLIER_RATE));
 
 const argv = process.argv.slice(2);
 const arg = (f, d) => { const i = argv.indexOf(f); return i >= 0 ? argv[i + 1] : d; };
@@ -132,23 +136,43 @@ async function main() {
     // ── verify: the data contract. This is the sensor everything hangs off. ──
     const verifyId = `verify-${RUN}`;
     const verification = await stage('verify', async (span) => {
+      // Two signals, different jobs (docs/CONTRACTS.md C3):
+      //   menu.price_null_rate     - static evidence of the legacy defect
+      //   supplier.price_null_rate - the LIVE contract; this is what breaks and heals
       const mi = mise.loadMenuIntel();
-      const rate = mise.priceNullRate(mi);
-      LAST_NULL_RATE = rate;
-      const pass = rate <= NULL_THRESHOLD;
-      span.setAttributes({ 'menu.price_null_rate': rate, 'verify.threshold': NULL_THRESHOLD, 'verify.pass': pass });
+      LAST_NULL_RATE = mise.priceNullRate(mi);
+
+      let rows;
+      try { rows = supplier.scrape(); }
+      catch (e) { log('warn', `live scrape failed, using last feed: ${e.message}`, { 'factory.stage': 'verify' }); rows = supplier.load(); }
+      const n = supplier.nullRate(rows);
+      LAST_SUPPLIER_RATE = n.rate;
+      const pass = n.rate <= NULL_THRESHOLD;
+
+      span.setAttributes({
+        'supplier.price_null_rate': n.rate, 'supplier.components': n.total,
+        'menu.price_null_rate': LAST_NULL_RATE,
+        'verify.threshold': NULL_THRESHOLD, 'verify.pass': pass,
+      });
       if (!pass) {
-        span.addEvent('data_contract.breached', { field: 'price', rate });
-        span.setStatus({ code: SpanStatusCode.ERROR, message: `null-rate ${rate.toFixed(4)} > ${NULL_THRESHOLD}` });
+        span.addEvent('data_contract.breached', { fields: n.failingFields.join(','), rate: n.rate });
+        span.setStatus({ code: SpanStatusCode.ERROR, message: `supplier null-rate ${n.rate.toFixed(4)} > ${NULL_THRESHOLD} on ${n.failingFields.join(',')}` });
         span.__failed = true;
-        log('error', `data contract breached: price null-rate ${(rate * 100).toFixed(1)}%`,
-            { 'factory.stage': 'verify', 'scraper.field': 'price' });
+        log('error', `data contract breached on [${n.failingFields.join(',')}]: ${(n.rate * 100).toFixed(1)}% null`,
+            { 'factory.stage': 'verify', 'scraper.fields': n.failingFields.join(',') });
       }
-      await port.upsert('verification', verifyId, `null-rate ${(rate * 100).toFixed(1)}%`, {
-        status: pass ? 'pass' : 'fail', contract_ok: pass, null_rate: +rate.toFixed(4),
+      await port.upsert('data_source', 'supplier-feed', 'Supplier price feed (c_mirror)', {
+        collector_id: process.env.SCRAPER_MIRROR_COLLECTOR_ID,
+        target_url: process.env.SCRAPER_MIRROR_TARGET_URL,
+        required_fields: supplier.REQUIRED, null_rate_threshold: NULL_THRESHOLD,
+        record_count: n.total, last_scraped_at: new Date().toISOString(),
+        health: pass ? 'healthy' : 'broken',
+      });
+      await port.upsert('verification', verifyId, `supplier null-rate ${(n.rate * 100).toFixed(1)}%`, {
+        status: pass ? 'pass' : 'fail', contract_ok: pass, null_rate: +n.rate.toFixed(4),
         tests_passed: pass ? 1 : 0, tests_failed: pass ? 0 : 1, trace_id: traceId,
-      }, { verifies: buildId });
-      return { rate, pass };
+      }, { verifies: buildId, checked_source: ['supplier-feed'] });
+      return { rate: n.rate, pass, failingFields: n.failingFields, total: n.total };
     });
 
     // ── approve: human gate. A failing contract escalates rather than releases ─
@@ -182,7 +206,9 @@ async function main() {
 
     console.log(`\n${decision.summary}`);
     for (const t of decision.tasks) console.log(`  [${t.executor.padEnd(5)}] ${t.kind}: ${t.rationale}`);
-    console.log(`\nnull-rate ${(verification.rate * 100).toFixed(1)}% (threshold ${NULL_THRESHOLD * 100}%) -> ${verification.pass ? 'PASS' : 'FAIL'}`);
+    console.log(`\nsupplier null-rate ${(verification.rate * 100).toFixed(1)}% over ${verification.total} rows (threshold ${NULL_THRESHOLD * 100}%) -> ${verification.pass ? 'PASS' : 'FAIL'}`);
+    if (!verification.pass) console.log(`failing fields: ${verification.failingFields.join(', ')}   -> heal: node factory/heal.js`);
+    console.log(`menu null-rate ${(LAST_NULL_RATE * 100).toFixed(1)}% (legacy defect, static evidence)`);
     console.log(`Port: https://app.us.port.io   SigNoz: http://localhost:8080  trace ${traceId}`);
   });
 
