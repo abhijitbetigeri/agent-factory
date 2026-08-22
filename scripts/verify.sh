@@ -42,11 +42,28 @@ for p in (os.path.expanduser('~/.claude.json'), os.environ.get('REPO_MCP','')):
     if any('port' in s for s in pools): found=True
 sys.exit(0 if found else 1)
 PY
-n=$(ls "$R"/port/blueprints/*.json 2>/dev/null | wc -l | tr -d ' ')
-python3 -c "
-import json,glob,sys
-for f in glob.glob('$R/port/blueprints/*.json'): json.load(open(f))
-" 2>/dev/null && [[ "$n" == "12" ]] && ok "12 blueprints valid JSON" || no "blueprints missing/invalid (found $n)"
+# Count is derived, not hardcoded — adding a blueprint should not fail preflight.
+# What matters is that every file parses and every relation target actually exists.
+bp_msg=$(python3 - "$R" <<'PYBP'
+import json,glob,sys,os
+root=sys.argv[1]
+files=glob.glob(os.path.join(root,'port/blueprints/*.json'))
+if not files: print("no blueprint files found"); sys.exit(1)
+ids=set(); rels=[]
+for f in files:
+    try: b=json.load(open(f))
+    except Exception as e: print(f"{os.path.basename(f)} is not valid JSON: {e}"); sys.exit(1)
+    ids.add(b['identifier'])
+    for name,r in (b.get('relations') or {}).items():
+        rels.append((b['identifier'],name,r.get('target')))
+# Port built-ins we deliberately point at are fine; only flag targets we neither
+# define nor know to exist upstream.
+known_external={'service','_team','_user'}
+dangling=[f"{a}.{n} -> {t}" for a,n,t in rels if t not in ids and t not in known_external]
+if dangling: print("dangling relation targets: "+", ".join(dangling)); sys.exit(1)
+print(f"{len(ids)} blueprints valid, {len(rels)} relations resolve")
+PYBP
+) && ok "$bp_msg" || no "$bp_msg"
 
 echo "== bright data =="
 BD="npx --yes --package @brightdata/cli brightdata"
