@@ -1,0 +1,291 @@
+{
+  "title": "Mise OS \u2014 factory health",
+  "description": "Built to answer 'what broke?' in under 30 seconds. Four panels only: the data contract, stage latency, stage errors, and feed freshness.",
+  "tags": [
+    "mise-os",
+    "factory",
+    "hackathon"
+  ],
+  "layout": [
+    {
+      "i": "contract",
+      "x": 0,
+      "y": 0,
+      "w": 6,
+      "h": 4
+    },
+    {
+      "i": "latency",
+      "x": 6,
+      "y": 0,
+      "w": 6,
+      "h": 4
+    },
+    {
+      "i": "errors",
+      "x": 0,
+      "y": 4,
+      "w": 6,
+      "h": 4
+    },
+    {
+      "i": "freshness",
+      "x": 6,
+      "y": 4,
+      "w": 6,
+      "h": 4
+    }
+  ],
+  "widgets": [
+    {
+      "id": "contract",
+      "title": "Data contract \u2014 supplier price null-rate",
+      "description": "THE sensor. Crossing 0.05 is what opens an incident and blocks release. Legacy menu null-rate (0.5625) shown alongside as the defect that motivated the project.",
+      "panelTypes": "graph",
+      "yAxisUnit": "none",
+      "isStacked": false,
+      "opacity": "1",
+      "nullZeroValues": "zero",
+      "timePreferance": "GLOBAL_TIME",
+      "softMax": null,
+      "softMin": null,
+      "query": {
+        "queryType": "builder",
+        "panelType": "graph",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "metrics",
+              "aggregateOperator": "avg",
+              "aggregateAttribute": {
+                "key": "supplier.price_null_rate",
+                "type": "Gauge",
+                "dataType": "float64",
+                "isColumn": true
+              },
+              "filters": {
+                "op": "AND",
+                "items": []
+              },
+              "groupBy": [],
+              "expression": "A",
+              "disabled": false,
+              "legend": "supplier feed (live contract)",
+              "reduceTo": "last",
+              "stepInterval": 60
+            },
+            {
+              "queryName": "B",
+              "dataSource": "metrics",
+              "aggregateOperator": "avg",
+              "aggregateAttribute": {
+                "key": "menu.price_null_rate",
+                "type": "Gauge",
+                "dataType": "float64",
+                "isColumn": true
+              },
+              "filters": {
+                "op": "AND",
+                "items": []
+              },
+              "groupBy": [],
+              "expression": "B",
+              "disabled": false,
+              "legend": "menu prices (legacy defect)",
+              "reduceTo": "last",
+              "stepInterval": 60
+            }
+          ],
+          "queryFormulas": []
+        },
+        "promql": [],
+        "clickhouse_sql": []
+      },
+      "thresholds": [
+        {
+          "index": "t1",
+          "keyIndex": 0,
+          "moduleUserGuid": "threshold",
+          "isVisible": true,
+          "thresholdValue": 0.05,
+          "thresholdUnit": "none",
+          "thresholdOperator": ">",
+          "thresholdColor": "Red",
+          "thresholdLabel": "contract breached",
+          "thresholdFormat": "Text"
+        }
+      ]
+    },
+    {
+      "id": "latency",
+      "title": "Factory stage latency",
+      "description": "Per-stage duration. A stage that suddenly dominates is where the run is stuck.",
+      "panelTypes": "graph",
+      "yAxisUnit": "ms",
+      "isStacked": false,
+      "opacity": "1",
+      "nullZeroValues": "zero",
+      "timePreferance": "GLOBAL_TIME",
+      "softMax": null,
+      "softMin": null,
+      "query": {
+        "queryType": "builder",
+        "panelType": "graph",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "metrics",
+              "aggregateOperator": "p95",
+              "aggregateAttribute": {
+                "key": "factory.stage.duration",
+                "type": "Sum",
+                "dataType": "float64",
+                "isColumn": true
+              },
+              "filters": {
+                "op": "AND",
+                "items": []
+              },
+              "groupBy": [
+                {
+                  "key": "factory.stage",
+                  "type": "tag",
+                  "dataType": "string",
+                  "isColumn": false
+                }
+              ],
+              "expression": "A",
+              "disabled": false,
+              "legend": "{{factory.stage}}",
+              "reduceTo": "last",
+              "stepInterval": 60
+            }
+          ],
+          "queryFormulas": []
+        },
+        "promql": [],
+        "clickhouse_sql": []
+      }
+    },
+    {
+      "id": "errors",
+      "title": "Endpoint + worker throughput",
+      "description": "Data endpoints and the background scrape job. Both must be visible: stage spans alone do not cover 'metric tracking across data endpoints and background jobs'.",
+      "panelTypes": "graph",
+      "yAxisUnit": "none",
+      "isStacked": false,
+      "opacity": "1",
+      "nullZeroValues": "zero",
+      "timePreferance": "GLOBAL_TIME",
+      "softMax": null,
+      "softMin": null,
+      "query": {
+        "queryType": "builder",
+        "panelType": "graph",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "metrics",
+              "aggregateOperator": "sum",
+              "aggregateAttribute": {
+                "key": "http.server.requests",
+                "type": "Sum",
+                "dataType": "float64",
+                "isColumn": true
+              },
+              "filters": {
+                "op": "AND",
+                "items": []
+              },
+              "groupBy": [
+                {
+                  "key": "http.route",
+                  "type": "tag",
+                  "dataType": "string",
+                  "isColumn": false
+                }
+              ],
+              "expression": "A",
+              "disabled": false,
+              "legend": "{{http.route}}",
+              "reduceTo": "last",
+              "stepInterval": 60
+            },
+            {
+              "queryName": "B",
+              "dataSource": "metrics",
+              "aggregateOperator": "p95",
+              "aggregateAttribute": {
+                "key": "worker.scrape.duration",
+                "type": "Sum",
+                "dataType": "float64",
+                "isColumn": true
+              },
+              "filters": {
+                "op": "AND",
+                "items": []
+              },
+              "groupBy": [],
+              "expression": "B",
+              "disabled": false,
+              "legend": "worker.scrape",
+              "reduceTo": "last",
+              "stepInterval": 60
+            }
+          ],
+          "queryFormulas": []
+        },
+        "promql": [],
+        "clickhouse_sql": []
+      }
+    },
+    {
+      "id": "freshness",
+      "title": "Supplier feed freshness",
+      "description": "Age of the last successful scrape. Climbing without bound means the background job is dead.",
+      "panelTypes": "graph",
+      "yAxisUnit": "s",
+      "isStacked": false,
+      "opacity": "1",
+      "nullZeroValues": "zero",
+      "timePreferance": "GLOBAL_TIME",
+      "softMax": null,
+      "softMin": null,
+      "query": {
+        "queryType": "builder",
+        "panelType": "graph",
+        "builder": {
+          "queryData": [
+            {
+              "queryName": "A",
+              "dataSource": "metrics",
+              "aggregateOperator": "avg",
+              "aggregateAttribute": {
+                "key": "supplier.feed.age_seconds",
+                "type": "Gauge",
+                "dataType": "float64",
+                "isColumn": true
+              },
+              "filters": {
+                "op": "AND",
+                "items": []
+              },
+              "groupBy": [],
+              "expression": "A",
+              "disabled": false,
+              "legend": "feed age",
+              "reduceTo": "last",
+              "stepInterval": 60
+            }
+          ],
+          "queryFormulas": []
+        },
+        "promql": [],
+        "clickhouse_sql": []
+      }
+    }
+  ]
+}
