@@ -1,0 +1,126 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mise OS — an OS for physical work, and the factory that builds it</title>
+<style>
+ :root{--bg:#0d1117;--panel:#161b22;--line:#30363d;--fg:#e6edf3;--dim:#8b949e;
+       --robot:#58a6ff;--human:#d29922;--agent:#3fb950;--bad:#f85149}
+ *{box-sizing:border-box}
+ body{margin:0;background:var(--bg);color:var(--fg);
+   font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+ .wrap{max-width:860px;margin:0 auto;padding:3rem 1.5rem 5rem}
+ h1{font-size:1.9rem;line-height:1.25;margin:0 0 .5rem;letter-spacing:-.02em}
+ h2{font-size:1.05rem;margin:2.5rem 0 .75rem;letter-spacing:-.01em}
+ .tag{color:var(--dim);font-size:.85rem;margin-bottom:2rem}
+ .lede{font-size:1.05rem;color:#c9d1d9;border-left:3px solid var(--robot);padding-left:1rem;margin:1.5rem 0}
+ .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1rem 1.25rem;margin:1rem 0}
+ pre{background:#010409;border:1px solid var(--line);border-radius:8px;padding:.9rem 1rem;
+     overflow-x:auto;font-size:12.5px;line-height:1.6;margin:.75rem 0}
+ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+ .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.75rem;margin:1rem 0}
+ .card{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:.9rem 1rem}
+ .card b{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.3rem}
+ .sig b{color:var(--robot)} .gov b{color:var(--human)} .rep b{color:var(--agent)}
+ .card p{margin:0;font-size:.87rem;color:var(--dim)}
+ .num{font-size:1.5rem;font-weight:700}
+ .bad{color:var(--bad)} .good{color:var(--agent)}
+ a{color:var(--robot)} a:hover{text-decoration:underline}
+ .links a{display:inline-block;margin:0 1rem .5rem 0}
+ table{border-collapse:collapse;width:100%;font-size:.88rem;margin:.75rem 0}
+ td,th{border-bottom:1px solid var(--line);padding:.45rem .5rem;text-align:left}
+ th{color:var(--dim);font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em}
+ .badge{font-size:.65rem;font-weight:700;text-transform:uppercase;padding:.15rem .45rem;border-radius:4px}
+ .robot{background:#0d3a6b;color:var(--robot)} .human{background:#4a3a08;color:var(--human)}
+ .agent{background:#0d3b1e;color:var(--agent)}
+ footer{color:var(--dim);font-size:.8rem;margin-top:3rem;border-top:1px solid var(--line);padding-top:1rem}
+</style>
+<div class="wrap">
+  <h1>Mise OS</h1>
+  <div class="tag">An operating system for physical work — and the factory that builds it.<br>
+    Agentic Software Factory hackathon · Port × Bright Data × SigNoz</div>
+
+  <div class="lede">The app is the test run. The factory is the deliverable.</div>
+
+  <p>Mise OS routes a unit of physical work — a restock, an inter-branch transfer, a procurement
+  pickup — to whoever should execute it: an <span class="badge agent">agent</span>, a
+  <span class="badge robot">robot</span>, or a <span class="badge human">human</span> in the field.
+  The factory is what builds and repairs Mise OS, and it is started by a <em>signal</em> rather than
+  by a person.</p>
+
+  <h2>The premise is a real defect, not a synthetic one</h2>
+  <p><a href="https://github.com/abhijitbetigeri/SC-Intelligence">Mise</a> is a multi-agent restaurant
+  supply chain that won AGI Summit 2026. <a href="https://github.com/abhijitbetigeri/Project-SCIM">Project-SCIM</a>
+  is its physical-AI extension, where a robot performs the restock in simulation. Neither had a factory
+  behind it, live web data under it, or observability across it. And there is a measurable consequence
+  sitting in the shipped data:</p>
+  <div class="panel"><span class="num bad">56.25%</span> &nbsp;of dish prices are null — 72 of 128.
+    <div style="color:var(--dim);font-size:.87rem;margin-top:.3rem">That system has been routing food on
+    data that is 56% blind, and nobody knew, because nothing was watching.</div></div>
+
+  <h2>Each tool does a job the other two cannot</h2>
+  <div class="grid">
+    <div class="card sig"><b>SigNoz — the nerves</b><p>Traces every stage, endpoint and background job.
+      Its alerts <em>start</em> the factory.</p></div>
+    <div class="card gov"><b>Port — the factory floor</b><p>Builds Mise OS. Holds goals, decisions,
+      risks, services. Gates plan and release.</p></div>
+    <div class="card rep"><b>Bright Data — senses &amp; repair</b><p>The feed it scrapes is what breaks,
+      and <code>scraper heal</code> is what fixes it.</p></div>
+  </div>
+
+  <h2>A run produces a real routing decision</h2>
+  <pre>node factory/run.js --brief "Route the Downtown tomato shortage"
+
+  brief · plan · build · verify · approve · release · audit
+
+  Transfer 10kg, buy net 26kg @ $2.05 = $53.3
+    [robot] transfer: 10kg from Marina (expires in 2d, use first)
+    [human] handoff: Crate handed to the cook at the service pass
+    [agent] procure: Only the NET shortage is bought: 26kg @ $2.05/kg</pre>
+  <p>Surplus moves before anything is bought. A branch below its own par cannot donate.
+  Nearest-expiry stock goes first. Only the <em>net</em> shortage reaches procurement.</p>
+
+  <h2>You approve the rehearsal, not the diff</h2>
+  <p>The factory generates a simulation <strong>from the dispatch it just produced</strong> — this donor
+  branch, this crate, this expiry window, this path. A different shortage draws a different simulation.
+  The human watches what the robot will do and approves <em>that</em>; the click writes back to Port.
+  The <a href="https://abhijitbetigeri.github.io/Project-SCIM/sim/">shipped SCIM simulation</a> is the
+  physical execution environment being rehearsed for.</p>
+
+  <h2>The loop closes</h2>
+  <pre>./scripts/break-mirror.sh --reset          <span style="color:#8b949e"># a real commit changes the page's HTML</span>
+node factory/run.js --incident data_source_broken
+    parse_error: Parse error: value must be finite number
+    supplier null-rate 100.0% -> FAIL   failing fields: name, price
+    release SKIPPED (contract failed)
+
+node factory/heal.js                       <span style="color:#8b949e"># human gate, then repair</span>
+    null-rate 100.0% -> 0.0%  RECOVERED
+
+node factory/run.js --incident data_source_broken
+    supplier null-rate 0.0% -> PASS
+    release    324ms</pre>
+  <table>
+    <tr><th>Stage</th><th>Who</th><th>What</th></tr>
+    <tr><td>Detect</td><td>us — <code>verify</code></td><td>null-rate over the required fields</td></tr>
+    <tr><td>Signal</td><td>SigNoz</td><td>metric crosses threshold, span goes ERROR</td></tr>
+    <tr><td>Decide</td><td>Port</td><td>Incident opens, human gate</td></tr>
+    <tr><td>Repair</td><td>Bright Data</td><td><code>scraper heal</code>, concrete failing fields</td></tr>
+    <tr><td>Prove</td><td>us — re-verify</td><td>null-rate under threshold, release unblocks</td></tr>
+  </table>
+  <p><strong>Detection is ours, not the CLI's.</strong> Bright Data never decides a scraper is broken —
+  which is why the null-rate check is load-bearing rather than decoration.</p>
+
+  <h2>Links</h2>
+  <div class="links">
+    <a href="https://github.com/abhijitbetigeri/agent-factory">Repository</a>
+    <a href="https://github.com/abhijitbetigeri/agent-factory/blob/main/docs/DEMO.md">Demo runbook</a>
+    <a href="https://github.com/abhijitbetigeri/agent-factory/blob/main/docs/incident-to-fix.md">Design</a>
+    <a href="https://abhijitbetigeri.github.io/agent-factory/mirror/">Supplier feed fixture</a>
+    <a href="https://abhijitbetigeri.github.io/Project-SCIM/sim/">SCIM simulation</a>
+  </div>
+
+  <footer>Built on <a href="https://github.com/abhijitbetigeri/SC-Intelligence">Mise</a> and
+  <a href="https://github.com/abhijitbetigeri/Project-SCIM">Project-SCIM</a>. The supplier feed fixture is
+  a deliberate break harness — the organizers' own advice is to point at a page whose structure has
+  changed and watch the auto-repair flow.</footer>
+</div>
