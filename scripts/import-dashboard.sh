@@ -1,32 +1,43 @@
 #!/usr/bin/env bash
-# Import the factory dashboard into self-hosted SigNoz.
+# Validate the factory dashboard and get it into SigNoz.
 #
-# SigNoz has no API key for self-hosted installs — dashboard creation needs a JWT from
-# an interactive login. This prompts for your credentials and uses them locally; nothing
-# is written to disk or into any file the repo tracks.
+# Self-hosted SigNoz v0.138.0 exposes no unauthenticated dashboard API, and the JWT
+# login route this script would need is not reachable (POST /api/v1/login is served by
+# the static handler, not the API router, and never reaches the server's route table).
+# So the reliable path is the UI importer. This script validates the JSON, checks SigNoz
+# is up, and prints the exact steps rather than pretending to automate something it cannot.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 SIGNOZ="${SIGNOZ_URL:-http://localhost:8080}"
 DASH=signoz/dashboard-factory-health.json
 
-read -r -p "SigNoz email: " EMAIL
-read -r -s -p "SigNoz password: " PASS; echo
+python3 - "$DASH" <<'PY'
+import json, sys
+d = json.load(open(sys.argv[1]))
+names = set()
+for w in d["widgets"]:
+    for q in w["query"]["builder"]["queryData"]:
+        names.add(q["aggregateAttribute"]["key"])
+print(f"  OK {sys.argv[1]} is valid JSON - {len(d['widgets'])} panels")
+print(f"  metrics referenced: {', '.join(sorted(names))}")
+PY
 
-TOKEN=$(curl -sf -X POST "$SIGNOZ/api/v1/login" \
-  -H 'Content-Type: application/json' \
-  -d "{\"email\":\"$EMAIL\",\"password\":\"$PASS\"}" \
-  | python3 -c 'import sys,json; print(json.load(sys.stdin)["accessJwt"])') || {
-    echo "!! login failed — check the email/password you registered at $SIGNOZ"; exit 1; }
-unset PASS
+ver=$(curl -s --max-time 6 "$SIGNOZ/api/v1/version" || true)
+if [[ "$ver" == *version* ]]; then echo "  ✅ SigNoz reachable — $ver"
+else echo "  ❌ SigNoz not reachable at $SIGNOZ"; exit 1; fi
 
-code=$(curl -s -o /tmp/signoz-dash.out -w '%{http_code}' -X POST "$SIGNOZ/api/v1/dashboards" \
-  -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
-  --data-binary "@$DASH")
+cat <<NOTE
 
-if [[ "$code" =~ ^2 ]]; then
-  uuid=$(python3 -c 'import json;d=json.load(open("/tmp/signoz-dash.out"));print(d.get("data",{}).get("uuid") or d.get("uuid",""))' 2>/dev/null || true)
-  echo "==> imported. $SIGNOZ/dashboard/${uuid}"
-else
-  echo "!! import failed ($code)"; cat /tmp/signoz-dash.out; echo
-  echo "   Fallback: $SIGNOZ -> Dashboards -> New dashboard -> Import JSON -> paste $DASH"
-fi
+Import it (about 20 seconds):
+
+  1. open  $SIGNOZ/dashboard
+  2. New dashboard  ->  Import JSON
+  3. paste the contents of $DASH
+
+If a panel is empty, nothing is exporting that metric yet. Run the factory once and
+start the app, then reload:
+
+  set -a && . ./.env && set +a
+  node factory/run.js --brief "Route the Downtown tomato shortage"
+  node app/server.js
+NOTE

@@ -139,8 +139,8 @@
               "dataSource": "metrics",
               "aggregateOperator": "p95",
               "aggregateAttribute": {
-                "key": "factory.stage.duration",
-                "type": "Sum",
+                "key": "factory.stage.duration.bucket",
+                "type": "Histogram",
                 "dataType": "float64",
                 "isColumn": true
               },
@@ -217,10 +217,10 @@
             {
               "queryName": "B",
               "dataSource": "metrics",
-              "aggregateOperator": "p95",
+              "aggregateOperator": "max",
               "aggregateAttribute": {
-                "key": "worker.scrape.duration",
-                "type": "Sum",
+                "key": "worker.scrape.duration.max",
+                "type": "Gauge",
                 "dataType": "float64",
                 "isColumn": true
               },

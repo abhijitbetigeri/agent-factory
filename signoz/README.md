@@ -17,15 +17,23 @@ Self-hosted SigNoz has no API key, and dashboard creation needs a JWT from an
 interactive login — so this is committed as an importable definition rather than applied
 by a script:
 
+SigNoz **v0.138.0** self-hosted exposes no unauthenticated dashboard API, and the JWT
+login route is not reachable — `POST /api/v1/login` is served by the static handler and
+never reaches the server's route table. So import through the UI:
+
 ```bash
-./scripts/import-dashboard.sh      # prompts for your SigNoz login, imports via the API
+./scripts/import-dashboard.sh    # validates the JSON, checks SigNoz, prints the steps
 ```
 
-Your password is read with `read -s`, used for one login call, and unset — it is never
-written to disk or into anything the repo tracks.
+then: http://localhost:8080/dashboard → **New dashboard** → **Import JSON** → paste
+`dashboard-factory-health.json`.
 
-Manual fallback: http://localhost:8080 → **Dashboards** → **+ New dashboard** →
-**Import JSON** → paste `dashboard-factory-health.json`.
+## Metric names
+
+Histograms are stored with `.bucket` / `.count` / `.sum` / `.max` / `.min` suffixes.
+Referencing the bare name gives an **empty panel**, so this dashboard points at
+`factory.stage.duration.bucket` and `worker.scrape.duration.max`, not the base names.
+Verified present in ClickHouse before committing.
 
 Metric names come from `docs/CONTRACTS.md` C5. If a panel is empty, run the factory once
 (`node factory/run.js --brief "..."`) and start the app (`node app/server.js`) — the
