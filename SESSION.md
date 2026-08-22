@@ -1,6 +1,15 @@
 # Session handoff — 2026-08-22
 
-## ⏭️ START HERE (written at the end of session 2)
+## ⏭️ START HERE
+
+**Building right now? Read `docs/BUILD-PLAN.md` first** — it has the slice status board,
+who owns which files, and runnable done-criteria. Then `docs/CONTRACTS.md` for the
+interfaces between slices, and `docs/AGENT-PROTOCOL.md` if more than one agent is working.
+
+Project definition: `docs/incident-to-fix.md` (Mise OS — an operating system for
+physical work in the food supply chain, and the factory that builds it).
+
+## Earlier handoff (session 2)
 
 **Run Claude Code from THIS directory** (`agentic-factory`), not from `~/projects`.
 Session 2 was rooted at the parent dir, so `.mcp.json` here was never loaded and
