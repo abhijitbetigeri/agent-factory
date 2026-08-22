@@ -150,6 +150,13 @@ node factory/run.js --brief "Route the Downtown tomato shortage"
   behind a location picker, which is exactly why the original pipeline left them null.
   The *live* contract runs on the supplier feed, which does break and heal.
 - **`fsis.usda.gov` is blocked** by Bright Data ("Domain not allowed").
+- **The heal on `c_mirror` did not complete.** Detection, the incident, the human gate
+  and the heal driver all work — but Bright Data had a refactor job running server-side
+  that rejected new requests with `409 Another refactor job is still in progress`. The
+  CLI's 600s timeout is client-side only; the job continues after it gives up. The
+  repair itself **is** proven on `c_real`, which `scraper heal` genuinely fixed from an
+  empty extraction to a full component list. So the loop's detect → gate → repair path
+  is real, but it has not been demonstrated end to end on a single collector.
 - Port's built-in `service` blueprint was accidentally reshaped early on; ours is
   namespaced `factory_service` and the apply script now refuses to touch blueprints it
   did not create.

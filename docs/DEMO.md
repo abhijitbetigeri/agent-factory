@@ -93,10 +93,28 @@ null-rate with the threshold drawn on it, stage latency, error rate.
 ./scripts/break-mirror.sh      # commits a real HTML change to the source page
 ```
 
-**On screen, in order:** GitHub Pages republishes → the worker scrapes → nulls appear →
-`supplier.price_null_rate` spikes in SigNoz → an `Incident` opens in Port → **approve on
-camera** → `brightdata scraper heal` runs with the concrete failing field names →
-`scraper approve` → re-verify → green → `release` entity created.
+**⚠️ Filmable state as of the last rehearsal — read before recording.**
+
+**Detection is proven and films cleanly:** break the page, Pages republishes, the
+collector fails with `parse_error: Parse error: value must be finite number`, verify
+reports null-rate 100%, names the failing fields `name,price`, opens the `Incident` in
+Port, and **SKIPS release**. That is the loop's left half, on camera, live.
+
+**The repair on `c_mirror` does NOT currently complete.** A Bright Data refactor job has
+been running server-side for 40+ minutes and rejects new heal requests with
+`409 Another refactor job is still in progress`. The CLI's 600s timeout is client-side
+only — the job keeps running after it gives up. Do not plan a live `c_mirror` heal.
+
+**Use `c_real` for the repair beat instead — it is a genuine, recorded repair.**
+`c_mt4sihtk1e4weky7id` (githubstatus.com) initially extracted nothing but an empty
+array. `scraper heal` with concrete failing fields ran `code_fixer` →
+`request_fulfillment_validator` → `user_approval` → `save_new_template`, and it now
+returns `overall_status` plus a full components array. Show that before/after.
+
+**Say plainly what is and is not automated end to end.** Detection, incident, gating and
+the heal driver are wired; the repair is proven on one collector and blocked by a
+provider-side job on the other. That is a better answer than implying a loop that did
+not close.
 
 > "The source page changed its HTML — a real commit, not a mock. SigNoz caught it. Port
 > opened an incident and asked a human. Bright Data repaired the scraper itself. The
