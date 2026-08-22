@@ -1,291 +1,455 @@
 {
-  "title": "Mise OS \u2014 factory health",
-  "description": "Built to answer 'what broke?' in under 30 seconds. Four panels only: the data contract, stage latency, stage errors, and feed freshness.",
+  "generateName": "Mise OS \u2014 factory health",
+  "schemaVersion": "v6",
   "tags": [
     "mise-os",
-    "factory",
-    "hackathon"
+    "factory"
   ],
-  "layout": [
-    {
-      "i": "contract",
-      "x": 0,
-      "y": 0,
-      "w": 6,
-      "h": 4
+  "spec": {
+    "display": {
+      "name": "Mise OS \u2014 factory health",
+      "description": "Built to answer 'what broke?' in under 30 seconds: the data contract, stage latency, endpoint and worker throughput, and feed freshness."
     },
-    {
-      "i": "latency",
-      "x": 6,
-      "y": 0,
-      "w": 6,
-      "h": 4
-    },
-    {
-      "i": "errors",
-      "x": 0,
-      "y": 4,
-      "w": 6,
-      "h": 4
-    },
-    {
-      "i": "freshness",
-      "x": 6,
-      "y": 4,
-      "w": 6,
-      "h": 4
-    }
-  ],
-  "widgets": [
-    {
-      "id": "contract",
-      "title": "Data contract \u2014 supplier price null-rate",
-      "description": "THE sensor. Crossing 0.05 is what opens an incident and blocks release. Legacy menu null-rate (0.5625) shown alongside as the defect that motivated the project.",
-      "panelTypes": "graph",
-      "yAxisUnit": "none",
-      "isStacked": false,
-      "opacity": "1",
-      "nullZeroValues": "zero",
-      "timePreferance": "GLOBAL_TIME",
-      "softMax": null,
-      "softMin": null,
-      "query": {
-        "queryType": "builder",
-        "panelType": "graph",
-        "builder": {
-          "queryData": [
+    "variables": [],
+    "panels": {
+      "0be02d14-989d-4cc4-83dd-861bcbb8eb40": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Data contract \u2014 supplier price null-rate",
+            "description": "THE sensor. Crossing 0.05 opens an incident and blocks release. The legacy menu null-rate (0.5625) is shown alongside as the defect that motivated the project."
+          },
+          "plugin": {
+            "kind": "signoz/TimeSeriesPanel",
+            "spec": {
+              "visualization": {
+                "timePreference": "global_time",
+                "fillSpans": false
+              },
+              "formatting": {
+                "unit": "none",
+                "decimalPrecision": "2"
+              },
+              "chartAppearance": {
+                "lineInterpolation": "spline",
+                "showPoints": false,
+                "lineStyle": "solid",
+                "fillMode": "none",
+                "spanGaps": {
+                  "fillOnlyBelow": false,
+                  "fillLessThan": ""
+                }
+              },
+              "axes": {
+                "softMin": 0,
+                "softMax": 0,
+                "isLogScale": false
+              },
+              "legend": {
+                "position": "bottom",
+                "mode": "list",
+                "customColors": {}
+              },
+              "thresholds": null
+            }
+          },
+          "queries": [
             {
-              "queryName": "A",
-              "dataSource": "metrics",
-              "aggregateOperator": "avg",
-              "aggregateAttribute": {
-                "key": "supplier.price_null_rate",
-                "type": "Gauge",
-                "dataType": "float64",
-                "isColumn": true
-              },
-              "filters": {
-                "op": "AND",
-                "items": []
-              },
-              "groupBy": [],
-              "expression": "A",
-              "disabled": false,
-              "legend": "supplier feed (live contract)",
-              "reduceTo": "last",
-              "stepInterval": 60
-            },
-            {
-              "queryName": "B",
-              "dataSource": "metrics",
-              "aggregateOperator": "avg",
-              "aggregateAttribute": {
-                "key": "menu.price_null_rate",
-                "type": "Gauge",
-                "dataType": "float64",
-                "isColumn": true
-              },
-              "filters": {
-                "op": "AND",
-                "items": []
-              },
-              "groupBy": [],
-              "expression": "B",
-              "disabled": false,
-              "legend": "menu prices (legacy defect)",
-              "reduceTo": "last",
-              "stepInterval": 60
+              "kind": "time_series",
+              "spec": {
+                "plugin": {
+                  "kind": "signoz/CompositeQuery",
+                  "spec": {
+                    "queries": [
+                      {
+                        "type": "builder_query",
+                        "spec": {
+                          "name": "A",
+                          "signal": "metrics",
+                          "source": "",
+                          "aggregations": [
+                            {
+                              "expression": "avg(supplier.price_null_rate)"
+                            }
+                          ],
+                          "disabled": false,
+                          "filter": {
+                            "expression": ""
+                          },
+                          "groupBy": [],
+                          "order": [],
+                          "having": {
+                            "expression": ""
+                          },
+                          "functions": [],
+                          "legend": "supplier feed (live contract)"
+                        }
+                      },
+                      {
+                        "type": "builder_query",
+                        "spec": {
+                          "name": "B",
+                          "signal": "metrics",
+                          "source": "",
+                          "aggregations": [
+                            {
+                              "expression": "avg(menu.price_null_rate)"
+                            }
+                          ],
+                          "disabled": false,
+                          "filter": {
+                            "expression": ""
+                          },
+                          "groupBy": [],
+                          "order": [],
+                          "having": {
+                            "expression": ""
+                          },
+                          "functions": [],
+                          "legend": "menu prices (legacy defect)"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
             }
           ],
-          "queryFormulas": []
-        },
-        "promql": [],
-        "clickhouse_sql": []
-      },
-      "thresholds": [
-        {
-          "index": "t1",
-          "keyIndex": 0,
-          "moduleUserGuid": "threshold",
-          "isVisible": true,
-          "thresholdValue": 0.05,
-          "thresholdUnit": "none",
-          "thresholdOperator": ">",
-          "thresholdColor": "Red",
-          "thresholdLabel": "contract breached",
-          "thresholdFormat": "Text"
+          "links": []
         }
-      ]
-    },
-    {
-      "id": "latency",
-      "title": "Factory stage latency",
-      "description": "Per-stage duration. A stage that suddenly dominates is where the run is stuck.",
-      "panelTypes": "graph",
-      "yAxisUnit": "ms",
-      "isStacked": false,
-      "opacity": "1",
-      "nullZeroValues": "zero",
-      "timePreferance": "GLOBAL_TIME",
-      "softMax": null,
-      "softMin": null,
-      "query": {
-        "queryType": "builder",
-        "panelType": "graph",
-        "builder": {
-          "queryData": [
-            {
-              "queryName": "A",
-              "dataSource": "metrics",
-              "aggregateOperator": "p95",
-              "aggregateAttribute": {
-                "key": "factory.stage.duration.bucket",
-                "type": "Histogram",
-                "dataType": "float64",
-                "isColumn": true
+      },
+      "18dcc72d-8115-4c70-adc6-3f68625bddd1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Factory stage latency (p95)",
+            "description": "Per-stage duration. A stage that suddenly dominates is where the run is stuck."
+          },
+          "plugin": {
+            "kind": "signoz/TimeSeriesPanel",
+            "spec": {
+              "visualization": {
+                "timePreference": "global_time",
+                "fillSpans": false
               },
-              "filters": {
-                "op": "AND",
-                "items": []
+              "formatting": {
+                "unit": "ms",
+                "decimalPrecision": "2"
               },
-              "groupBy": [
-                {
-                  "key": "factory.stage",
-                  "type": "tag",
-                  "dataType": "string",
-                  "isColumn": false
+              "chartAppearance": {
+                "lineInterpolation": "spline",
+                "showPoints": false,
+                "lineStyle": "solid",
+                "fillMode": "none",
+                "spanGaps": {
+                  "fillOnlyBelow": false,
+                  "fillLessThan": ""
                 }
-              ],
-              "expression": "A",
-              "disabled": false,
-              "legend": "{{factory.stage}}",
-              "reduceTo": "last",
-              "stepInterval": 60
+              },
+              "axes": {
+                "softMin": 0,
+                "softMax": 0,
+                "isLogScale": false
+              },
+              "legend": {
+                "position": "bottom",
+                "mode": "list",
+                "customColors": {}
+              },
+              "thresholds": null
+            }
+          },
+          "queries": [
+            {
+              "kind": "time_series",
+              "spec": {
+                "plugin": {
+                  "kind": "signoz/CompositeQuery",
+                  "spec": {
+                    "queries": [
+                      {
+                        "type": "builder_query",
+                        "spec": {
+                          "name": "A",
+                          "signal": "metrics",
+                          "source": "",
+                          "aggregations": [
+                            {
+                              "expression": "p95(factory.stage.duration)"
+                            }
+                          ],
+                          "disabled": false,
+                          "filter": {
+                            "expression": ""
+                          },
+                          "groupBy": [
+                            {
+                              "name": "factory.stage",
+                              "signal": "",
+                              "fieldContext": "",
+                              "fieldDataType": ""
+                            }
+                          ],
+                          "order": [],
+                          "having": {
+                            "expression": ""
+                          },
+                          "functions": [],
+                          "legend": "{{factory.stage}}"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
             }
           ],
-          "queryFormulas": []
-        },
-        "promql": [],
-        "clickhouse_sql": []
+          "links": []
+        }
+      },
+      "89cffa0d-aeac-4cc4-98f3-9249420357de": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Endpoint + worker throughput",
+            "description": "Data endpoints and the background scrape job. Both must be visible \u2014 stage spans alone do not cover 'metric tracking across data endpoints and background jobs'."
+          },
+          "plugin": {
+            "kind": "signoz/TimeSeriesPanel",
+            "spec": {
+              "visualization": {
+                "timePreference": "global_time",
+                "fillSpans": false
+              },
+              "formatting": {
+                "unit": "none",
+                "decimalPrecision": "2"
+              },
+              "chartAppearance": {
+                "lineInterpolation": "spline",
+                "showPoints": false,
+                "lineStyle": "solid",
+                "fillMode": "none",
+                "spanGaps": {
+                  "fillOnlyBelow": false,
+                  "fillLessThan": ""
+                }
+              },
+              "axes": {
+                "softMin": 0,
+                "softMax": 0,
+                "isLogScale": false
+              },
+              "legend": {
+                "position": "bottom",
+                "mode": "list",
+                "customColors": {}
+              },
+              "thresholds": null
+            }
+          },
+          "queries": [
+            {
+              "kind": "time_series",
+              "spec": {
+                "plugin": {
+                  "kind": "signoz/CompositeQuery",
+                  "spec": {
+                    "queries": [
+                      {
+                        "type": "builder_query",
+                        "spec": {
+                          "name": "A",
+                          "signal": "metrics",
+                          "source": "",
+                          "aggregations": [
+                            {
+                              "expression": "sum(http.server.requests)"
+                            }
+                          ],
+                          "disabled": false,
+                          "filter": {
+                            "expression": ""
+                          },
+                          "groupBy": [
+                            {
+                              "name": "http.route",
+                              "signal": "",
+                              "fieldContext": "",
+                              "fieldDataType": ""
+                            }
+                          ],
+                          "order": [],
+                          "having": {
+                            "expression": ""
+                          },
+                          "functions": [],
+                          "legend": "{{http.route}}"
+                        }
+                      },
+                      {
+                        "type": "builder_query",
+                        "spec": {
+                          "name": "B",
+                          "signal": "metrics",
+                          "source": "",
+                          "aggregations": [
+                            {
+                              "expression": "max(worker.scrape.duration)"
+                            }
+                          ],
+                          "disabled": false,
+                          "filter": {
+                            "expression": ""
+                          },
+                          "groupBy": [],
+                          "order": [],
+                          "having": {
+                            "expression": ""
+                          },
+                          "functions": [],
+                          "legend": "worker.scrape"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "links": []
+        }
+      },
+      "11e39ede-eb78-4acc-9362-92abbec48fa5": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Supplier feed freshness",
+            "description": "Age of the last successful scrape. Climbing without bound means the background job is dead."
+          },
+          "plugin": {
+            "kind": "signoz/TimeSeriesPanel",
+            "spec": {
+              "visualization": {
+                "timePreference": "global_time",
+                "fillSpans": false
+              },
+              "formatting": {
+                "unit": "s",
+                "decimalPrecision": "2"
+              },
+              "chartAppearance": {
+                "lineInterpolation": "spline",
+                "showPoints": false,
+                "lineStyle": "solid",
+                "fillMode": "none",
+                "spanGaps": {
+                  "fillOnlyBelow": false,
+                  "fillLessThan": ""
+                }
+              },
+              "axes": {
+                "softMin": 0,
+                "softMax": 0,
+                "isLogScale": false
+              },
+              "legend": {
+                "position": "bottom",
+                "mode": "list",
+                "customColors": {}
+              },
+              "thresholds": null
+            }
+          },
+          "queries": [
+            {
+              "kind": "time_series",
+              "spec": {
+                "plugin": {
+                  "kind": "signoz/CompositeQuery",
+                  "spec": {
+                    "queries": [
+                      {
+                        "type": "builder_query",
+                        "spec": {
+                          "name": "A",
+                          "signal": "metrics",
+                          "source": "",
+                          "aggregations": [
+                            {
+                              "expression": "max(supplier.feed.age_seconds)"
+                            }
+                          ],
+                          "disabled": false,
+                          "filter": {
+                            "expression": ""
+                          },
+                          "groupBy": [],
+                          "order": [],
+                          "having": {
+                            "expression": ""
+                          },
+                          "functions": [],
+                          "legend": "feed age"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ],
+          "links": []
+        }
       }
     },
-    {
-      "id": "errors",
-      "title": "Endpoint + worker throughput",
-      "description": "Data endpoints and the background scrape job. Both must be visible: stage spans alone do not cover 'metric tracking across data endpoints and background jobs'.",
-      "panelTypes": "graph",
-      "yAxisUnit": "none",
-      "isStacked": false,
-      "opacity": "1",
-      "nullZeroValues": "zero",
-      "timePreferance": "GLOBAL_TIME",
-      "softMax": null,
-      "softMin": null,
-      "query": {
-        "queryType": "builder",
-        "panelType": "graph",
-        "builder": {
-          "queryData": [
+    "layouts": [
+      {
+        "kind": "Grid",
+        "spec": {
+          "items": [
             {
-              "queryName": "A",
-              "dataSource": "metrics",
-              "aggregateOperator": "sum",
-              "aggregateAttribute": {
-                "key": "http.server.requests",
-                "type": "Sum",
-                "dataType": "float64",
-                "isColumn": true
-              },
-              "filters": {
-                "op": "AND",
-                "items": []
-              },
-              "groupBy": [
-                {
-                  "key": "http.route",
-                  "type": "tag",
-                  "dataType": "string",
-                  "isColumn": false
-                }
-              ],
-              "expression": "A",
-              "disabled": false,
-              "legend": "{{http.route}}",
-              "reduceTo": "last",
-              "stepInterval": 60
+              "x": 0,
+              "y": 0,
+              "width": 6,
+              "height": 5,
+              "content": {
+                "$ref": "#/spec/panels/0be02d14-989d-4cc4-83dd-861bcbb8eb40"
+              }
             },
             {
-              "queryName": "B",
-              "dataSource": "metrics",
-              "aggregateOperator": "max",
-              "aggregateAttribute": {
-                "key": "worker.scrape.duration.max",
-                "type": "Gauge",
-                "dataType": "float64",
-                "isColumn": true
-              },
-              "filters": {
-                "op": "AND",
-                "items": []
-              },
-              "groupBy": [],
-              "expression": "B",
-              "disabled": false,
-              "legend": "worker.scrape",
-              "reduceTo": "last",
-              "stepInterval": 60
-            }
-          ],
-          "queryFormulas": []
-        },
-        "promql": [],
-        "clickhouse_sql": []
-      }
-    },
-    {
-      "id": "freshness",
-      "title": "Supplier feed freshness",
-      "description": "Age of the last successful scrape. Climbing without bound means the background job is dead.",
-      "panelTypes": "graph",
-      "yAxisUnit": "s",
-      "isStacked": false,
-      "opacity": "1",
-      "nullZeroValues": "zero",
-      "timePreferance": "GLOBAL_TIME",
-      "softMax": null,
-      "softMin": null,
-      "query": {
-        "queryType": "builder",
-        "panelType": "graph",
-        "builder": {
-          "queryData": [
+              "x": 6,
+              "y": 0,
+              "width": 6,
+              "height": 5,
+              "content": {
+                "$ref": "#/spec/panels/18dcc72d-8115-4c70-adc6-3f68625bddd1"
+              }
+            },
             {
-              "queryName": "A",
-              "dataSource": "metrics",
-              "aggregateOperator": "avg",
-              "aggregateAttribute": {
-                "key": "supplier.feed.age_seconds",
-                "type": "Gauge",
-                "dataType": "float64",
-                "isColumn": true
-              },
-              "filters": {
-                "op": "AND",
-                "items": []
-              },
-              "groupBy": [],
-              "expression": "A",
-              "disabled": false,
-              "legend": "feed age",
-              "reduceTo": "last",
-              "stepInterval": 60
+              "x": 0,
+              "y": 5,
+              "width": 6,
+              "height": 5,
+              "content": {
+                "$ref": "#/spec/panels/89cffa0d-aeac-4cc4-98f3-9249420357de"
+              }
+            },
+            {
+              "x": 6,
+              "y": 5,
+              "width": 6,
+              "height": 5,
+              "content": {
+                "$ref": "#/spec/panels/11e39ede-eb78-4acc-9362-92abbec48fa5"
+              }
             }
-          ],
-          "queryFormulas": []
-        },
-        "promql": [],
-        "clickhouse_sql": []
+          ]
+        }
       }
-    }
-  ]
+    ],
+    "duration": "",
+    "refreshInterval": "",
+    "links": []
+  }
 }

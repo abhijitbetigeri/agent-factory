@@ -11,16 +11,23 @@ cd "$(dirname "$0")/.."
 SIGNOZ="${SIGNOZ_URL:-http://localhost:8080}"
 DASH=signoz/dashboard-factory-health.json
 
-python3 - "$DASH" <<'PY'
+python3 - "$DASH" <<'PYV'
 import json, sys
 d = json.load(open(sys.argv[1]))
-names = set()
-for w in d["widgets"]:
-    for q in w["query"]["builder"]["queryData"]:
-        names.add(q["aggregateAttribute"]["key"])
-print(f"  OK {sys.argv[1]} is valid JSON - {len(d['widgets'])} panels")
-print(f"  metrics referenced: {', '.join(sorted(names))}")
-PY
+assert d.get("schemaVersion") == "v6", f"expected schemaVersion v6, got {d.get('schemaVersion')!r}"
+panels = d["spec"]["panels"]
+items = d["spec"]["layouts"][0]["spec"]["items"]
+refs = {i["content"]["$ref"].split("/")[-1] for i in items}
+assert refs == set(panels), "layout items and panels disagree"
+exprs = sorted({a["expression"]
+                for p in panels.values()
+                for qq in p["spec"]["queries"]
+                for bq in qq["spec"]["plugin"]["spec"]["queries"]
+                for a in bq["spec"]["aggregations"]})
+print(f"  OK {sys.argv[1]} — schemaVersion v6, {len(panels)} panels, layout consistent")
+for e in exprs:
+    print(f"     {e}")
+PYV
 
 ver=$(curl -s --max-time 6 "$SIGNOZ/api/v1/version" || true)
 if [[ "$ver" == *version* ]]; then echo "  ✅ SigNoz reachable — $ver"

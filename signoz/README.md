@@ -28,6 +28,17 @@ never reaches the server's route table. So import through the UI:
 then: http://localhost:8080/dashboard → **New dashboard** → **Import JSON** → paste
 `dashboard-factory-health.json`.
 
+## Schema
+
+`schemaVersion: v6` — the format SigNoz v0.138 expects: `spec.panels` keyed by uuid,
+with `spec.layouts[0].spec.items` referencing them by `$ref`. An earlier hand-built
+version used the legacy top-level `widgets` array and SigNoz rejected it outright with
+*"Error loading JSON file"*. The shape here is modelled on SigNoz's own published
+dashboards (github.com/SigNoz/dashboards), not guessed.
+
+Queries use metric-signal builder queries with expressions like
+`avg(supplier.price_null_rate)` and `p95(factory.stage.duration)`.
+
 ## Metric names
 
 Histograms are stored with `.bucket` / `.count` / `.sum` / `.max` / `.min` suffixes.
