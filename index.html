@@ -105,6 +105,7 @@
     started by a <em>signal</em> rather than by a person.</p>
   <div class="cta">
     <a class="btn primary" href="https://github.com/abhijitbetigeri/agent-factory">Source on GitHub</a>
+    <a class="btn primary" id="consoleCta" href="/console">Open the console</a>
     <a class="btn" href="https://abhijitbetigeri.github.io/agent-factory/mirror/">Live supplier feed</a>
   </div>
 </div></div>
@@ -314,3 +315,16 @@ release <span class="y">SKIPPED</span> (contract failed)</pre>
   <div style="margin-top:.6rem">Built for the Agentic Software Factory hackathon —
     Port × Bright Data × SigNoz.</div>
 </div></footer>
+<script>
+// The console is served by the local app (node app/server.js). On the published static
+// page there is nothing at /console, so point visitors at the runbook instead.
+(function () {
+  var a = document.getElementById('consoleCta');
+  if (!a) return;
+  var local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  if (!local) {
+    a.href = 'https://github.com/abhijitbetigeri/agent-factory/blob/main/docs/DEMO.md';
+    a.textContent = 'How to run the console';
+  }
+})();
+</script>

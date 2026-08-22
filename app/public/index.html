@@ -1,126 +1,330 @@
 <!doctype html>
-<meta charset="utf-8"><title>Mise OS — dispatch rehearsal</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mise OS — an operating system for physical work</title>
+<meta name="description" content="An agentic software factory that builds and repairs Mise OS: brief or incident to plan, build, verify, approve, release, audit — every stage traced, gated and repairable.">
 <style>
+ /* Palette copied verbatim from app/public/index.html so the two surfaces match. */
  :root{--bg:#0d1117;--panel:#161b22;--line:#30363d;--fg:#e6edf3;--dim:#8b949e;
        --robot:#58a6ff;--human:#d29922;--agent:#3fb950;--bad:#f85149}
- *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);
-   font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
- header{padding:1rem 1.5rem;border-bottom:1px solid var(--line);display:flex;
-   justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem}
- h1{font-size:1rem;margin:0;font-weight:600}
- .sub{color:var(--dim);font-size:.8rem}
- main{max-width:1080px;margin:0 auto;padding:1.5rem}
- .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;
-   padding:1rem 1.25rem;margin-bottom:1rem}
- .lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:.5rem}
- .task{display:flex;gap:.75rem;align-items:flex-start;padding:.55rem 0;border-top:1px solid var(--line)}
- .task:first-of-type{border-top:0}
- .badge{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
-   padding:.2rem .5rem;border-radius:4px;flex:none;min-width:58px;text-align:center}
- .robot{background:#0d3a6b;color:var(--robot)} .human{background:#4a3a08;color:var(--human)}
- .agent{background:#0d3b1e;color:var(--agent)}
- .sum{font-size:1.15rem;font-weight:700}
- button{font:inherit;font-weight:600;padding:.6rem 1.4rem;border-radius:7px;cursor:pointer;border:1px solid var(--line)}
- .ok{background:var(--agent);color:#04260f;border-color:transparent}
- .no{background:transparent;color:var(--bad);border-color:var(--bad)}
- #status{margin-left:.75rem;color:var(--dim)}
- svg{width:100%;height:auto;display:block}
- .warn{color:var(--bad)}
- a{color:var(--robot)}
+ *{box-sizing:border-box}
+ body{margin:0;background:var(--bg);color:var(--fg);
+   font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+   -webkit-font-smoothing:antialiased}
+ a{color:var(--robot);text-decoration:none}
+ a:hover{text-decoration:underline}
+ code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+ .wrap{max-width:900px;margin:0 auto;padding:0 1.25rem}
+
+ header{border-bottom:1px solid var(--line);padding:1rem 0}
+ header .wrap{display:flex;justify-content:space-between;align-items:baseline;
+   flex-wrap:wrap;gap:.5rem}
+ .brand{font-weight:600}
+ .brand span{color:var(--dim);font-weight:400}
+ .tag{color:var(--dim);font-size:.8rem}
+
+ .hero{padding:3.5rem 0 2.5rem;border-bottom:1px solid var(--line)}
+ h1{font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.25;margin:0 0 1rem;font-weight:600;
+   letter-spacing:-.01em}
+ .claim{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--fg);margin:0 0 1.5rem;
+   padding-left:.9rem;border-left:3px solid var(--agent)}
+ .lede{color:var(--dim);max-width:62ch;margin:0 0 1.75rem}
+ .cta{display:flex;gap:.6rem;flex-wrap:wrap}
+ .btn{display:inline-block;padding:.55rem 1.1rem;border-radius:7px;font-weight:600;
+   font-size:.9rem;border:1px solid var(--line);background:var(--panel);color:var(--fg)}
+ .btn:hover{border-color:var(--dim);text-decoration:none}
+ .btn.primary{background:var(--robot);border-color:var(--robot);color:#04121f}
+
+ section{padding:2.75rem 0;border-bottom:1px solid var(--line)}
+ h2{font-size:1.15rem;margin:0 0 .5rem;font-weight:600}
+ h2 .n{color:var(--dim);font-weight:400;margin-right:.5rem}
+ .sub{color:var(--dim);max-width:64ch;margin:0 0 1.5rem}
+
+ .panel{background:var(--panel);border:1px solid var(--line);border-radius:9px;
+   padding:1.1rem 1.25rem}
+ .lbl{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);
+   margin-bottom:.6rem}
+
+ pre{background:var(--panel);border:1px solid var(--line);border-radius:9px;
+   padding:1rem 1.15rem;overflow-x:auto;font-size:.82rem;margin:0;line-height:1.55}
+ pre .c{color:var(--dim)}
+ pre .r{color:var(--bad)} pre .g{color:var(--agent)} pre .y{color:var(--human)}
+ pre .b{color:var(--robot)}
+
+ .stat{display:flex;gap:1.25rem;align-items:baseline;flex-wrap:wrap}
+ .big{font-size:clamp(2.4rem,8vw,3.4rem);font-weight:600;color:var(--bad);
+   line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+ .stat .what{color:var(--dim);max-width:44ch}
+
+ .grid{display:grid;gap:.85rem;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+ .grid h3{margin:0 0 .35rem;font-size:.92rem;font-weight:600}
+ .grid p{margin:0;color:var(--dim);font-size:.88rem}
+ .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:.45rem;
+   vertical-align:middle}
+
+ figure{margin:0}
+ /* Below ~620px the 880-wide viewBox would scale labels down to unreadable.
+    Scroll the diagram inside its own box instead of shrinking it — the page
+    itself must never scroll horizontally. */
+ .diagram{overflow-x:auto;-webkit-overflow-scrolling:touch}
+ figure svg{display:block;width:100%;min-width:620px;height:auto}
+ figcaption{color:var(--dim);font-size:.82rem;margin-top:.7rem}
+
+ .steps{display:grid;gap:.6rem;margin:0;padding:0;list-style:none}
+ .steps li{display:flex;gap:.75rem;align-items:flex-start}
+ .badge{flex:0 0 auto;font-size:.68rem;font-weight:600;letter-spacing:.05em;
+   text-transform:uppercase;padding:.2rem .5rem;border-radius:5px;border:1px solid;
+   margin-top:.15rem;min-width:62px;text-align:center}
+ .badge.robot{color:var(--robot);border-color:var(--robot)}
+ .badge.human{color:var(--human);border-color:var(--human)}
+ .badge.agent{color:var(--agent);border-color:var(--agent)}
+ .steps .txt{color:var(--dim);font-size:.9rem}
+ .steps .txt b{color:var(--fg);font-weight:600}
+
+ ul.notes{margin:0;padding-left:1.1rem;color:var(--dim)}
+ ul.notes li{margin-bottom:.7rem}
+ ul.notes b{color:var(--fg);font-weight:600}
+ .warnmark{color:var(--human)}
+
+ footer{padding:2rem 0 3rem;color:var(--dim);font-size:.85rem}
+ footer a{color:var(--dim);text-decoration:underline}
+ .spacer{height:.9rem}
 </style>
-<header>
-  <div><h1>Mise OS — dispatch rehearsal</h1>
-    <div class="sub">Generated from the dispatch the factory just produced. Approve what the robot will do.</div></div>
-  <div class="sub" id="meta">loading…</div>
-</header>
-<main>
-  <div class="panel"><div class="lbl">Simulated execution</div><div id="sim">…</div></div>
-  <div class="panel"><div class="lbl">Routed work</div><div id="tasks"></div>
-    <div class="sum" id="summary" style="margin-top:.75rem"></div></div>
-  <div class="panel"><div class="lbl">Human gate</div>
-    <div class="sub" style="margin-bottom:.75rem">You are approving the rehearsal above, not a JSON diff.
-      The approved plan is what deploys to the physical robot.</div>
-    <button class="ok" onclick="decide('approve')">Approve dispatch</button>
-    <button class="no" onclick="decide('reject')">Reject</button><span id="status"></span></div>
-</main>
-<script>
-let RUN = null;
 
-// Everything below renders from dispatch.json. Change the branch numbers in
-// factory/mise.js, re-run the factory, reload -- the simulation changes with it.
-async function load() {
-  const r = await fetch('/api/dispatch');
-  if (!r.ok) { document.getElementById('sim').innerHTML =
-    '<span class="warn">No dispatch yet — run the factory first.</span>'; return; }
-  const d = await r.json();
-  RUN = d.run;
+<header><div class="wrap">
+  <div class="brand">Mise&nbsp;OS <span>· the factory behind it</span></div>
+  <div class="tag">Agentic Software Factory · Port × Bright&nbsp;Data × SigNoz</div>
+</div></header>
 
-  const h = await (await fetch('/api/health')).json();
-  document.getElementById('meta').innerHTML =
-    `run <code>${d.run}</code> · trace <code>${(d.trace_id||'').slice(0,12)}…</code> · feed ` +
-    (h.contract_ok === false ? '<span class="warn">DEGRADED</span>' : 'healthy');
+<div class="hero"><div class="wrap">
+  <h1>An operating system for physical work — and the factory that builds&nbsp;it.</h1>
+  <p class="claim">The app is the test run. The factory is the deliverable.</p>
+  <p class="lede">Mise OS routes a unit of physical work — a restock, an inter-branch
+    transfer, a procurement pickup — to whoever should execute it: an AI agent, a robot,
+    or a human in the field. The factory is what builds and repairs Mise OS, and it is
+    started by a <em>signal</em> rather than by a person.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/abhijitbetigeri/agent-factory">Source on GitHub</a>
+    <a class="btn primary" id="consoleCta" href="/console">Open the console</a>
+    <a class="btn" href="https://abhijitbetigeri.github.io/agent-factory/mirror/">Live supplier feed</a>
+  </div>
+</div></div>
 
-  document.getElementById('summary').textContent = d.summary;
-  document.getElementById('tasks').innerHTML = d.tasks.map(t =>
-    `<div class="task"><span class="badge ${t.executor}">${t.executor}</span>
-       <div><strong>${t.kind}</strong> — ${t.rationale}</div></div>`).join('');
+<section><div class="wrap">
+  <h2><span class="n">01</span>A real defect, not a synthetic one</h2>
+  <p class="sub">Mise OS routes food between restaurant branches, and every routing
+    decision is arithmetic over scraped menu and supplier data. The dataset it inherited
+    was assembled by an earlier scraping pipeline — search, then a generic page scrape,
+    then LLM extraction — which failed silently on prices and left a measurable hole.</p>
+  <div class="panel">
+    <div class="lbl">menu.price_null_rate</div>
+    <div class="stat">
+      <div class="big">56.25%</div>
+      <div class="what">72 of 128 dish prices are null. Routing was running on data that
+        is 56% blind, and nothing was watching — no contract, no metric, no alert.</div>
+    </div>
+  </div>
+</div></section>
 
-  drawSim(d);
-}
+<section><div class="wrap">
+  <h2><span class="n">02</span>The loop</h2>
+  <p class="sub">Each tool does a job the other two cannot. Observability is not a
+    dashboard bolted on at the end — an alert is what <em>starts</em> the factory.</p>
 
-function drawSim(d) {
-  const tr = (d.transfers && d.transfers[0]) || null;
-  const need = d.need || {};
-  const cap = s => (s||'').charAt(0).toUpperCase() + (s||'').slice(1);
-  const donor = tr ? cap(tr.from) : '—', recip = cap(need.id || (tr && tr.to));
-  const qty = tr ? tr.qty : 0, exp = tr ? tr.expiryDays : null;
-  const buy = d.buy || {};
+  <figure>
+  <div class="diagram">
+  <svg viewBox="0 0 880 260" role="img"
+       aria-label="SigNoz alert triggers Port governance, which triages to a fix path, through a human gate to release; Bright Data repairs the scraper and re-verify closes the loop.">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#8b949e"/>
+      </marker>
+      <marker id="arg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#3fb950"/>
+      </marker>
+    </defs>
+    <g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="13">
 
-  document.getElementById('sim').innerHTML = `
-  <svg viewBox="0 0 880 260" role="img" aria-label="Simulated robot transfer">
-    <defs><marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L0,6 L8,3 z" fill="#58a6ff"/></marker></defs>
+      <!-- top row -->
+      <rect x="8"   y="34" width="150" height="52" rx="8" fill="#161b22" stroke="#f85149"/>
+      <text x="83"  y="57" text-anchor="middle" fill="#f85149" font-weight="600">SigNoz alert</text>
+      <text x="83"  y="74" text-anchor="middle" fill="#8b949e" font-size="11">the sensor</text>
 
-    <rect x="30" y="70" width="200" height="120" rx="10" fill="#161b22" stroke="#3fb950"/>
-    <text x="130" y="100" text-anchor="middle" fill="#e6edf3" font-size="15" font-weight="700">${donor}</text>
-    <text x="130" y="124" text-anchor="middle" fill="#8b949e" font-size="12">surplus donor</text>
-    <text x="130" y="150" text-anchor="middle" fill="#d29922" font-size="12" font-weight="600">
-      ${exp != null ? 'expires in ' + exp + ' days' : ''}</text>
-    <text x="130" y="172" text-anchor="middle" fill="#3fb950" font-size="13" font-weight="700">${qty} kg</text>
+      <rect x="206" y="34" width="150" height="52" rx="8" fill="#161b22" stroke="#58a6ff"/>
+      <text x="281" y="57" text-anchor="middle" fill="#58a6ff" font-weight="600">Port</text>
+      <text x="281" y="74" text-anchor="middle" fill="#8b949e" font-size="11">governance</text>
 
-    <rect x="650" y="70" width="200" height="120" rx="10" fill="#161b22" stroke="#f85149"/>
-    <text x="750" y="100" text-anchor="middle" fill="#e6edf3" font-size="15" font-weight="700">${recip}</text>
-    <text x="750" y="124" text-anchor="middle" fill="#8b949e" font-size="12">shortage</text>
-    <text x="750" y="150" text-anchor="middle" fill="#f85149" font-size="13" font-weight="700">
-      ${need.gap != null ? need.gap + ' kg short' : ''}</text>
-    <text x="750" y="172" text-anchor="middle" fill="#8b949e" font-size="12">
-      ${need.onHand != null ? 'on hand ' + need.onHand + ' / par ' + need.par : ''}</text>
+      <rect x="404" y="34" width="150" height="52" rx="8" fill="#161b22" stroke="#30363d"/>
+      <text x="479" y="57" text-anchor="middle" fill="#e6edf3" font-weight="600">triage</text>
+      <text x="479" y="74" text-anchor="middle" fill="#8b949e" font-size="11">fix path</text>
 
-    <line x1="240" y1="130" x2="640" y2="130" stroke="#30363d" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#a)"/>
-    <text x="440" y="118" text-anchor="middle" fill="#58a6ff" font-size="12" font-weight="600">
-      robot carries ${qty} kg ${d.ingredient || ''}</text>
+      <rect x="602" y="34" width="120" height="52" rx="8" fill="#161b22" stroke="#d29922"/>
+      <text x="662" y="57" text-anchor="middle" fill="#d29922" font-weight="600">human gate</text>
+      <text x="662" y="74" text-anchor="middle" fill="#8b949e" font-size="11">approve</text>
 
-    <g>
-      <rect x="-16" y="-14" width="32" height="28" rx="5" fill="#0d3a6b" stroke="#58a6ff"/>
-      <rect x="-9" y="-22" width="18" height="12" rx="2" fill="#3fb950"/>
-      <animateMotion dur="4s" repeatCount="indefinite" path="M250,130 L630,130"/>
+      <rect x="762" y="34" width="110" height="52" rx="8" fill="#161b22" stroke="#3fb950"/>
+      <text x="817" y="65" text-anchor="middle" fill="#3fb950" font-weight="600">release</text>
+
+      <line x1="160" y1="60" x2="202" y2="60" stroke="#8b949e" marker-end="url(#ar)"/>
+      <line x1="358" y1="60" x2="400" y2="60" stroke="#8b949e" marker-end="url(#ar)"/>
+      <line x1="556" y1="60" x2="598" y2="60" stroke="#8b949e" marker-end="url(#ar)"/>
+      <line x1="724" y1="60" x2="758" y2="60" stroke="#8b949e" marker-end="url(#ar)"/>
+
+      <!-- bottom row -->
+      <rect x="380" y="164" width="198" height="56" rx="8" fill="#161b22" stroke="#3fb950"/>
+      <text x="479" y="187" text-anchor="middle" fill="#3fb950" font-weight="600">brightdata scraper heal</text>
+      <text x="479" y="205" text-anchor="middle" fill="#8b949e" font-size="11">Bright Data repairs the feed</text>
+
+      <rect x="700" y="164" width="140" height="56" rx="8" fill="#161b22" stroke="#30363d"/>
+      <text x="770" y="187" text-anchor="middle" fill="#e6edf3" font-weight="600">re-verify</text>
+      <text x="770" y="205" text-anchor="middle" fill="#8b949e" font-size="11">null-rate under 5%</text>
+
+      <!-- triage down to heal -->
+      <path d="M479 90 L479 160" stroke="#8b949e" fill="none" marker-end="url(#ar)"/>
+      <line x1="582" y1="192" x2="696" y2="192" stroke="#8b949e" marker-end="url(#ar)"/>
+      <!-- re-verify back up to release -->
+      <path d="M840 192 L862 192 L862 92" stroke="#3fb950" fill="none" marker-end="url(#arg)"/>
+
+      <text x="8" y="150" fill="#8b949e" font-size="11">detection is ours — the CLI never decides a scraper is broken</text>
     </g>
+  </svg>
+  </div>
+  <figcaption>Bright Data is not a garnish: the feed it scrapes is the thing that fails,
+    and <code>scraper heal</code> is what fixes it.</figcaption>
+  </figure>
 
-    <circle cx="750" cy="215" r="7" fill="#d29922"/>
-    <text x="766" y="220" fill="#d29922" font-size="12" font-weight="600">human handoff at the service pass</text>
-    <text x="30" y="240" fill="#3fb950" font-size="12">
-      agent procures net ${buy.qty ?? 0} kg @ $${buy.unitPrice ?? 0}/kg = $${buy.cost ?? 0}</text>
-  </svg>`;
-}
+  <div class="spacer"></div>
+  <div class="grid">
+    <div class="panel">
+      <h3><span class="dot" style="background:var(--bad)"></span>SigNoz</h3>
+      <p>The nerves. Traces every stage, endpoint and background job. Its alerts
+        <em>start</em> the factory.</p>
+    </div>
+    <div class="panel">
+      <h3><span class="dot" style="background:var(--robot)"></span>Port</h3>
+      <p>The factory floor. Builds Mise OS, holds goals, decisions, risks and services,
+        and gates plan and release.</p>
+    </div>
+    <div class="panel">
+      <h3><span class="dot" style="background:var(--agent)"></span>Bright Data</h3>
+      <p>The senses — and the repair. The supplier feed is what breaks, and
+        <code>scraper heal</code> is what mends it.</p>
+    </div>
+  </div>
+</div></section>
 
-async function decide(decision) {
-  const s = document.getElementById('status');
-  s.textContent = 'recording…';
-  const r = await fetch('/api/approve', { method: 'POST', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ run: RUN, decision }) });
-  const j = await r.json();
-  s.innerHTML = r.ok ? `plan <code>${RUN}</code> → <strong>${j.approval_status}</strong> in Port`
-                     : `<span class="warn">${j.error}</span>`;
-}
-load();
+<section><div class="wrap">
+  <h2><span class="n">03</span>Two entry points, one pipeline</h2>
+  <p class="sub">So the factory demonstrably <b>builds</b>, not just repairs. Every stage is
+    one OTel span under a single <code>factory.run</code> root, and one Port entity carrying
+    that run's <code>trace_id</code> — so any node in the Port graph jumps straight to its
+    trace. If it is not traced, it did not happen.</p>
+<pre><span class="c"># a human asks</span>
+node factory/run.js --brief <span class="g">"Route the Downtown tomato shortage"</span>
+
+<span class="c"># a signal asks</span>
+node factory/run.js --incident <span class="g">data_source_broken</span>
+
+  brief → plan → build → verify → approve → release → audit</pre>
+
+  <div class="spacer"></div>
+  <div class="panel">
+    <div class="lbl">A run produces a real routing decision</div>
+    <div style="margin-bottom:.9rem"><b>Transfer 10kg, buy net 26kg @ $2.05 = $53.30</b></div>
+    <ul class="steps">
+      <li><span class="badge robot">robot</span><span class="txt"><b>transfer</b> — 10kg from Marina, expires in 2 days, use first</span></li>
+      <li><span class="badge human">human</span><span class="txt"><b>handoff</b> — crate handed to the cook at the service pass</span></li>
+      <li><span class="badge agent">agent</span><span class="txt"><b>procure</b> — only the net shortage is bought: 26kg @ $2.05/kg</span></li>
+    </ul>
+    <p class="sub" style="margin:.9rem 0 0;font-size:.88rem">Surplus moves before anything
+      is bought. A branch below its own par cannot donate. Nearest-expiry stock goes first.
+      Only the <em>net</em> shortage reaches procurement.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2><span class="n">04</span>You approve the rehearsal, not the diff</h2>
+  <p class="sub">The app generates a simulation <b>from the dispatch the factory just
+    produced</b> — this donor branch, this crate, this expiry window, this path, this
+    handoff. A different shortage draws a different simulation. The human watches what the
+    robot will do and approves <em>that</em>; the click writes <code>approval_status</code>
+    back to Port.</p>
+<pre>node app/server.js        <span class="c"># http://localhost:3000</span></pre>
+  <div class="spacer"></div>
+  <div class="panel">
+    <div class="lbl">Falsifiable</div>
+    <p style="margin:0;color:var(--dim)">Change the branch numbers in
+      <code>factory/mise.js</code>, re-run the factory, reload. The simulation must show a
+      different donor and quantity. If it does not, it is a hardcoded demo.</p>
+  </div>
+  <p class="sub" style="margin-top:1.1rem">The rehearsal is what a human approves against.
+    The same approved plan is what would deploy to a physical robot — the simulation is the
+    gate, not a decoration.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2><span class="n">05</span>The self-healing edge</h2>
+  <p class="sub">The supplier page's prices stop being text inside <code>.price</code> and
+    become an attribute on a renamed element — the kind of change a site redesign makes.
+    GitHub Pages republishes, and the contract catches it.</p>
+<pre>./scripts/break-mirror.sh        <span class="c"># a real commit that restructures the price markup</span>
+node factory/run.js --incident data_source_broken
+node factory/heal.js             <span class="c"># detect → human gate → repair → re-verify</span>
+
+supplier null-rate <span class="r">100.0%</span>  (threshold 5%) -&gt; <span class="r">FAIL</span>
+failing fields: <span class="y">name, price</span>
+release <span class="y">SKIPPED</span> (contract failed)</pre>
+  <p class="sub" style="margin-top:1.1rem"><b>Detection is ours, not the CLI's.</b> Bright
+    Data never decides a scraper is broken. <code>verify</code> computes the null-rate, and
+    <code>heal.js</code> passes the concrete failing field names into
+    <code>brightdata scraper heal</code> — it never heals blind.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2><span class="n">06</span>Honest notes</h2>
+  <p class="sub">What did not work, stated plainly. A factory you cannot trust the
+    reporting of is not a factory.</p>
+  <ul class="notes">
+    <li><b class="warnmark">The heal on <code>c_mirror</code> did not complete.</b>
+      Detection, the incident, the human gate and the heal driver all work — but Bright
+      Data had a refactor job running server-side that rejected new requests with
+      <code>409 Another refactor job is still in progress</code>. The CLI's 600s timeout is
+      client-side only; the job continues after it gives up. The repair itself <b>is</b>
+      proven on <code>c_real</code>, which <code>scraper heal</code> genuinely fixed from an
+      empty extraction to a full component list. So detect → gate → repair is real, but it
+      has not been demonstrated end to end on a single collector.</li>
+    <li><b>The 56.25% menu null-rate is evidence, not something the demo fixes.</b>
+      Re-scraping real restaurant menus was attempted and failed: every candidate renders
+      prices in JS behind a location picker — which is exactly why the original pipeline
+      left them null. The <em>live</em> contract runs on the supplier feed, which does
+      break and heal.</li>
+    <li><b>SigNoz is self-hosted</b>, so it cannot webhook into a local factory without a
+      tunnel. The orchestrator reads alert state rather than receiving a push.
+      Observability still triggers the factory; the transport is a poll.</li>
+    <li><b><code>fsis.usda.gov</code> is blocked</b> by Bright Data — "Domain not allowed".</li>
+    <li><b>Port's built-in <code>service</code> blueprint was accidentally reshaped</b> early
+      on. Ours is namespaced <code>factory_service</code>, and the apply script now refuses
+      to touch blueprints it did not create.</li>
+  </ul>
+</div></section>
+
+<footer><div class="wrap">
+  <a href="https://github.com/abhijitbetigeri/agent-factory">Repository</a> ·
+  <a href="https://abhijitbetigeri.github.io/agent-factory/mirror/">Supplier feed</a> ·
+  <a href="https://github.com/abhijitbetigeri/agent-factory/blob/main/docs/DEMO.md">Demo runbook</a>
+  <div style="margin-top:.6rem">Built for the Agentic Software Factory hackathon —
+    Port × Bright Data × SigNoz.</div>
+</div></footer>
+<script>
+// The console is served by the local app (node app/server.js). On the published static
+// page there is nothing at /console, so point visitors at the runbook instead.
+(function () {
+  var a = document.getElementById('consoleCta');
+  if (!a) return;
+  var local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  if (!local) {
+    a.href = 'https://github.com/abhijitbetigeri/agent-factory/blob/main/docs/DEMO.md';
+    a.textContent = 'How to run the console';
+  }
+})();
 </script>
