@@ -33,6 +33,15 @@
         "type": "string",
         "title": "Trace ID",
         "description": "Links this entity to its SigNoz trace. Every entity carries one."
+      },
+      "origin": {
+        "type": "string",
+        "title": "Origin",
+        "enum": [
+          "human",
+          "incident",
+          "scheduled"
+        ]
       }
     },
     "required": [

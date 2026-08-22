@@ -11,7 +11,7 @@ const stageFailure = meter.createCounter('factory.stage.failure');
 const nullRate = meter.createObservableGauge('scraper.field_null_rate');
 
 let currentNullRate = 0.0;
-nullRate.addCallback((r) => r.observe(currentNullRate, { field: 'price', collector: process.env.SCRAPER_STUDIO_COLLECTOR_ID || 'c_stub' }));
+nullRate.addCallback((r) => r.observe(currentNullRate, { field: 'price', collector: process.env.SCRAPER_REAL_COLLECTOR_ID || 'c_stub' }));
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const BREAK = process.env.FORCE_BREAK === '1';
@@ -54,7 +54,7 @@ async function main() {
         await sleep(90);
         if (currentNullRate > 0.05) {
           span.addEvent('scraper.heal.requested', {
-            'collector.id': process.env.SCRAPER_STUDIO_COLLECTOR_ID || 'c_stub',
+            'collector.id': process.env.SCRAPER_REAL_COLLECTOR_ID || 'c_stub',
             reason: 'price returns null on 62% of rows after site redesign',
           });
           throw new Error(`data contract violated: null_rate=${currentNullRate}`);

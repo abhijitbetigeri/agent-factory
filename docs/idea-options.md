@@ -1,6 +1,12 @@
 # The open decision: which use case
 
-Status: **UNDECIDED** as of 2026-08-22. Nothing downstream is blocked except
+Status: **DECIDED 2026-08-22 — #5 Incident-to-Fix.** Design in
+`docs/incident-to-fix.md`. The standing recommendation below was #3; #5 was chosen
+instead. The analysis is kept for the record, and #5's noted weakness (Bright Data
+as a garnish) is addressed head-on in the design by giving BD two load-bearing roles:
+it is the thing that breaks *and* the thing that repairs, plus triage context.
+
+Original status line: UNDECIDED as of 2026-08-22. Nothing downstream is blocked except
 `brightdata scraper create` (5-25 min), which needs a target URL.
 
 ## The two filters that actually matter

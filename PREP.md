@@ -28,7 +28,7 @@ This file is the setup runbook.
 |---|---|---|
 | Port | app.port.io (or app.us.port.io) | org + login; note **region (EU vs US)** — it changes every URL below |
 | Bright Data | brightdata.com → Scraper Studio | API key + some credit balance |
-| SigNoz Cloud | signoz.io → cloud trial | **ingestion key** + **region** (`ingest.<region>.signoz.cloud`) |
+| SigNoz | ~~cloud trial~~ → **self-hosted, no account needed** | nothing — `foundryctl cast -f casting.yaml` runs it locally on :8080 |
 
 Also worth doing: play with **demo.port.io** (no signup) to see a populated catalog before
 you model your own.
@@ -143,7 +143,11 @@ vs. current layout), let the null-rate check fail, and drive the heal from the a
 
 ## 4. SigNoz setup — ~30 min
 
-### 4a. Cloud (recommended for a hackathon; self-host burns time)
+### 4a. Exporter config
+
+> **DECIDED 2026-08-22: we self-host.** The stack is already running — see the SigNoz
+> section of `CLAUDE.md`. Use `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318` and no
+> ingestion key. The cloud recipe below is kept only as the fallback path.
 
 Node instrumentation — zero-code path:
 

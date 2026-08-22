@@ -3,6 +3,16 @@
     "port": {
       "type": "http",
       "url": "https://mcp.us.port.io/v1"
+    },
+    "bright-data": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@brightdata/mcp"
+      ],
+      "env": {
+        "API_TOKEN": "${BRIGHTDATA_API_KEY}"
+      }
     }
   }
 }

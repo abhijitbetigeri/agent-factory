@@ -21,8 +21,11 @@ Port UI -> org settings -> Credentials (app.us.getport.io) into `.env`, and
 org — creds from the EU org authenticate successfully and silently write to the wrong
 place. `.mcp.json` already points at `mcp.us.port.io`.
 
-**The use case is still undecided** — see `docs/idea-options.md`. It gates only
-`brightdata scraper create` (5-25 min), which is the schedule long pole.
+**USE CASE DECIDED: #5 Incident-to-Fix Factory** — see `docs/incident-to-fix.md`.
+SigNoz alert is the entry point; Port triages and gates; Bright Data both breaks
+(c_mirror's page changes -> null-rate spike -> incident class #1) and repairs
+(`scraper heal`) and informs (c_real scrapes upstream status during triage).
+13 blueprints applied, `incident` added as the entry-point entity.
 
 
 State of prep when this repo was created. A fresh Claude Code session in this directory
@@ -60,16 +63,33 @@ should read this first; project memory for this path is already seeded.
   (idempotent, dependency-ordered). Idea-agnostic — safe to apply the moment Port
   machine credentials exist. See `port/README.md`.
 
-## Blocked on the user — all browser OAuth, ~20 min total
+## Credentials — ALL CLEARED 2026-08-22 ✅
 
-- [ ] Port account (**US region**) → then `./scripts/setup-port-mcp.sh` + OAuth in `claude`
-- [ ] `brightdata login` → then `./scripts/setup-brightdata.sh`
-- [ ] SigNoz Cloud account (**US region**) → ingestion key into `.env`
+- [x] Port — client credentials in `.env`, `port` MCP registered
+- [x] Bright Data — logged in, key in `.env`, balance $50, zones + skills + MCP done
+- [x] SigNoz — **self-hosted** docker compose, not cloud. `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`
+
+`./scripts/verify.sh` is now **13 passed / 0 failed / 1 warned**. The single warning is
+`SCRAPER_REAL_COLLECTOR_ID`, gated on the use-case choice — that is the ONLY thing left.
+
+Two bugs found and fixed while wiring this up:
+1. `brightdata add mcp --project` wrote the literal API token into the **committed**
+   `.claude/settings.json`. Moved to `.mcp.json` via `${BRIGHTDATA_API_KEY}`; `verify.sh`
+   now fails if a literal key reappears. Never run that command again.
+2. `verify.sh`'s logs check grepped stdout for `traceId`, which only the console exporter
+   prints — so it passed only while SigNoz was UNconfigured. Now mode-aware and asserts
+   the record actually lands in ClickHouse.
+
+⚠️ Launch Claude Code with the env loaded or `.mcp.json` expansion yields an
+unauthenticated Bright Data MCP: `set -a && . ./.env && set +a && claude`
 
 ## Region — DECIDED 2026-08-22: US
 
-Pinned in `CLAUDE.md` and `.env`. `PORT_MCP_URL=https://mcp.us.port.io/v1`, SigNoz
-`ingest.us.signoz.cloud`. Both accounts must be created in the US region to match.
+Pinned in `CLAUDE.md` and `.env`. `PORT_MCP_URL=https://mcp.us.port.io/v1`. Port US
+verified live: `api.us.port.io` issues a token for `org_ZYv2lWwJzrARBLVA`, and the same
+credentials 401 against the EU endpoint — so the abandoned EU org cannot be hit by accident.
+SigNoz no longer follows this decision: it is **self-hosted on localhost**, so region
+applies to Port only.
 `.env` now exists (copied from `.env.example`); only the three secrets are still empty.
 
 ## Biggest schedule risk

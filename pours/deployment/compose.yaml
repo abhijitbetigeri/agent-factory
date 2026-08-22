@@ -16,6 +16,10 @@ services:
     environment:
     - SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_DSN=tcp://signoz-telemetrystore-clickhouse-0-0:9000
     - SIGNOZ_OTEL_COLLECTOR_TIMEOUT=10m
+    # ingester.yaml references ${env:LOW_CARDINAL_EXCEPTION_GROUPING} but nothing
+    # defines it. Unresolved, the collector rejects the server-pushed config and
+    # falls back to a default with NO OTLP receivers, so 4317/4318 never open.
+    - LOW_CARDINAL_EXCEPTION_GROUPING=false
     image: signoz/signoz-otel-collector:latest
     networks:
       signoz-network:
@@ -162,6 +166,10 @@ services:
     environment:
     - SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_DSN=tcp://signoz-telemetrystore-clickhouse-0-0:9000
     - SIGNOZ_OTEL_COLLECTOR_TIMEOUT=10m
+    # ingester.yaml references ${env:LOW_CARDINAL_EXCEPTION_GROUPING} but nothing
+    # defines it. Unresolved, the collector rejects the server-pushed config and
+    # falls back to a default with NO OTLP receivers, so 4317/4318 never open.
+    - LOW_CARDINAL_EXCEPTION_GROUPING=false
     image: signoz/signoz-otel-collector:latest
     networks:
     - signoz-network

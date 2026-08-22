@@ -1,0 +1,108 @@
+{
+  "identifier": "incident",
+  "title": "Incident",
+  "icon": "Alert",
+  "schema": {
+    "properties": {
+      "incident_class": {
+        "type": "string",
+        "title": "Class",
+        "enum": [
+          "data_source_broken",
+          "endpoint_failing",
+          "performance_regression"
+        ]
+      },
+      "severity": {
+        "type": "string",
+        "title": "Severity",
+        "enum": [
+          "sev1",
+          "sev2",
+          "sev3"
+        ]
+      },
+      "detected_by": {
+        "type": "string",
+        "title": "Detected By",
+        "description": "Which SigNoz alert fired. Observability is the sensor."
+      },
+      "signal": {
+        "type": "string",
+        "title": "Triggering Signal",
+        "description": "e.g. scraper.field_null_rate=0.42 > 0.05"
+      },
+      "triage_summary": {
+        "type": "string",
+        "title": "Agent Triage Summary",
+        "description": "What the agent concluded from the traces"
+      },
+      "upstream_context": {
+        "type": "string",
+        "title": "Upstream Context",
+        "description": "Fetched by Bright Data: status pages / release notes"
+      },
+      "fix_path": {
+        "type": "string",
+        "title": "Fix Path",
+        "enum": [
+          "scraper_heal",
+          "code_patch",
+          "no_action"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "title": "Status",
+        "enum": [
+          "open",
+          "triaging",
+          "awaiting_approval",
+          "resolved",
+          "rejected"
+        ]
+      },
+      "detected_at": {
+        "type": "string",
+        "title": "Detected At",
+        "format": "date-time"
+      },
+      "resolved_at": {
+        "type": "string",
+        "title": "Resolved At",
+        "format": "date-time"
+      },
+      "trace_id": {
+        "type": "string",
+        "title": "Trace ID",
+        "description": "Jumps straight to the SigNoz trace that caused this"
+      }
+    },
+    "required": [
+      "incident_class",
+      "status"
+    ]
+  },
+  "relations": {
+    "affects_service": {
+      "target": "factory_service",
+      "required": false,
+      "many": false
+    },
+    "from_verification": {
+      "target": "verification",
+      "required": false,
+      "many": false
+    },
+    "raised_brief": {
+      "target": "brief",
+      "required": false,
+      "many": false
+    },
+    "repaired_by": {
+      "target": "heal_event",
+      "required": false,
+      "many": false
+    }
+  }
+}

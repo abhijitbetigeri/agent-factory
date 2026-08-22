@@ -10,13 +10,26 @@ npm run smoke        # happy path  → factory.run OK, released
 npm run smoke:fail   # broken path → verify fails, escalates
 ```
 
-## Run against SigNoz Cloud
+## Run against self-hosted SigNoz — THIS IS WHAT WE USE
+Stack is cast by `foundryctl cast -f casting.yaml` from the repo root. No key: a
+self-hosted ingester accepts unauthenticated OTLP.
+```bash
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318
+npm run smoke
+```
+Verified end-to-end 2026-08-22 against SigNoz v0.138.0 — traces, metrics and logs all
+land. Look for service `factory-orchestrator` in SigNoz → Services (UI on :8080).
+
+## Run against SigNoz Cloud (fallback path)
 ```bash
 export SIGNOZ_INGESTION_KEY=...      # from SigNoz Cloud settings
 export SIGNOZ_REGION=us              # or eu / in
 npm run smoke
 ```
-Then look for service `factory-orchestrator` in SigNoz → Services.
+
+> ⚠️ Set **exactly one** of `OTEL_EXPORTER_OTLP_ENDPOINT` / `SIGNOZ_INGESTION_KEY`.
+> With neither, `tracing.js` falls back to the console exporter — the run looks green
+> and every span is discarded. The banner it prints on startup names the active mode.
 
 ## What it emits — this is the contract
 ```

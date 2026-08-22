@@ -46,17 +46,24 @@ if [[ -n "${REGION:-}" && "$REGION" != "$DETECTED" ]]; then
 fi
 
 # Dependency order: a relation's target blueprint must already exist.
+OWNED="port/.applied"        # identifiers this script has successfully created
+touch "$OWNED"
+
 ORDER=(goal factory_service technical_decision risk brief plan data_source
-       build_run verification heal_event release agent_invocation)
+       build_run verification heal_event release agent_invocation incident)
 
 for id in "${ORDER[@]}"; do
   f="port/blueprints/$id.json"
   code=$(curl -s -o /tmp/port-bp.out -w '%{http_code}' -X POST "$API/blueprints" \
     -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' --data-binary "@$f")
-  if [[ "$code" == "409" && "${PORT_ALLOW_OVERWRITE:-0}" != "1" ]]; then
-    echo "  ! $id already exists and is NOT ours to reshape — skipping."
-    echo "    A PUT here would strip its schema and break any scorecard bound to it."
-    echo "    Re-run with PORT_ALLOW_OVERWRITE=1 if you really mean to overwrite."
+  # On 409 the blueprint already exists. Updating one WE created is normal and must
+  # stay cheap (re-running the whole script is the "run it again" story). Reshaping a
+  # blueprint we did NOT create is what broke Port's built-in 'service' earlier, so
+  # that still requires an explicit override. OWNED tracks what we have created.
+  if [[ "$code" == "409" ]] && ! grep -qx "$id" "$OWNED" 2>/dev/null && [[ "${PORT_ALLOW_OVERWRITE:-0}" != "1" ]]; then
+    echo "  ! $id exists but we did not create it — skipping."
+    echo "    A PUT would strip its schema and break any scorecard bound to it."
+    echo "    Re-run with PORT_ALLOW_OVERWRITE=1 to overwrite anyway."
     continue
   elif [[ "$code" == "409" ]]; then
     code=$(curl -s -o /tmp/port-bp.out -w '%{http_code}' -X PUT "$API/blueprints/$id" \
@@ -64,6 +71,7 @@ for id in "${ORDER[@]}"; do
     echo "  ~ $id updated ($code)"
   elif [[ "$code" =~ ^2 ]]; then
     echo "  + $id created"
+    grep -qx "$id" "$OWNED" 2>/dev/null || echo "$id" >> "$OWNED"
   else
     echo "  ! $id FAILED ($code)"; cat /tmp/port-bp.out; echo
   fi

@@ -11,11 +11,18 @@ const { resourceFromAttributes } = require('@opentelemetry/resources');
 
 const KEY = process.env.SIGNOZ_INGESTION_KEY;
 const REGION = process.env.SIGNOZ_REGION || 'us';
-const ENDPOINT = process.env.OTEL_EXPORTER_OTLP_ENDPOINT || `https://ingest.${REGION}.signoz.cloud:443`;
+const EXPLICIT = process.env.OTEL_EXPORTER_OTLP_ENDPOINT;
 const SERVICE = process.env.OTEL_SERVICE_NAME || 'factory-orchestrator';
 
-const remote = Boolean(KEY);
-const headers = remote ? { 'signoz-ingestion-key': KEY } : {};
+// Two supported deployments, auto-detected — getting this wrong is silent and lethal:
+//   self-hosted : OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318, no key needed
+//   cloud       : SIGNOZ_INGESTION_KEY set, endpoint derived from SIGNOZ_REGION
+// Exporting was previously gated on KEY alone, so a self-hosted setup silently sent
+// every span, metric and log to the console while the dashboard sat empty.
+const ENDPOINT = EXPLICIT || `https://ingest.${REGION}.signoz.cloud:443`;
+const remote = Boolean(KEY || EXPLICIT);
+const headers = KEY ? { 'signoz-ingestion-key': KEY } : {};
+const MODE = EXPLICIT ? 'self-hosted' : KEY ? 'cloud' : 'console (nothing configured)';
 
 const sdk = new NodeSDK({
   resource: resourceFromAttributes({ 'service.name': SERVICE, 'deployment.environment': process.env.NODE_ENV || 'dev' }),
@@ -40,7 +47,7 @@ const sdk = new NodeSDK({
 });
 
 sdk.start();
-console.error(`[otel] traces+metrics+logs -> ${remote ? ENDPOINT : 'console (no SIGNOZ_INGESTION_KEY set)'} as service=${SERVICE}`);
+console.error(`[otel] traces+metrics+logs -> ${remote ? ENDPOINT : 'console'} [${MODE}] as service=${SERVICE}`);
 
 // The factory's logging front door. Never use console.log for factory events:
 // these records are trace-correlated, the console is not.

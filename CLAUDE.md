@@ -26,22 +26,24 @@ verified, what is blocked.
 
 ```
 BRIGHTDATA_CLI="npx --yes --package @brightdata/cli brightdata"
-# ⚠️ USE CASE NOT YET CHOSEN. Targets below are placeholders.
-# The two-collector pattern (c_real + c_mirror) is a PROPOSAL in docs/plan-12h.md,
-# not a decision. Fill these in once the idea is settled — see docs/idea-options.md.
-SCRAPER_REAL_COLLECTOR_ID=<c_xxxxxxxxxxxx>       # TODO: after `scraper create`
-SCRAPER_REAL_TARGET_URL=<https://...>            # TODO: depends on chosen use case
+# Use case: Incident-to-Fix Factory (docs/incident-to-fix.md). Two collectors.
+# c_real — live upstream status page, scraped during triage for "did a dependency
+#          change under us?". Also the open-web credibility artifact.
+SCRAPER_REAL_COLLECTOR_ID=c_mt4sihtk1e4weky7id
+SCRAPER_REAL_TARGET_URL=https://www.githubstatus.com/
 
-SCRAPER_MIRROR_COLLECTOR_ID=<c_xxxxxxxxxxxx>     # TODO: only if using the mirror harness
-SCRAPER_MIRROR_TARGET_URL=<https://USER.github.io/agentic-factory/mirror/>  # TODO
+# c_mirror — the app's data source, and the deterministic break harness. Breaking it
+#            is a commit to mirror/index.html that alters the price markup.
+SCRAPER_MIRROR_COLLECTOR_ID=<c_xxxxxxxxxxxx>     # TODO: create still running
+SCRAPER_MIRROR_TARGET_URL=https://abhijitbetigeri.github.io/agent-factory/mirror/
 
-SCRAPER_REQUIRED_FIELDS=<field_a,field_b>        # drives the null-rate health check
+SCRAPER_REQUIRED_FIELDS=name,price               # `price` is the field that breaks
 SCRAPER_NULL_RATE_THRESHOLD=0.05
 ```
 
 **Run the pipeline:**
 ```bash
-brightdata scraper run $SCRAPER_STUDIO_COLLECTOR_ID $SCRAPER_TARGET_URL --pretty
+brightdata scraper run $SCRAPER_REAL_COLLECTOR_ID $SCRAPER_REAL_TARGET_URL --pretty
 # batch:  --urls a,b,c   |   --input-file urls.txt
 # fast single-URL path:  --sync --sync-timeout 50
 ```
@@ -53,8 +55,8 @@ brightdata scraper create <url> "<natural language description of fields>"
 
 **Repair a scraper when the site's HTML changes:**
 ```bash
-brightdata scraper heal $SCRAPER_STUDIO_COLLECTOR_ID "<what is broken>" --url $SCRAPER_TARGET_URL
-brightdata scraper approve $SCRAPER_STUDIO_COLLECTOR_ID --url $SCRAPER_TARGET_URL
+brightdata scraper heal $SCRAPER_REAL_COLLECTOR_ID "<what is broken>" --url $SCRAPER_REAL_TARGET_URL
+brightdata scraper approve $SCRAPER_REAL_COLLECTOR_ID --url $SCRAPER_REAL_TARGET_URL
 # unattended (factory-driven): append --auto-approve --auto-save to `heal`
 ```
 
@@ -65,6 +67,27 @@ Never call `heal` blind — always pass the concrete failing-field message from 
 
 **Auth:** `brightdata login` (browser) or `export BRIGHTDATA_API_KEY=...` in headless/CI.
 Never inline a key into a command that gets committed.
+
+### Setup state — DONE 2026-08-22
+- Logged in; key synced into `.env` as `BRIGHTDATA_API_KEY` (gitignored). Balance **$50**.
+- Zones `cli_unlocker` + `cli_browser` auto-created by `login`. Live `scrape` verified.
+- Skills installed project-scoped: `.claude/skills/{brightdata-cli,scraper-builder}`.
+- MCP `bright-data` declared in `.mcp.json` (5 tools: `search_engine`, `scrape_as_markdown`,
+  `search_engine_batch`, `scrape_batch`, `discover`). Handshake verified.
+
+> ⚠️ **Never run `brightdata add mcp --project`.** It writes the literal API token into
+> `.claude/settings.json`, which is **committed**. `.mcp.json` instead uses
+> `${BRIGHTDATA_API_KEY}` expansion. `verify.sh` now fails if a literal key appears in
+> either file.
+
+> ⚠️ **Launch Claude Code with the env loaded**, or `${BRIGHTDATA_API_KEY}` resolves to
+> empty and the MCP server starts unauthenticated:
+> ```bash
+> set -a && . ./.env && set +a && claude
+> ```
+
+Only `SCRAPER_REAL_COLLECTOR_ID` / `SCRAPER_REAL_TARGET_URL` remain — both gated on the
+use-case choice in `docs/idea-options.md`.
 
 ---
 
@@ -84,8 +107,11 @@ Never inline a key into a command that gets committed.
 
 ## SigNoz
 
-- Endpoint `https://ingest.<region>.signoz.cloud:443`, key from env
-  (`SIGNOZ_INGESTION_KEY`) — never hardcoded.
+- **Deployment: SELF-HOSTED via docker compose** (decided 2026-08-22). `.env` sets
+  `OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318`; `SIGNOZ_INGESTION_KEY` stays EMPTY.
+  UI at http://localhost:8080. Cloud would instead be `https://ingest.<region>.signoz.cloud:443`
+  with the key set and the endpoint empty — **set exactly one**, never both.
+  `tracing.js` auto-detects; getting it wrong fails silently to the console.
 - Manual spans required for each factory stage: `stage.plan`, `stage.build`,
   `stage.verify`, `stage.approve`, `stage.release`, under a root `factory.run` span.
 - Emit span **events** for `scraper.heal.requested|approved|failed`.
@@ -100,6 +126,21 @@ Never inline a key into a command that gets committed.
   throughput, errors, and `scraper.field_null_rate` with its threshold drawn on it.
 - `console.log` is not observability. If you're tempted to add one, add a span event —
   or a real OTel log record, now that we have that pipeline.
+
+### Setup state — DONE 2026-08-22
+Stack healthy (ingester 4317/4318, ClickHouse, UI 8080). End-to-end verified in ClickHouse:
+- **Traces** — all 6 spans (`factory.run` + 5 stages) with correct nesting and status.
+- **Metrics** — `factory.run.duration.*` and `scraper.field_null_rate` (the load-bearing one).
+- **Logs** — arrive carrying `trace_id`/`span_id`.
+
+> ⚠️ `log()` only correlates when called **inside an active span**. Emitted outside one it
+> still ships, but with empty `trace_id` — it will not link back to anything in the UI.
+
+> Inspect directly when the UI is ambiguous:
+> ```bash
+> docker exec signoz-telemetrystore-clickhouse-0-0 clickhouse-client -q \
+>   "SELECT name,statusCodeString FROM signoz_traces.distributed_signoz_index_v3 WHERE traceID='<id>'"
+> ```
 
 ## Secrets
 All keys live in `.env` (gitignored). Never commit a key, never paste one into a command
