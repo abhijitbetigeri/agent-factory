@@ -13,12 +13,15 @@ slices — if you honour those, parallel work composes without coordination.
 Update the status cell in this table when you pick up or finish a slice. This file is
 the single source of truth for who is doing what.
 
-| Slice | Owns (exclusive) | Depends on | Status |
-|---|---|---|---|
-| **1. Factory core** | `factory/` | — | ✅ **DONE** |
-| **2. Mise OS app** | `app/` | contract C1, C2 | ⬜ not started |
-| **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | contract C3, C4 | ⬜ not started |
-| **4. Dashboard + docs** | `README.md`, `docs/`, SigNoz dashboard | C5 | ⬜ not started |
+Priority order is **3 → 2 → 4**, not numeric order. Slice 3 is the submission; slice 2
+is the pitch; slice 4 is evidence. If time runs out, it runs out on slice 4.
+
+| Slice | Owns (exclusive) | Depends on | Priority | Status |
+|---|---|---|---|---|
+| **1. Factory core** | `factory/` | — | — | ✅ **DONE** |
+| **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | C3, C4 | **1st** | ⬜ not started |
+| **2. Sim + approval** | `app/` | C1, C2 | **2nd** | ⬜ not started |
+| **4. Dashboard + README** | `README.md`, `docs/`, SigNoz dashboard | C5 | 3rd | ⬜ not started |
 
 **Known dead ends — do not retry:**
 - `fsis.usda.gov` — Bright Data rejects it, "Domain not allowed"
@@ -48,22 +51,36 @@ node run.js --incident data_source_broken
 
 ---
 
-## Slice 2 — Mise OS app  ⬜
+## Slice 2 — Runtime-generated sim + approval gate  ⬜  ← the pitch
 
-**Goal.** The thing being operated on. Deliberately thin: it exists to have endpoints,
-a background job, and a visible failure mode. **Resist every feature beyond this list.**
+**The claim, stated precisely so it survives scrutiny.** The simulation is **not** a
+pre-recorded demo. It is generated from `data/dispatch.json` — the dispatch the factory
+just produced. A different shortage produces a different sim: different donor branch,
+different crate, different path, different handoff. **The human approves by watching
+the rehearsal of the physical action, not by reading a JSON diff.** The approved plan
+is what would deploy to the physical robot.
+
+Be careful with wording in the README and video: the *shipped Unity SCIM sim* is a
+pre-built artifact and cannot be generated at runtime. What is generated at runtime is
+**this preview**, from the dispatch. The Unity sim is the execution environment being
+rehearsed *for*, and is linked as such. Do not claim Unity scenes are synthesised live.
 
 **Owns:** `app/` only.
 
 **Build:**
-- `GET /api/dispatch` — serves the current routing decision from `data/dispatch.json`
-- `GET /api/health` — data freshness + last null-rate from `data/verification.json`
-- `POST /api/dispatch/:id/decision` — human accept/reject; flips the Port `plan`
-  entity's `approval_status` (see contract C2)
-- Background worker on an interval: runs the Bright Data mirror collector, writes
+- **Sim view generated from the dispatch** — top-down branch layout, the donor branch
+  (Marina, 2 days to expiry), the recipient (Downtown, 36 short), the robot path
+  between them, the crate pick, and the handoff at the service pass. SVG or canvas,
+  animated, driven entirely by `dispatch.json` fields. No hardcoded scenario.
+- **Approve / Reject on that view.** Clicking writes to Port: flips
+  `plan-<RUN>.approval_status` and sets `approved_by` (contract C2). This IS the human
+  gate — approval is granted against a rehearsal, which is the whole argument for why
+  a gate belongs here at all.
+- `GET /api/dispatch` — serves `data/dispatch.json`
+- `GET /api/health` — freshness + last null-rate
+- **Background worker** on an interval: runs the Bright Data mirror collector, writes
   `data/supplier-feed.json`, emits its own span + metrics
-- One page: the three routed tasks with their executor badges (robot / human / agent),
-  the $53.30 summary, freshness timestamp, and Accept / Reject buttons
+- Link out to the shipped Unity SCIM sim as the physical execution environment
 
 **Why the endpoint + worker pair is mandatory:** the SigNoz track is judged on "metric
 tracking across **data endpoints and background jobs**". Stage spans alone do not
@@ -71,10 +88,16 @@ satisfy it. Instrument both with `factory/telemetry.js` — never `console.log`.
 
 **Done when:**
 ```bash
-curl -s localhost:3000/api/health | jq .           # returns freshness + null_rate
+curl -s localhost:3000/api/health | jq .           # freshness + null_rate
 curl -s localhost:3000/api/dispatch | jq '.tasks'  # 3 tasks, 3 executors
-# and a span named http.server + worker.scrape appears in SigNoz
+# the sim renders Marina -> Downtown from dispatch.json, not from hardcoded values
+# Approve flips plan-<RUN>.approval_status in Port
+# spans http.server.* and worker.scrape appear in SigNoz
 ```
+
+**Proof it is runtime-generated:** edit the branch numbers in `factory/mise.js`, re-run
+the factory, reload — the sim must show a different donor and quantity. If it does not,
+it is a hardcoded demo and the pitch is false.
 
 ---
 
@@ -114,7 +137,7 @@ opens an incident, Bright Data repairs it, a human approves, re-verify goes gree
 - **README**: what was built, the 56.25% -> X% null-rate story, how to run it, and an
   honest note that SigNoz is self-hosted so the orchestrator polls alert state rather
   than receiving a webhook.
-- **Demo video beats** are in `docs/incident-to-fix.md`.
+- **Demo video beats** are in `docs/DEMO.md` — the fixed shot list. Build to it.
 
 ---
 
