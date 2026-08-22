@@ -31,13 +31,18 @@ else
   grep -q 'class="price"' "$M" || { echo "!! $M already broken (no .price nodes) — nothing to break."; \
                                     echo "   run: $0 --reset"; exit 1; }
   python3 -c "
-import re,sys
+import re
 s=open('mirror/index.html').read()
-# The price stops being text inside .price and moves into an attribute on a renamed
-# element. Selectors that worked yesterday now find an empty node.
-s2=re.sub(r'<div class=\"price\">\\\$([\d.]+)</div>', r'<div class=\"amt\" data-cost=\"\1\"></div>', s)
+# Break ONLY the price field, and leave the row structure intact. This is what a real
+# site tweak looks like: the rows still parse, the product names still extract, but the
+# price is no longer text where it used to be. A collector that returns rows with one
+# null field is both a truer failure mode and something heal can actually repair -- an
+# earlier, more destructive break renamed the row container too, the extraction
+# returned zero rows, and heal timed out at 600s with nothing to anchor on.
+s2=re.sub(r'<div class=\\"price\\">\\\$([\d.]+)</div>',
+          r'<div class=\\"price\\"><span data-amount=\\"\\1\\"></span></div>', s)
 open('mirror/index.html','w').write(s2)
-print('  rewrote', s.count('class=\"price\"'), 'price nodes -> .amt[data-cost]')
+print('  emptied', s.count('class=\\"price\\"'), 'price nodes (rows + names left intact)')
 "
   MSG="Supplier site redesign: price markup restructured"
   echo "==> price markup restructured"
