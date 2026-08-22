@@ -68,9 +68,42 @@ PYBP
 echo "== bright data =="
 BD="npx --yes --package @brightdata/cli brightdata"
 $BD --version >/dev/null 2>&1 && ok "CLI runs" || no "CLI failed"
+# c_mirror is the LOAD-BEARING collector: it feeds the data contract that breaks,
+# alerts and heals (CONTRACTS C3/C4). Check it strictly -- it returns well inside 50s.
+if [[ -n "${SCRAPER_MIRROR_COLLECTOR_ID:-}" && -n "${SCRAPER_MIRROR_TARGET_URL:-}" ]]; then
+  if $BD scraper run "$SCRAPER_MIRROR_COLLECTOR_ID" "$SCRAPER_MIRROR_TARGET_URL" \
+       --sync --sync-timeout 50 --pretty >/tmp/bd-mirror.json 2>&1; then
+    rate=$(node -e "
+      process.env.SCRAPER_REQUIRED_FIELDS='${SCRAPER_REQUIRED_FIELDS:-name,price}';
+      const s=require('$R/factory/supplier.js'), fs=require('fs');
+      const t=fs.readFileSync('/tmp/bd-mirror.json','utf8');
+      console.log(s.nullRate(JSON.parse(t.slice(t.indexOf('[')))).rate);
+    " 2>/dev/null)
+    if [[ -n "$rate" ]] && node -e "process.exit(${rate:-1} <= ${SCRAPER_NULL_RATE_THRESHOLD:-0.05} ?0:1)"; then
+      ok "c_mirror data contract holds (null rate $rate)"
+    else
+      no "c_mirror null rate $rate exceeds ${SCRAPER_NULL_RATE_THRESHOLD:-0.05} — mirror may still be broken (./scripts/break-mirror.sh --reset)"
+    fi
+  else
+    no "c_mirror run failed (see /tmp/bd-mirror.json)"
+  fi
+fi
+
+# c_real is triage-only and routinely exceeds the CLI's 50s sync cap (50 is the max
+# allowed), so --sync failed a perfectly working collector. Poll instead, and only
+# WARN on slowness -- a slow triage collector must not fail the whole preflight.
 if [[ -n "${SCRAPER_REAL_COLLECTOR_ID:-}" && "${SCRAPER_REAL_COLLECTOR_ID:-}" != \<* && -n "${SCRAPER_REAL_TARGET_URL:-}" ]]; then
-  $BD scraper run "$SCRAPER_REAL_COLLECTOR_ID" "$SCRAPER_REAL_TARGET_URL" --sync --sync-timeout 50 >/tmp/bd.json 2>&1 \
-    && ok "collector returns data" || no "collector run failed (see /tmp/bd.json)"
+  $BD scraper run "$SCRAPER_REAL_COLLECTOR_ID" "$SCRAPER_REAL_TARGET_URL" --pretty >/tmp/bd.json 2>&1 &
+  bdpid=$!
+  for _ in $(seq 1 60); do kill -0 $bdpid 2>/dev/null || break; sleep 2; done
+  if kill -0 $bdpid 2>/dev/null; then
+    kill $bdpid 2>/dev/null; wait $bdpid 2>/dev/null
+    wn "c_real slower than 120s (triage only, not load-bearing)"
+  elif wait $bdpid && grep -q '"components"' /tmp/bd.json; then
+    ok "c_real returns data"
+  else
+    no "c_real run failed (see /tmp/bd.json)"
+  fi
 fi
 
 # Secret hygiene: `brightdata add mcp --project` writes the literal token into

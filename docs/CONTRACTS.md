@@ -102,6 +102,23 @@ Both IDs live in `.env` and `CLAUDE.md`. `heal` on `c_mirror` is proven working;
 
 `fsis.usda.gov` is **blocked** by Bright Data ("Domain not allowed"). Do not retry it.
 
+> ⚠️ **`scraper create` / `scraper run` against the mirror fails while the mirror is
+> broken.** The break removes every visible price (`.price` text → empty
+> `.amt[data-cost]`), so Bright Data's template generator finds nothing to extract and
+> returns *"unable to generate a working code template for the site."* That is the
+> break working as designed, not a Bright Data fault. **Reset before building or
+> rebuilding any collector**, and leave the mirror healthy at the end of a rehearsal:
+> ```bash
+> ./scripts/break-mirror.sh --reset   # then wait ~60s for GitHub Pages
+> ```
+> `mirror/index.baseline.html` is the pristine copy `--reset` restores from. It is now
+> snapshotted automatically before the first break — previously it was referenced but
+> never created, which made a break irreversible.
+
+> ⚠️ **`c_real` exceeds the CLI's 50s `--sync` cap** (50 is the maximum the CLI accepts).
+> Run it without `--sync` to poll. Preflight treats c_real slowness as a warning only —
+> it is triage, not load-bearing. `c_mirror` is the one that must pass.
+
 ---
 
 ## C5 — Telemetry names
