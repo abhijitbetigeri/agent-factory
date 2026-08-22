@@ -21,9 +21,9 @@ not points. Never start it while 3, 2 or 4 are open.
 | Slice | Owns (exclusive) | Depends on | Priority | Status |
 |---|---|---|---|---|
 | **1. Factory core** | `factory/` | — | — | ✅ **DONE** |
-| **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | C3, C4 | **1st** | ✅ **DONE** — break + detect proven; heal verified |
-| **2. Sim + approval** | `app/` | C1, C2 | **2nd** | ✅ **DONE** — sim renders from dispatch.json, approve writes to Port |
-| **4. Dashboard + README** | `README.md`, `docs/`, SigNoz dashboard | C5 | 3rd | ⬜ not started |
+| **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | C3, C4 | **1st** | 🟡 **PARTIAL** — break + detect proven live; heal on c_mirror blocked by BD `409 refactor in progress`. Repair itself proven on c_real. |
+| **2. Sim + approval** | `app/` | C1, C2 | **2nd** | ✅ **DONE** — verified: endpoints, approve→Port (`approved_by: human (via simulation rehearsal)`), falsifiability check passed |
+| **4. Dashboard + README** | `README.md`, `docs/`, SigNoz dashboard | C5 | 3rd | 🟡 **PARTIAL** — README + DEMO.md done; **SigNoz dashboard NOT built** (Beat 4 films the raw trace view instead) |
 | **5. Landing page** | `site/` | C1 | 4th (unscored) | ⬜ not started |
 
 **Known dead ends — do not retry:**
