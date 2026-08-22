@@ -20,6 +20,13 @@ the single source of truth for who is doing what.
 | **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | contract C3, C4 | ⬜ not started |
 | **4. Dashboard + docs** | `README.md`, `docs/`, SigNoz dashboard | C5 | ⬜ not started |
 
+**Known dead ends — do not retry:**
+- `fsis.usda.gov` — Bright Data rejects it, "Domain not allowed"
+- `maggianos.com` menu — collector create failed (`c_mt4u57bdmex2k7x9e`, half-built).
+  All candidate restaurant menus render prices in JS behind a location picker. This is
+  why the original pipeline left 72 prices null. The 56.25% figure is evidence, not a
+  number the demo drives down. See contract C3.
+
 **Nobody edits a file another slice owns.** If you need a change in someone else's file,
 add it to "Cross-slice requests" at the bottom instead of editing.
 

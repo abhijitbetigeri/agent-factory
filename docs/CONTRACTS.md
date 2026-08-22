@@ -64,12 +64,29 @@ Every entity carries `trace_id`. Identifiers are derived from the run id:
 
 **Owned by** slice 1 `verify`. **Consumed by** slice 3.
 
+There are **two** null-rate signals. Keep them distinct — they do different jobs.
+
+| Metric | Source | Now | Role |
+|---|---|---|---|
+| `menu.price_null_rate` | vendored Mise menu data | **0.5625** | the legacy defect. Why the factory exists. Static "before" evidence. |
+| `supplier.price_null_rate` | `c_mirror` live scrape | 0.0 | the live contract. This is what breaks, alerts, heals, and recovers. |
+
 - Required fields: `SCRAPER_REQUIRED_FIELDS` (`name,price`)
 - Threshold: `SCRAPER_NULL_RATE_THRESHOLD` (`0.05`)
 - Breach ⇒ `stage.verify` span status **ERROR**, span event `data_contract.breached`,
-  and `verification.status = fail`. Release is skipped.
-- Current baseline: **0.5625** (72/128 dish prices null) — recorded in
-  `data/baseline-null-rate.json`. Driving this below threshold is the headline number.
+  `verification.status = fail`, release skipped.
+
+**Why two.** The 56.25% menu figure is a real, measurable defect left by the old
+Exa+Firecrawl+LLM pipeline, and it is what motivates the project. But we cannot drive
+it down: an attempt to re-scrape real restaurant menus through Bright Data
+(`maggianos.com`) **failed to build a collector**, and every candidate menu site
+renders prices in JS behind a location picker — which is precisely why the original
+pipeline left them null.
+
+So the *live* contract that the heal loop exercises runs on `c_mirror`, which works,
+is breakable on demand, and has proven `heal`. The menu figure stays as documented
+evidence, not as something the demo claims to fix. Do not build a demo beat that
+promises "56% -> 0%".
 
 ---
 
