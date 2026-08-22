@@ -7,6 +7,8 @@ product brief or change request and drives it through
 The app it produces is the test run. **The factory is the deliverable.**
 
 Design doc: `docs/factory-design.md`. Setup runbook: `PREP.md`.
+**Starting a fresh session? Read `SESSION.md` first** — decisions already made, what is
+verified, what is blocked.
 
 ## Non-negotiables (these are the judging criteria)
 - No single-giant-prompt shortcuts, and no fixed CI pipeline with an LLM bolted on.

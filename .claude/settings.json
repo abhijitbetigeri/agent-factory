@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx --yes --package @brightdata/cli brightdata *)",
+      "Bash(brightdata *)",
+      "Bash(node -v)",
+      "Bash(npm install)",
+      "Bash(npm run *)",
+      "Bash(claude mcp list)",
+      "Bash(./scripts/verify.sh)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "WebFetch(domain:docs.port.io)",
+      "WebFetch(domain:docs.brightdata.com)",
+      "WebFetch(domain:signoz.io)"
+    ]
+  }
+}
