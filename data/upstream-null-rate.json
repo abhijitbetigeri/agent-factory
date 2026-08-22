@@ -1,34 +1,27 @@
 {
-  "scraped_at": "2026-08-22T22:13:20.204953+00:00",
+  "scraped_at": "2026-08-22T22:35:11.598130+00:00",
   "collector": "c_real",
-  "urls_submitted": 22,
-  "rows_returned": 19,
+  "state": "after_heal",
+  "urls_attempted": 19,
+  "rows_returned": 17,
+  "rows_missing": 2,
+  "missing_urls": [
+    "https://slack-status.com/",
+    "https://status.heroku.com/"
+  ],
   "field": "overall_status",
-  "populated": 7,
-  "null": 12,
-  "null_rate": 0.6316,
+  "populated": 14,
+  "null_rate_over_attempted": 0.2632,
+  "null_rate_before": 0.6316,
   "threshold": 0.05,
   "contract_ok": false,
   "component_records": 439,
-  "failure_modes": {
-    "empty_extraction": [
-      "https://linearstatus.com/",
-      "https://slack-status.com/",
-      "https://status.clickhouse.com/",
-      "https://status.gitlab.com/",
-      "https://status.heroku.com/",
-      "https://status.openai.com/",
-      "https://www.cloudflarestatus.com/",
-      "https://www.dockerstatus.com/",
-      "https://www.notion-status.com/"
-    ],
+  "remaining_failures": {
     "partial_components_no_status": [
       "https://status.digitalocean.com/",
       "https://status.mongodb.com/",
       "https://status.supabase.com/"
     ],
-    "status_but_no_components": [
-      "https://status.atlassian.com/"
-    ]
+    "empty_extraction": []
   }
 }

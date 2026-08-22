@@ -1,0 +1,13 @@
+=== heal-1787435102771 ===
+trace_id 4e5ae5dd05eae41360aca2567af42e3f
+
+null-rate 100.0% over 0 rows  missing={}
+collector error: parse_error: Parse error: value must be finite number
+
+healing (this takes a few minutes)...
+Triggering self-healing...
+Healing scraper...
+Done in 30 poll attempts.
+Scraping...
+
+null-rate 100.0% -> 0.0%  RECOVERED

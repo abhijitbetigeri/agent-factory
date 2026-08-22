@@ -1,0 +1,22 @@
+
+=== factory.run run-1787438791706 ===
+trace_id 2dba2cb166e62642a61479da7f3efb7f
+trigger  brief:"Route the Downtown tomato shortage"
+
+  brief      1584ms
+  plan        704ms
+  build       388ms
+Scraping...
+  verify     9968ms
+  approve     392ms
+  release   SKIPPED (awaiting approval)
+  audit         2ms
+
+Transfer 10kg, buy net 26kg @ $2.05 = $53.3
+  [robot] transfer: 10kg from Marina (expires in 2d, use first)
+  [human] handoff: Crate handed to the cook at the service pass
+  [agent] procure: Only the NET shortage is bought: 26kg @ $2.05/kg
+
+supplier null-rate 0.0% over 5 rows (threshold 5%) -> PASS
+menu null-rate 56.3% (legacy defect, static evidence)
+Port: https://app.us.port.io   SigNoz: http://localhost:8080  trace 2dba2cb166e62642a61479da7f3efb7f

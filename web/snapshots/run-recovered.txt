@@ -1,0 +1,20 @@
+=== factory.run run-1787435526479 ===
+trace_id 67623b61b37cf49d9ce09c91e465e397
+trigger  incident:data_source_broken
+
+  brief       363ms
+  plan        627ms
+  build       403ms
+Scraping...
+  verify    10016ms
+  approve     508ms
+  release     324ms
+  audit         1ms
+
+Transfer 10kg, buy net 26kg @ $2.05 = $53.3
+  [robot] transfer: 10kg from Marina (expires in 2d, use first)
+  [human] handoff: Crate handed to the cook at the service pass
+  [agent] procure: Only the NET shortage is bought: 26kg @ $2.05/kg
+
+supplier null-rate 0.0% over 5 rows (threshold 5%) -> PASS
+menu null-rate 56.3% (legacy defect, static evidence)

@@ -2,17 +2,10 @@
   {
     "incident_updates": [],
     "product_page_url": "https://linearstatus.com/",
+    "overall_status": "We\u2019re fully operational",
     "components": [],
     "input": {
       "url": "https://status.linear.app/"
-    }
-  },
-  {
-    "incident_updates": [],
-    "product_page_url": "https://slack-status.com/",
-    "components": [],
-    "input": {
-      "url": "https://status.slack.com/"
     }
   },
   {
@@ -55,6 +48,7 @@
   {
     "incident_updates": [],
     "product_page_url": "https://status.clickhouse.com/",
+    "overall_status": "We\u2019re fully operational",
     "components": [],
     "input": {
       "url": "https://status.clickhouse.com/"
@@ -901,17 +895,10 @@
   {
     "incident_updates": [],
     "product_page_url": "https://status.gitlab.com/",
+    "overall_status": "All Systems Operational",
     "components": [],
     "input": {
       "url": "https://status.gitlab.com/"
-    }
-  },
-  {
-    "incident_updates": [],
-    "product_page_url": "https://status.heroku.com/",
-    "components": [],
-    "input": {
-      "url": "https://status.heroku.com/"
     }
   },
   {
@@ -981,6 +968,7 @@
   {
     "incident_updates": [],
     "product_page_url": "https://status.openai.com/",
+    "overall_status": "We\u2019re fully operational",
     "components": [],
     "input": {
       "url": "https://status.openai.com/"
@@ -1215,6 +1203,7 @@
   {
     "incident_updates": [],
     "product_page_url": "https://www.cloudflarestatus.com/",
+    "overall_status": "All systems operational",
     "components": [],
     "input": {
       "url": "https://www.cloudflarestatus.com/"
@@ -1223,9 +1212,10 @@
   {
     "incident_updates": [],
     "product_page_url": "https://www.dockerstatus.com/",
+    "overall_status": "All Systems Operational",
     "components": [],
     "input": {
-      "url": "https://www.dockerstatus.com/"
+      "url": "https://status.docker.com/"
     }
   },
   {
@@ -1289,6 +1279,7 @@
   {
     "incident_updates": [],
     "product_page_url": "https://www.notion-status.com/",
+    "overall_status": "We\u2019re fully operational",
     "components": [],
     "input": {
       "url": "https://status.notion.so/"
