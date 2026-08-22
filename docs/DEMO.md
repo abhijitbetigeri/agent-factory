@@ -112,10 +112,18 @@ In Port afterwards: `heal_event.outcome = resolved`, `data_source.health = healt
 and a new `release`. In SigNoz: `stage.verify` red on the failing run, green on the
 recovering one, both under their own `factory.run` traces.
 
-**⚠️ Read before recording — the collector adapts.** `heal` rewrote the collector to
-read the *new* markup, so the page's current state is its new baseline. Do not assume
-`--reset` returns you to a working pair; check which state the collector currently
-parses before you roll. `scripts/verify.sh` tells you in one command.
+**⚠️ Read before recording — the states are INVERTED.** `heal` rewrote the collector to
+read the new markup, so as of the last heal:
+
+| Page state | Collector | Command to get there |
+|---|---|---|
+| `<span data-amount="109.00">` | ✅ works — **start here** | `./scripts/break-mirror.sh` |
+| `$109.00` text | ❌ breaks, `parse_error` | `./scripts/break-mirror.sh --reset` |
+
+**`--reset` is now the break.** Confirmed by test, not assumed. Roll from the
+data-amount state and run `--reset` on camera. If you heal again, expect the pair to
+invert again — the collector always adapts to whatever it was last healed against.
+`./scripts/verify.sh` tells you which side you are on in one command.
 
 > "The source page changed its HTML — a real commit, not a mock. SigNoz caught it. Port
 > opened an incident and asked a human. Bright Data repaired the scraper itself. The

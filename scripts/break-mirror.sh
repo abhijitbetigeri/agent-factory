@@ -3,8 +3,19 @@
 # GitHub Pages republish. This is the "source site changed its structure" event, made
 # reproducible -- which is what the organizers' own prep advice tells you to rehearse.
 #
-#   ./scripts/break-mirror.sh          break it
-#   ./scripts/break-mirror.sh --reset  restore the working markup
+# ⚠️ WHICH STATE IS "BROKEN" DEPENDS ON THE COLLECTOR, AND THE COLLECTOR ADAPTS.
+#    `heal` rewrote c_mirror to read the span[data-amount] markup, so as of the last
+#    heal the states are INVERTED from what the names suggest:
+#
+#      span[data-amount]  (this script's "break")  -> collector WORKS. Current baseline.
+#      "$109.00" text     (this script's --reset)  -> collector BREAKS. parse_error.
+#
+#    So to rehearse the demo: leave the page in the data-amount state, then run
+#    --reset to trigger the break. Always confirm with ./scripts/verify.sh before
+#    recording rather than trusting these names.
+#
+#   ./scripts/break-mirror.sh          -> span[data-amount] markup
+#   ./scripts/break-mirror.sh --reset  -> "$109.00" text markup
 set -euo pipefail
 cd "$(dirname "$0")/.."
 M=mirror/index.html
