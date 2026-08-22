@@ -1,8 +1,8 @@
 // Mise OS domain model.
-// Concepts carried over from Mise (SC-Intelligence) and Project-SCIM: branch agents
-// forecast demand, shortages route to surplus holders nearest-expiry-first, only the
-// NET shortage escalates to procurement. What is new here is the routing decision —
-// who physically executes each task: an AI agent, a robot, or a human in the field.
+// Branch agents forecast demand, shortages route to surplus holders nearest-expiry
+// first, and only the NET shortage escalates to procurement. On top of that sits the
+// routing decision this project exists for: who physically executes each task — an AI
+// agent, a robot, or a human in the field.
 const fs = require('fs'), path = require('path');
 
 const DATA = path.join(__dirname, '..', 'data');
@@ -32,7 +32,7 @@ function loadMenuIntel() {
 /** The data-contract check that drives everything. Null price = blind routing. */
 function priceNullRate(m) { return m.dishes ? m.nullPrice / m.dishes : 1; }
 
-// Branch state. Real numbers from the Project-SCIM scenario.
+// Branch state for the worked scenario.
 const BRANCHES = [
   { id: 'downtown', name: 'Downtown', onHand: 4.0,  par: 40, expiryDays: null },
   { id: 'marina',   name: 'Marina',   onHand: 34.0, par: 24, expiryDays: 2 },
@@ -62,7 +62,7 @@ function plan(ingredient = 'tomato', unitPrice = 2.05) {
     transfers.push({ from: d.id, to: need.id, qty, expiryDays: d.expiryDays });
     tasks.push({
       kind: 'transfer', ingredient, qty, from: d.id, to: need.id,
-      // A physical move between sites is robot work; the SCIM sim is where it happens.
+      // A physical move between sites is robot work; the rehearsal shows it happening.
       executor: 'robot', rationale: `${qty}kg from ${d.name} (expires in ${d.expiryDays}d, use first)`,
     });
     tasks.push({

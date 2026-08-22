@@ -13,20 +13,17 @@ by a *signal* rather than by a person.
 
 ## The premise: a real defect, not a synthetic one
 
-[Mise](https://github.com/abhijitbetigeri/SC-Intelligence) is a multi-agent restaurant
-supply chain that won AGI Summit 2026.
-[Project-SCIM](https://github.com/abhijitbetigeri/Project-SCIM) is its physical-AI
-extension, where a robot performs the restock in simulation.
-
-Neither had a factory behind it, live web data under it, or observability across it.
-And there is a measurable consequence sitting in the shipped data:
+Mise OS routes food between restaurant branches, and every routing decision is
+arithmetic over scraped menu and supplier data. The dataset it inherited was assembled
+by an earlier scraping pipeline — search, then a generic page scrape, then LLM
+extraction — which failed silently on prices. There is a measurable hole to prove it:
 
 ```
 menu.price_null_rate = 0.5625      # 72 of 128 dish prices are null
 ```
 
-That system has been routing food on data that is 56% blind, and nobody knew, because
-nothing was watching. That is the gap this fills.
+Routing was running on data that is 56% blind, and nothing was watching — no data
+contract, no metric, no alert. That is the gap this fills.
 
 ---
 
@@ -98,9 +95,8 @@ node app/server.js        # http://localhost:3000
 reload. The simulation must show a different donor and quantity. If it does not, it is
 a hardcoded demo.
 
-The [shipped Unity SCIM simulation](https://abhijitbetigeri.github.io/Project-SCIM/sim/)
-is the physical execution environment being rehearsed *for*. It is a pre-built artifact
-and is **not** generated at runtime — only the rehearsal preview is.
+The rehearsal is what the human approves against, and the approved plan is what would
+deploy to a physical robot. The simulation is the gate, not a decoration.
 
 ---
 

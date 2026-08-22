@@ -5,5 +5,5 @@
   "distinct_ingredients": 297,
   "restaurants": 16,
   "branches": 53,
-  "source": "Project-SCIM mise/data/menu-intel, Exa+Firecrawl+LLM pipeline"
+  "source": "inherited menu dataset; prices dropped by the earlier search + generic-scrape + LLM-extract pipeline"
 }

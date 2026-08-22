@@ -105,22 +105,22 @@
     started by a <em>signal</em> rather than by a person.</p>
   <div class="cta">
     <a class="btn primary" href="https://github.com/abhijitbetigeri/agent-factory">Source on GitHub</a>
-    <a class="btn" href="https://abhijitbetigeri.github.io/Project-SCIM/sim/">Unity SCIM simulation</a>
+    <a class="btn" href="https://abhijitbetigeri.github.io/agent-factory/mirror/">Live supplier feed</a>
   </div>
 </div></div>
 
 <section><div class="wrap">
   <h2><span class="n">01</span>A real defect, not a synthetic one</h2>
-  <p class="sub">Mise won AGI Summit 2026. Project-SCIM extended it into physical AI, where
-    a robot performs the restock in simulation. Neither had a factory behind it, live web
-    data under it, or observability across it — and there is a measurable consequence
-    sitting in the shipped data.</p>
+  <p class="sub">Mise OS routes food between restaurant branches, and every routing
+    decision is arithmetic over scraped menu and supplier data. The dataset it inherited
+    was assembled by an earlier scraping pipeline — search, then a generic page scrape,
+    then LLM extraction — which failed silently on prices and left a measurable hole.</p>
   <div class="panel">
     <div class="lbl">menu.price_null_rate</div>
     <div class="stat">
       <div class="big">56.25%</div>
-      <div class="what">72 of 128 dish prices are null. That system has been routing food
-        on data that is 56% blind, and nobody knew — because nothing was watching.</div>
+      <div class="what">72 of 128 dish prices are null. Routing was running on data that
+        is 56% blind, and nothing was watching — no contract, no metric, no alert.</div>
     </div>
   </div>
 </div></section>
@@ -256,11 +256,9 @@ node factory/run.js --incident <span class="g">data_source_broken</span>
       <code>factory/mise.js</code>, re-run the factory, reload. The simulation must show a
       different donor and quantity. If it does not, it is a hardcoded demo.</p>
   </div>
-  <p class="sub" style="margin-top:1.1rem">The
-    <a href="https://abhijitbetigeri.github.io/Project-SCIM/sim/">shipped Unity SCIM
-    simulation</a> is the physical execution environment being rehearsed <em>for</em>. It is
-    a pre-built artifact and is <b>not</b> generated at runtime — only the rehearsal
-    preview is.</p>
+  <p class="sub" style="margin-top:1.1rem">The rehearsal is what a human approves against.
+    The same approved plan is what would deploy to a physical robot — the simulation is the
+    gate, not a decoration.</p>
 </div></section>
 
 <section><div class="wrap">
@@ -311,8 +309,8 @@ release <span class="y">SKIPPED</span> (contract failed)</pre>
 
 <footer><div class="wrap">
   <a href="https://github.com/abhijitbetigeri/agent-factory">Repository</a> ·
-  <a href="https://abhijitbetigeri.github.io/Project-SCIM/sim/">Unity SCIM simulation</a> ·
-  <a href="https://github.com/abhijitbetigeri/SC-Intelligence">Mise</a>
+  <a href="https://abhijitbetigeri.github.io/agent-factory/mirror/">Supplier feed</a> ·
+  <a href="https://github.com/abhijitbetigeri/agent-factory/blob/main/docs/DEMO.md">Demo runbook</a>
   <div style="margin-top:.6rem">Built for the Agentic Software Factory hackathon —
     Port × Bright Data × SigNoz.</div>
 </div></footer>
