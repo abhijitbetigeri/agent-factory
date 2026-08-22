@@ -35,6 +35,16 @@ for a in aggs:
     assert "expression" not in a, 'metric aggregations must not use "expression"'
     missing = {"metricName","temporality","timeAggregation","spaceAggregation"} - set(a)
     assert not missing, f"aggregation missing {missing}"
+    # The API enum is lowercase even though the frontend's TS enum is capitalised and
+    # ClickHouse stores it capitalised. Capitalised values are rejected with the
+    # unhelpful "request body contains invalid field value".
+    assert a["temporality"] in ("delta","cumulative","unspecified"), \
+        f'temporality must be lowercase delta/cumulative/unspecified, got {a["temporality"]!r}'
+    assert a["timeAggregation"] in ("avg","count","count_distinct","increase","latest",
+                                    "max","min","p90","p95","p99","rate","sum"), \
+        f'invalid timeAggregation {a["timeAggregation"]!r}'
+    assert a["spaceAggregation"] in ("avg","max","sum"), \
+        f'spaceAggregation must be avg/max/sum, got {a["spaceAggregation"]!r}' 
 exprs = sorted({f'{a["timeAggregation"]}({a["metricName"]}) [{a["temporality"]}]' for a in aggs})
 print(f"  OK {sys.argv[1]} — schemaVersion v6, {len(panels)} panels, layout consistent")
 for e in exprs:

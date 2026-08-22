@@ -72,7 +72,7 @@
                           "aggregations": [
                             {
                               "metricName": "supplier.price_null_rate",
-                              "temporality": "Unspecified",
+                              "temporality": "unspecified",
                               "timeAggregation": "avg",
                               "spaceAggregation": "avg",
                               "reduceTo": "avg"
@@ -102,7 +102,7 @@
                           "aggregations": [
                             {
                               "metricName": "menu.price_null_rate",
-                              "temporality": "Unspecified",
+                              "temporality": "unspecified",
                               "timeAggregation": "avg",
                               "spaceAggregation": "avg",
                               "reduceTo": "avg"
@@ -190,7 +190,7 @@
                           "aggregations": [
                             {
                               "metricName": "factory.stage.duration.max",
-                              "temporality": "Unspecified",
+                              "temporality": "unspecified",
                               "timeAggregation": "max",
                               "spaceAggregation": "max",
                               "reduceTo": "max"
@@ -285,7 +285,7 @@
                           "aggregations": [
                             {
                               "metricName": "http.server.requests",
-                              "temporality": "Cumulative",
+                              "temporality": "cumulative",
                               "timeAggregation": "rate",
                               "spaceAggregation": "sum",
                               "reduceTo": "sum"
@@ -322,7 +322,7 @@
                           "aggregations": [
                             {
                               "metricName": "worker.scrape.duration.max",
-                              "temporality": "Unspecified",
+                              "temporality": "unspecified",
                               "timeAggregation": "max",
                               "spaceAggregation": "max",
                               "reduceTo": "max"
@@ -410,7 +410,7 @@
                           "aggregations": [
                             {
                               "metricName": "supplier.feed.age_seconds",
-                              "temporality": "Unspecified",
+                              "temporality": "unspecified",
                               "timeAggregation": "max",
                               "spaceAggregation": "max",
                               "reduceTo": "max"
