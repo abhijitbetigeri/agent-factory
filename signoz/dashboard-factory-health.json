@@ -72,10 +72,10 @@
                           "aggregations": [
                             {
                               "metricName": "supplier.price_null_rate",
-                              "temporality": "unspecified",
+                              "temporality": "",
                               "timeAggregation": "avg",
                               "spaceAggregation": "avg",
-                              "reduceTo": "avg"
+                              "reduceTo": "last"
                             }
                           ],
                           "disabled": false,
@@ -102,10 +102,10 @@
                           "aggregations": [
                             {
                               "metricName": "menu.price_null_rate",
-                              "temporality": "unspecified",
+                              "temporality": "",
                               "timeAggregation": "avg",
                               "spaceAggregation": "avg",
-                              "reduceTo": "avg"
+                              "reduceTo": "last"
                             }
                           ],
                           "disabled": false,
@@ -190,10 +190,10 @@
                           "aggregations": [
                             {
                               "metricName": "factory.stage.duration.max",
-                              "temporality": "unspecified",
+                              "temporality": "",
                               "timeAggregation": "max",
                               "spaceAggregation": "max",
-                              "reduceTo": "max"
+                              "reduceTo": "last"
                             }
                           ],
                           "disabled": false,
@@ -322,10 +322,10 @@
                           "aggregations": [
                             {
                               "metricName": "worker.scrape.duration.max",
-                              "temporality": "unspecified",
+                              "temporality": "",
                               "timeAggregation": "max",
                               "spaceAggregation": "max",
-                              "reduceTo": "max"
+                              "reduceTo": "last"
                             }
                           ],
                           "disabled": false,
@@ -410,10 +410,10 @@
                           "aggregations": [
                             {
                               "metricName": "supplier.feed.age_seconds",
-                              "temporality": "unspecified",
+                              "temporality": "",
                               "timeAggregation": "max",
                               "spaceAggregation": "max",
-                              "reduceTo": "max"
+                              "reduceTo": "last"
                             }
                           ],
                           "disabled": false,

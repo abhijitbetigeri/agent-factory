@@ -38,13 +38,17 @@ for a in aggs:
     # The API enum is lowercase even though the frontend's TS enum is capitalised and
     # ClickHouse stores it capitalised. Capitalised values are rejected with the
     # unhelpful "request body contains invalid field value".
-    assert a["temporality"] in ("delta","cumulative","unspecified"), \
-        f'temporality must be lowercase delta/cumulative/unspecified, got {a["temporality"]!r}'
+    # Gauges carry an EMPTY temporality in SigNoz's own templates. "unspecified" -
+    # the word ClickHouse reports - is rejected as an invalid field value.
+    assert a["temporality"] in ("", "delta", "cumulative"), \
+        f'temporality must be "" (gauges), delta or cumulative, got {a["temporality"]!r}'
     assert a["timeAggregation"] in ("avg","count","count_distinct","increase","latest",
                                     "max","min","p90","p95","p99","rate","sum"), \
         f'invalid timeAggregation {a["timeAggregation"]!r}'
     assert a["spaceAggregation"] in ("avg","max","sum"), \
-        f'spaceAggregation must be avg/max/sum, got {a["spaceAggregation"]!r}' 
+        f'spaceAggregation must be avg/max/sum, got {a["spaceAggregation"]!r}'
+    assert a.get("reduceTo") in ("last","sum"), \
+        f'reduceTo must be last or sum, got {a.get("reduceTo")!r}' 
 exprs = sorted({f'{a["timeAggregation"]}({a["metricName"]}) [{a["temporality"]}]' for a in aggs})
 print(f"  OK {sys.argv[1]} — schemaVersion v6, {len(panels)} panels, layout consistent")
 for e in exprs:
