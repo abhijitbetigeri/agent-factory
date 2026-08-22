@@ -28,7 +28,10 @@ else
     cp "$M" "$B"; git add "$B"
     echo "==> baseline snapshotted -> $B"
   fi
-  grep -q 'class="price"' "$M" || { echo "!! $M already broken (no .price nodes) — nothing to break."; \
+  # Detect the price TEXT, not the .price class: the break now keeps the .price div
+  # and empties it, so a class-only test would pass on an already-broken page and
+  # silently no-op instead of warning.
+  grep -qE '<div class="price">\$[0-9]' "$M" || { echo "!! $M already broken (no price text) — nothing to break."; \
                                     echo "   run: $0 --reset"; exit 1; }
   python3 -c "
 import re
