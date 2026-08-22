@@ -1,0 +1,60 @@
+[
+  {
+    "components": [
+      {
+        "product_name": "Mechanical Keyboard K8 Pro",
+        "sku_code": "KB-K8P-001",
+        "price_usd": {
+          "value": 109,
+          "currency": "USD",
+          "symbol": "$"
+        },
+        "stock_status": "In stock"
+      },
+      {
+        "product_name": "Low-Profile Switch Set (110pc)",
+        "sku_code": "SW-LP-110",
+        "price_usd": {
+          "value": 34.5,
+          "currency": "USD",
+          "symbol": "$"
+        },
+        "stock_status": "In stock"
+      },
+      {
+        "product_name": "Aluminium Case — 75%",
+        "sku_code": "CS-AL-075",
+        "price_usd": {
+          "value": 189.99,
+          "currency": "USD",
+          "symbol": "$"
+        },
+        "stock_status": "Backorder"
+      },
+      {
+        "product_name": "PBT Doubleshot Keycaps",
+        "sku_code": "KC-PBT-104",
+        "price_usd": {
+          "value": 59,
+          "currency": "USD",
+          "symbol": "$"
+        },
+        "stock_status": "In stock"
+      },
+      {
+        "product_name": "Coiled USB-C Cable",
+        "sku_code": "CB-USBC-18",
+        "price_usd": {
+          "value": 24,
+          "currency": "USD",
+          "symbol": "$"
+        },
+        "stock_status": "In stock"
+      }
+    ],
+    "product_page_url": "https://abhijitbetigeri.github.io/agent-factory/mirror/",
+    "input": {
+      "url": "https://abhijitbetigeri.github.io/agent-factory/mirror/"
+    }
+  }
+]

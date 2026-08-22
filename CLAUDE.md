@@ -34,7 +34,7 @@ SCRAPER_REAL_TARGET_URL=https://www.githubstatus.com/
 
 # c_mirror — the app's data source, and the deterministic break harness. Breaking it
 #            is a commit to mirror/index.html that alters the price markup.
-SCRAPER_MIRROR_COLLECTOR_ID=<c_xxxxxxxxxxxx>     # TODO: create still running
+SCRAPER_MIRROR_COLLECTOR_ID=c_mt4sjr912k58zc0ek7
 SCRAPER_MIRROR_TARGET_URL=https://abhijitbetigeri.github.io/agent-factory/mirror/
 
 SCRAPER_REQUIRED_FIELDS=name,price               # `price` is the field that breaks

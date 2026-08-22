@@ -1,0 +1,60 @@
+[
+  {
+    "incident_updates": [],
+    "product_page_url": "https://www.githubstatus.com/",
+    "overall_status": "All Systems Operational",
+    "components": [
+      {
+        "name": "Git Operations",
+        "status": "Normal"
+      },
+      {
+        "name": "Webhooks",
+        "status": "Normal"
+      },
+      {
+        "name": "Visit www.githubstatus.com for more information",
+        "status": "Normal"
+      },
+      {
+        "name": "API Requests",
+        "status": "Normal"
+      },
+      {
+        "name": "Issues",
+        "status": "Normal"
+      },
+      {
+        "name": "Pull Requests",
+        "status": "Normal"
+      },
+      {
+        "name": "Actions",
+        "status": "Normal"
+      },
+      {
+        "name": "Packages",
+        "status": "Normal"
+      },
+      {
+        "name": "Pages",
+        "status": "Normal"
+      },
+      {
+        "name": "Copilot",
+        "status": "Normal"
+      },
+      {
+        "name": "Codespaces",
+        "status": "Normal"
+      },
+      {
+        "name": "Copilot AI Model Providers",
+        "status": "Normal"
+      }
+    ],
+    "input": {
+      "url": "https://www.githubstatus.com/"
+    }
+  }
+]
