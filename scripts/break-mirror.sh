@@ -33,20 +33,7 @@ else
   # silently no-op instead of warning.
   grep -qE '<div class="price">\$[0-9]' "$M" || { echo "!! $M already broken (no price text) — nothing to break."; \
                                     echo "   run: $0 --reset"; exit 1; }
-  python3 -c "
-import re
-s=open('mirror/index.html').read()
-# Break ONLY the price field, and leave the row structure intact. This is what a real
-# site tweak looks like: the rows still parse, the product names still extract, but the
-# price is no longer text where it used to be. A collector that returns rows with one
-# null field is both a truer failure mode and something heal can actually repair -- an
-# earlier, more destructive break renamed the row container too, the extraction
-# returned zero rows, and heal timed out at 600s with nothing to anchor on.
-s2=re.sub(r'<div class=\\"price\\">\\\$([\d.]+)</div>',
-          r'<div class=\\"price\\"><span data-amount=\\"\\1\\"></span></div>', s)
-open('mirror/index.html','w').write(s2)
-print('  emptied', s.count('class=\\"price\\"'), 'price nodes (rows + names left intact)')
-"
+  python3 scripts/_mirror_edit.py break
   MSG="Supplier site redesign: price markup restructured"
   echo "==> price markup restructured"
 fi

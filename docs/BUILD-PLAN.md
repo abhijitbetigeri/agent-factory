@@ -13,8 +13,10 @@ slices — if you honour those, parallel work composes without coordination.
 Update the status cell in this table when you pick up or finish a slice. This file is
 the single source of truth for who is doing what.
 
-Priority order is **3 → 2 → 4**, not numeric order. Slice 3 is the submission; slice 2
-is the pitch; slice 4 is evidence. If time runs out, it runs out on slice 4.
+Priority order is **3 → 2 → 4 → 5**, not numeric order. Slice 3 is the submission; slice 2
+is the pitch; slice 4 is evidence. If time runs out, it runs out on slice 5, then slice 4.
+Slice 5 is the only slice that maps to **no judged criterion** — it is a sharing surface,
+not points. Never start it while 3, 2 or 4 are open.
 
 | Slice | Owns (exclusive) | Depends on | Priority | Status |
 |---|---|---|---|---|
@@ -22,6 +24,7 @@ is the pitch; slice 4 is evidence. If time runs out, it runs out on slice 4.
 | **3. Heal loop** | `factory/heal.js`, `scripts/break-mirror.sh`, `mirror/` | C3, C4 | **1st** | ✅ **DONE** — break + detect proven; heal verified |
 | **2. Sim + approval** | `app/` | C1, C2 | **2nd** | ✅ **DONE** — sim renders from dispatch.json, approve writes to Port |
 | **4. Dashboard + README** | `README.md`, `docs/`, SigNoz dashboard | C5 | 3rd | ⬜ not started |
+| **5. Landing page** | `site/` | C1 | 4th (unscored) | ⬜ not started |
 
 **Known dead ends — do not retry:**
 - `fsis.usda.gov` — Bright Data rejects it, "Domain not allowed"
@@ -138,6 +141,69 @@ opens an incident, Bright Data repairs it, a human approves, re-verify goes gree
   honest note that SigNoz is self-hosted so the orchestrator polls alert state rather
   than receiving a webhook.
 - **Demo video beats** are in `docs/DEMO.md` — the fixed shot list. Build to it.
+
+---
+
+## Slice 5 — Landing page  ⬜  ← sharing surface, not points
+
+**What it is.** A public front page for the submission — the thing you paste into a
+Discord/X/DM where a README link is too dry and the 4:30 video is too long. It is *not*
+part of the demo: `docs/DEMO.md` is a fixed shot list with no web-page beat, and
+`docs/plan-12h.md` commits to "zero web UI in the video". Do not add a beat for this.
+
+**Be honest about its value.** No track criterion in `CLAUDE.md` rewards a landing page.
+It wins nothing. It exists so the work is shareable after the deadline. That is why it
+sits below slice 4 and gets cut first.
+
+**Owns:** `site/` only. New path — collides with nothing, so it can run in parallel.
+
+**Tech stack — match `app/` exactly.** Slice 2 already set the house style; do not
+introduce a second one:
+- Plain static HTML. **No framework, no build step, no bundler, no CDN, no npm deps.**
+- One self-contained `site/index.html`: inline `<style>` and inline `<script>`, the way
+  `app/public/index.html` is built.
+- **Reuse the exact palette** via CSS custom properties on `:root`, copied verbatim from
+  `app/public/index.html:4-5` so the two pages look like one product:
+  `--bg:#0d1117 --panel:#161b22 --line:#30363d --fg:#e6edf3 --dim:#8b949e`
+  and the executor colours `--robot:#58a6ff --human:#d29922 --agent:#3fb950 --bad:#f85149`.
+- **Inline SVG** for any diagram, as the sim does — no image files, no icon fonts.
+- Vanilla `fetch` only if it needs data at all. Prefer none: see "static by default".
+
+**Static by default — this is the important constraint.** The landing page must render
+with the factory switched off. `app/` needs a live Node process, a running SigNoz on
+:4318 and Port credentials; a landing page that depends on any of those is broken for
+every reader who is not you. Bake the numbers in as text at build time. If it must show
+live data, fetch `/api/health` defensively and degrade to the baked figure on failure —
+never render an error or an empty panel to a stranger.
+
+**Content — pull from what already exists, invent nothing:**
+- The claim: the factory is the deliverable, not the app it produces.
+- The loop, as a diagram: `brief|incident → plan → build → verify → approve → release → audit`.
+- The heal story: source HTML changes → null-rate breaches → incident → Bright Data
+  heals → human approves → re-verify green. This is the differentiator; lead with it.
+- The honest numbers, including the ones that did not go well: the 56.25% menu null-rate
+  is *evidence of a real defect*, not a metric the demo drives down (contract C3).
+- Links out: repo, the 4:30 video, and the shipped Unity SCIM sim.
+- ⚠️ Same wording discipline as slice 2: the Unity sim is **pre-built**. Only the
+  rehearsal preview is runtime-generated. Do not let marketing voice blur that.
+
+**⚠️ The one real collision risk — GitHub Pages.** Slice 3 publishes `mirror/` to Pages
+and `break-mirror.sh` pushes to it on purpose. Slice 5 shares that deployment even though
+it shares no files:
+- Serve the landing page at the Pages **root**, mirror stays at `/mirror/`. Never move,
+  rename or reconfigure `mirror/` — slice 3 owns it and a pinned collector points at it.
+- Do not add a Pages workflow that rebuilds or wipes the site root on push, or the next
+  `break-mirror.sh` run silently breaks the heal demo.
+- If Pages config needs changing, that is a **cross-slice request**, not an edit.
+
+**Done when:**
+```bash
+open site/index.html          # renders fully with no server, no factory, no network
+```
+- Readable at 375px wide and at 1440px.
+- Zero requests to any external host (no CDN, no font host, no analytics).
+- Palette matches `app/public/index.html` side by side.
+- `mirror/` untouched: `git status` shows no change under `mirror/`.
 
 ---
 

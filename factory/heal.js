@@ -35,12 +35,21 @@ async function main() {
     let rows; try { rows = supplier.scrape(); } catch { rows = supplier.load(); }
     const n = supplier.nullRate(rows);
     console.log(`null-rate ${(n.rate * 100).toFixed(1)}% over ${n.total} rows  missing=${JSON.stringify(n.missing)}`);
+    if (n.errors && n.errors.length) console.log(`collector error: ${n.errors[0]}`);
     if (n.rate <= THRESHOLD) { console.log('contract holds — nothing to heal'); root.end(); return; }
 
     const fields = n.failingFields.join(',');
-    const msg = `Extraction is returning null for [${fields}] on ${n.total} of the listed components. ` +
-      `The page previously exposed each price as text inside a div with class "price"; the required ` +
-      `fields ${fields} must be recovered from the page's current structure.`;
+    // Never heal blind (CLAUDE.md). Lead with the collector's OWN error when it gave us
+    // one - it names the exact failure inside the generated code - then say what changed
+    // on the page and where the value actually lives now.
+    const msg = (n.errors && n.errors.length
+        ? `The collector is failing with: "${n.errors[0]}". `
+        : `Extraction is returning null for [${fields}] on ${n.total} rows. `) +
+      `The supplier page changed: each price used to be text like "$109.00" directly inside ` +
+      `<div class="price">, and is now an empty <span data-amount="109.00"></span> nested inside ` +
+      `that same div, so the text content is empty and the numeric parse fails. Read the price ` +
+      `from the data-amount attribute of the span inside div.price. The product name in ` +
+      `div.name and the SKU in div.meta are unchanged. Required fields: ${fields}.`;
 
     root.addEvent('scraper.heal.requested', { fields, rate: n.rate });
     log('error', `heal requested for [${fields}] at ${(n.rate * 100).toFixed(1)}% null`, { 'scraper.fields': fields });

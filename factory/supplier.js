@@ -40,21 +40,31 @@ function components(rows) {
 }
 
 /**
+ * The collector can fail loudly rather than returning nulls: when its generated code
+ * cannot coerce a field it emits {error, error_code} instead of rows. That message is
+ * the sharpest anchor we can hand to `heal`, so surface it rather than swallowing it.
+ */
+function collectorErrors(rows) {
+  return (rows || []).filter(r => r && r.error).map(r => `${r.error_code || 'error'}: ${r.error}`);
+}
+
+/**
  * Null-rate over the required fields. This is the number the SigNoz alert watches and
  * the number `heal` has to bring back down.
  */
 function nullRate(rows) {
   const items = components(rows);
-  if (!items.length) return { rate: 1, total: 0, missing: {}, failingFields: REQUIRED.slice() };
+  const errors = collectorErrors(rows);
+  if (!items.length) return { rate: 1, total: 0, missing: {}, failingFields: REQUIRED.slice(), errors };
   const missing = {};
   for (const f of REQUIRED) missing[f] = items.filter(i => i[f] === null || i[f] === undefined).length;
   const worst = Math.max(...Object.values(missing));
   const failingFields = REQUIRED.filter(f => missing[f] / items.length > 0);
-  return { rate: worst / items.length, total: items.length, missing, failingFields };
+  return { rate: worst / items.length, total: items.length, missing, failingFields, errors };
 }
 
 function load() {
   try { return JSON.parse(fs.readFileSync(FEED, 'utf8')); } catch { return null; }
 }
 
-module.exports = { scrape, nullRate, components, load, FEED, REQUIRED };
+module.exports = { scrape, nullRate, components, collectorErrors, load, FEED, REQUIRED };
