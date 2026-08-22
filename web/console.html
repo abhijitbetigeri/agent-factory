@@ -57,6 +57,7 @@
   <a href="#market">0 · Market</a>
   <a href="#run" class="on">1 · Factory</a>
   <a href="#rehearsal">2 · Rehearsal</a>
+  <a href="#robot">2b · Robot</a>
   <a href="#contract">3 · Data contract</a>
   <span class="sp"></span>
   <span class="pill" id="feedPill">feed …</span>
@@ -104,6 +105,24 @@
       <button class="ok" onclick="decide('approve')">Approve dispatch</button>
       <button class="danger" onclick="decide('reject')">Reject</button>
       <span id="approvalStatus" class="sub" style="margin:0"></span>
+    </div>
+  </section>
+
+
+  <section id="robot">
+    <h2><span class="n">02b</span>Robot execution</h2>
+    <p class="sub">The approved dispatch is executed physically here. The rehearsal above is the
+      plan; this is the back-of-house it runs in — the robot drives to the donor branch, picks the
+      near-expiry crate, and carries it through the service pass.</p>
+    <div class="row">
+      <button class="primary" onclick="loadSim()">Load simulation</button>
+      <a class="ext" href="https://abhijitbetigeri.github.io/Project-SCIM/sim/" target="_blank" style="font-size:.87rem">Open full screen ↗</a>
+      <span class="sub" style="margin:0">Controls: <b>1</b> branches · <b>2</b> warehouse ·
+        <b>3</b> follow the robot · WASD fly · <b>R</b> restart</span>
+    </div>
+    <div id="simFrame" style="border:1px solid var(--line);border-radius:9px;overflow:hidden;
+         background:#010409;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center">
+      <span class="sub" style="margin:0">Click <b>Load simulation</b> — it is a few MB and plays itself in ~45s.</span>
     </div>
   </section>
 
@@ -265,6 +284,13 @@ async function decide(decision) {
   $('approvalStatus').innerHTML = r.ok
     ? `plan <code>${RUN}</code> → <strong>${j.approval_status}</strong> in Port`
     : `<span class="err">${j.error}</span>`;
+}
+
+function loadSim() {
+  const f = $('simFrame');
+  if (f.querySelector('iframe')) return;
+  f.innerHTML = `<iframe src="https://abhijitbetigeri.github.io/Project-SCIM/sim/" title="Robot execution simulation"
+     style="width:100%;height:100%;border:0" allow="fullscreen; autoplay"></iframe>`;
 }
 
 async function loadMarket() {

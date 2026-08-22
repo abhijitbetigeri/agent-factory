@@ -1,8 +1,8 @@
 <!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mise OS — an operating system for physical work</title>
-<meta name="description" content="An agentic software factory that builds and repairs Mise OS: brief or incident to plan, build, verify, approve, release, audit — every stage traced, gated and repairable.">
+<title>Mise OS, an operating system for physical work</title>
+<meta name="description" content="An agentic software factory that builds and repairs Mise OS: brief or incident to plan, build, verify, approve, release, audit. Every stage traced, gated and repairable.">
 <style>
  /* Palette copied verbatim from app/public/index.html so the two surfaces match. */
  :root{--bg:#0d1117;--panel:#161b22;--line:#30363d;--fg:#e6edf3;--dim:#8b949e;
@@ -33,11 +33,11 @@
  .btn{display:inline-block;padding:.55rem 1.1rem;border-radius:7px;font-weight:600;
    font-size:.9rem;border:1px solid var(--line);background:var(--panel);color:var(--fg)}
  .btn:hover{border-color:var(--dim);text-decoration:none}
+ .btn:active{transform:translateY(1px)}
  .btn.primary{background:var(--robot);border-color:var(--robot);color:#04121f}
 
  section{padding:2.75rem 0;border-bottom:1px solid var(--line)}
  h2{font-size:1.15rem;margin:0 0 .5rem;font-weight:600}
- h2 .n{color:var(--dim);font-weight:400;margin-right:.5rem}
  .sub{color:var(--dim);max-width:64ch;margin:0 0 1.5rem}
 
  .panel{background:var(--panel);border:1px solid var(--line);border-radius:9px;
@@ -56,15 +56,16 @@
    line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
  .stat .what{color:var(--dim);max-width:44ch}
 
- .grid{display:grid;gap:.85rem;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
- .grid h3{margin:0 0 .35rem;font-size:.92rem;font-weight:600}
- .grid p{margin:0;color:var(--dim);font-size:.88rem}
- .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:.45rem;
-   vertical-align:middle}
+ /* Asymmetric 2 + 1. Three equal cards is the templated default; this gives rhythm. */
+ .tools{display:grid;gap:.85rem;grid-template-columns:1fr 1fr}
+ .tools .wide{grid-column:1 / -1}
+ .tools h3{margin:0 0 .35rem;font-size:.92rem;font-weight:600}
+ .tools p{margin:0;color:var(--dim);font-size:.88rem}
+ @media (max-width:620px){ .tools{grid-template-columns:1fr} }
 
  figure{margin:0}
  /* Below ~620px the 880-wide viewBox would scale labels down to unreadable.
-    Scroll the diagram inside its own box instead of shrinking it — the page
+    Scroll the diagram inside its own box instead of shrinking it. The page
     itself must never scroll horizontally. */
  .diagram{overflow-x:auto;-webkit-overflow-scrolling:touch}
  figure svg{display:block;width:100%;min-width:620px;height:auto}
@@ -88,6 +89,7 @@
 
  footer{padding:2rem 0 3rem;color:var(--dim);font-size:.85rem}
  footer a{color:var(--dim);text-decoration:underline}
+ footer nav{display:flex;gap:1.25rem;flex-wrap:wrap;margin-bottom:.7rem}
  .spacer{height:.9rem}
 </style>
 
@@ -97,39 +99,37 @@
 </div></header>
 
 <div class="hero"><div class="wrap">
-  <h1>An operating system for physical work — and the factory that builds&nbsp;it.</h1>
+  <h1>An operating system for physical work, and the factory that builds&nbsp;it.</h1>
   <p class="claim">The app is the test run. The factory is the deliverable.</p>
-  <p class="lede">Mise OS routes a unit of physical work — a restock, an inter-branch
-    transfer, a procurement pickup — to whoever should execute it: an AI agent, a robot,
-    or a human in the field. The factory is what builds and repairs Mise OS, and it is
-    started by a <em>signal</em> rather than by a person.</p>
+  <p class="lede">Mise OS routes physical work to whoever should execute it: an agent, a robot,
+    or a human.</p>
   <div class="cta">
     <a class="btn primary" href="https://github.com/abhijitbetigeri/agent-factory">Source on GitHub</a>
-    <a class="btn primary" id="consoleCta" href="/console">Open the console</a>
+    <a class="btn" id="consoleCta" href="/console">Open the console</a>
     <a class="btn" href="https://abhijitbetigeri.github.io/agent-factory/mirror/">Live supplier feed</a>
   </div>
 </div></div>
 
 <section><div class="wrap">
-  <h2><span class="n">01</span>A real defect, not a synthetic one</h2>
+  <h2>A real defect, not a synthetic one</h2>
   <p class="sub">Mise OS routes food between restaurant branches, and every routing
     decision is arithmetic over scraped menu and supplier data. The dataset it inherited
-    was assembled by an earlier scraping pipeline — search, then a generic page scrape,
-    then LLM extraction — which failed silently on prices and left a measurable hole.</p>
+    was assembled by an earlier scraping pipeline (search, then a generic page scrape,
+    then LLM extraction) which failed silently on prices and left a measurable hole.</p>
   <div class="panel">
     <div class="lbl">menu.price_null_rate</div>
     <div class="stat">
       <div class="big">56.25%</div>
       <div class="what">72 of 128 dish prices are null. Routing was running on data that
-        is 56% blind, and nothing was watching — no contract, no metric, no alert.</div>
+        is 56% blind, and nothing was watching. No contract, no metric, no alert.</div>
     </div>
   </div>
 </div></section>
 
 <section><div class="wrap">
-  <h2><span class="n">02</span>The loop</h2>
+  <h2>The loop</h2>
   <p class="sub">Each tool does a job the other two cannot. Observability is not a
-    dashboard bolted on at the end — an alert is what <em>starts</em> the factory.</p>
+    dashboard bolted on at the end. An alert is what <em>starts</em> the factory.</p>
 
   <figure>
   <div class="diagram">
@@ -185,7 +185,7 @@
       <!-- re-verify back up to release -->
       <path d="M840 192 L862 192 L862 92" stroke="#3fb950" fill="none" marker-end="url(#arg)"/>
 
-      <text x="8" y="150" fill="#8b949e" font-size="11">detection is ours — the CLI never decides a scraper is broken</text>
+      <text x="8" y="150" fill="#8b949e" font-size="11">detection is ours. The CLI never decides a scraper is broken.</text>
     </g>
   </svg>
   </div>
@@ -194,30 +194,32 @@
   </figure>
 
   <div class="spacer"></div>
-  <div class="grid">
+  <div class="tools">
     <div class="panel">
-      <h3><span class="dot" style="background:var(--bad)"></span>SigNoz</h3>
-      <p>The nerves. Traces every stage, endpoint and background job. Its alerts
-        <em>start</em> the factory.</p>
+      <h3><span style="color:var(--bad)">SigNoz</span>, the nerves</h3>
+      <p>Traces every stage, endpoint and background job. Its alerts <em>start</em>
+        the factory rather than merely reporting on it.</p>
     </div>
     <div class="panel">
-      <h3><span class="dot" style="background:var(--robot)"></span>Port</h3>
-      <p>The factory floor. Builds Mise OS, holds goals, decisions, risks and services,
-        and gates plan and release.</p>
+      <h3><span style="color:var(--robot)">Port</span>, the factory floor</h3>
+      <p>Holds goals, decisions, risks and services. Records the plan and release
+        gates, with a trace id on every entity.</p>
     </div>
-    <div class="panel">
-      <h3><span class="dot" style="background:var(--agent)"></span>Bright Data</h3>
-      <p>The senses — and the repair. The supplier feed is what breaks, and
-        <code>scraper heal</code> is what mends it.</p>
+    <div class="panel wide">
+      <h3><span style="color:var(--agent)">Bright Data</span>, the senses and the repair</h3>
+      <p>The supplier feed is what breaks, and <code>scraper heal</code> is what mends it.
+        Across 22 upstream status pages the collector's null-rate on
+        <code>overall_status</code> was 63.16%. One healed selector took it to 26.32%
+        with zero regressions on the four control sites.</p>
     </div>
   </div>
 </div></section>
 
 <section><div class="wrap">
-  <h2><span class="n">03</span>Two entry points, one pipeline</h2>
+  <h2>Two entry points, one pipeline</h2>
   <p class="sub">So the factory demonstrably <b>builds</b>, not just repairs. Every stage is
     one OTel span under a single <code>factory.run</code> root, and one Port entity carrying
-    that run's <code>trace_id</code> — so any node in the Port graph jumps straight to its
+    that run's <code>trace_id</code>, so any node in the Port graph jumps straight to its
     trace. If it is not traced, it did not happen.</p>
 <pre><span class="c"># a human asks</span>
 node factory/run.js --brief <span class="g">"Route the Downtown tomato shortage"</span>
@@ -232,9 +234,9 @@ node factory/run.js --incident <span class="g">data_source_broken</span>
     <div class="lbl">A run produces a real routing decision</div>
     <div style="margin-bottom:.9rem"><b>Transfer 10kg, buy net 26kg @ $2.05 = $53.30</b></div>
     <ul class="steps">
-      <li><span class="badge robot">robot</span><span class="txt"><b>transfer</b> — 10kg from Marina, expires in 2 days, use first</span></li>
-      <li><span class="badge human">human</span><span class="txt"><b>handoff</b> — crate handed to the cook at the service pass</span></li>
-      <li><span class="badge agent">agent</span><span class="txt"><b>procure</b> — only the net shortage is bought: 26kg @ $2.05/kg</span></li>
+      <li><span class="badge robot">robot</span><span class="txt"><b>transfer</b>, 10kg from Marina, expires in 2 days, use first</span></li>
+      <li><span class="badge human">human</span><span class="txt"><b>handoff</b>, crate handed to the cook at the service pass</span></li>
+      <li><span class="badge agent">agent</span><span class="txt"><b>procure</b>, only the net shortage is bought: 26kg at $2.05/kg</span></li>
     </ul>
     <p class="sub" style="margin:.9rem 0 0;font-size:.88rem">Surplus moves before anything
       is bought. A branch below its own par cannot donate. Nearest-expiry stock goes first.
@@ -243,9 +245,9 @@ node factory/run.js --incident <span class="g">data_source_broken</span>
 </div></section>
 
 <section><div class="wrap">
-  <h2><span class="n">04</span>You approve the rehearsal, not the diff</h2>
+  <h2>You approve the rehearsal, not the diff</h2>
   <p class="sub">The app generates a simulation <b>from the dispatch the factory just
-    produced</b> — this donor branch, this crate, this expiry window, this path, this
+    produced</b>: this donor branch, this crate, this expiry window, this path, this
     handoff. A different shortage draws a different simulation. The human watches what the
     robot will do and approves <em>that</em>; the click writes <code>approval_status</code>
     back to Port.</p>
@@ -258,14 +260,14 @@ node factory/run.js --incident <span class="g">data_source_broken</span>
       different donor and quantity. If it does not, it is a hardcoded demo.</p>
   </div>
   <p class="sub" style="margin-top:1.1rem">The rehearsal is what a human approves against.
-    The same approved plan is what would deploy to a physical robot — the simulation is the
+    The same approved plan is what would deploy to a physical robot. The simulation is the
     gate, not a decoration.</p>
 </div></section>
 
 <section><div class="wrap">
-  <h2><span class="n">05</span>The self-healing edge</h2>
+  <h2>The self-healing edge</h2>
   <p class="sub">The supplier page's prices stop being text inside <code>.price</code> and
-    become an attribute on a renamed element — the kind of change a site redesign makes.
+    become an attribute on a renamed element, the kind of change a site redesign makes.
     GitHub Pages republishes, and the contract catches it.</p>
 <pre>./scripts/break-mirror.sh        <span class="c"># a real commit that restructures the price markup</span>
 node factory/run.js --incident data_source_broken
@@ -277,16 +279,16 @@ release <span class="y">SKIPPED</span> (contract failed)</pre>
   <p class="sub" style="margin-top:1.1rem"><b>Detection is ours, not the CLI's.</b> Bright
     Data never decides a scraper is broken. <code>verify</code> computes the null-rate, and
     <code>heal.js</code> passes the concrete failing field names into
-    <code>brightdata scraper heal</code> — it never heals blind.</p>
+    <code>brightdata scraper heal</code>. It never heals blind.</p>
 </div></section>
 
 <section><div class="wrap">
-  <h2><span class="n">06</span>Honest notes</h2>
+  <h2>Honest notes</h2>
   <p class="sub">What did not work, stated plainly. A factory you cannot trust the
     reporting of is not a factory.</p>
   <ul class="notes">
     <li><b class="warnmark">The heal on <code>c_mirror</code> did not complete.</b>
-      Detection, the incident, the human gate and the heal driver all work — but Bright
+      Detection, the incident, the human gate and the heal driver all work, but Bright
       Data had a refactor job running server-side that rejected new requests with
       <code>409 Another refactor job is still in progress</code>. The CLI's 600s timeout is
       client-side only; the job continues after it gives up. The repair itself <b>is</b>
@@ -295,13 +297,13 @@ release <span class="y">SKIPPED</span> (contract failed)</pre>
       has not been demonstrated end to end on a single collector.</li>
     <li><b>The 56.25% menu null-rate is evidence, not something the demo fixes.</b>
       Re-scraping real restaurant menus was attempted and failed: every candidate renders
-      prices in JS behind a location picker — which is exactly why the original pipeline
+      prices in JS behind a location picker, which is exactly why the original pipeline
       left them null. The <em>live</em> contract runs on the supplier feed, which does
       break and heal.</li>
     <li><b>SigNoz is self-hosted</b>, so it cannot webhook into a local factory without a
       tunnel. The orchestrator reads alert state rather than receiving a push.
       Observability still triggers the factory; the transport is a poll.</li>
-    <li><b><code>fsis.usda.gov</code> is blocked</b> by Bright Data — "Domain not allowed".</li>
+    <li><b><code>fsis.usda.gov</code> is blocked</b> by Bright Data, "Domain not allowed".</li>
     <li><b>Port's built-in <code>service</code> blueprint was accidentally reshaped</b> early
       on. Ours is namespaced <code>factory_service</code>, and the apply script now refuses
       to touch blueprints it did not create.</li>
@@ -309,11 +311,12 @@ release <span class="y">SKIPPED</span> (contract failed)</pre>
 </div></section>
 
 <footer><div class="wrap">
-  <a href="https://github.com/abhijitbetigeri/agent-factory">Repository</a> ·
-  <a href="https://abhijitbetigeri.github.io/agent-factory/mirror/">Supplier feed</a> ·
-  <a href="https://github.com/abhijitbetigeri/agent-factory/blob/main/docs/DEMO.md">Demo runbook</a>
-  <div style="margin-top:.6rem">Built for the Agentic Software Factory hackathon —
-    Port × Bright Data × SigNoz.</div>
+  <nav>
+    <a href="https://github.com/abhijitbetigeri/agent-factory">Repository</a>
+    <a href="https://abhijitbetigeri.github.io/agent-factory/mirror/">Supplier feed</a>
+    <a href="https://github.com/abhijitbetigeri/agent-factory/blob/main/docs/DEMO.md">Demo runbook</a>
+  </nav>
+  <div style="margin-top:.6rem">Built for the Agentic Software Factory hackathon with Port, Bright Data and SigNoz.</div>
 </div></footer>
 <script>
 // The console is served by the local app (node app/server.js). On the published static

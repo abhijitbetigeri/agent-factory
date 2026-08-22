@@ -19,6 +19,11 @@ const reqCount = meter.createCounter('http.server.requests');
 const reqDur = meter.createHistogram('http.server.duration', { unit: 'ms' });
 const scrapeDur = meter.createHistogram('worker.scrape.duration', { unit: 'ms' });
 const feedGauge = meter.createObservableGauge('supplier.feed.age_seconds');
+// The contract gauges were only ever emitted by factory/run.js, so the dashboard's
+// headline panel went flat whenever nobody ran the factory. The worker already computes
+// this every couple of minutes — publish it, so the panel tracks the feed continuously.
+const nullGauge = meter.createObservableGauge('supplier.price_null_rate');
+const menuGauge = meter.createObservableGauge('menu.price_null_rate');
 
 const DATA = path.join(__dirname, '..', 'data');
 const SNAP = path.join(__dirname, '..', 'web', 'snapshots');
@@ -61,8 +66,10 @@ function replay(res, key) {
 }
 let lastScrapeAt = null, lastNullRate = null;
 feedGauge.addCallback(r => r.observe(lastScrapeAt ? (Date.now() - lastScrapeAt) / 1000 : -1));
+nullGauge.addCallback(r => { if (lastNullRate !== null) r.observe(lastNullRate); });
+menuGauge.addCallback(r => { const b = readJSON('baseline-null-rate.json'); if (b) r.observe(b.null_rate); });
 
-const readJSON = f => { try { return JSON.parse(fs.readFileSync(path.join(DATA, f), 'utf8')); } catch { return null; } };
+function readJSON(f) { try { return JSON.parse(fs.readFileSync(path.join(DATA, f), 'utf8')); } catch { return null; } }
 const send = (res, code, body, type = 'application/json') => {
   res.writeHead(code, { 'Content-Type': type, 'Cache-Control': 'no-store' });
   res.end(typeof body === 'string' ? body : JSON.stringify(body, null, 2));
