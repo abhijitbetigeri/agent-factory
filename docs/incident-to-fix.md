@@ -46,7 +46,7 @@ So: SigNoz initiates, Port governs, Bright Data repairs **and** informs.
 Class #1 is the flagship and the one rehearsed for the video. Classes #2 and #3 share the
 same triage→patch→PR machinery; #2 is the demoable one if time allows.
 
-## The app under observation: PartsRadar
+## The app under observation: GreenCrate
 
 Deliberately thin. It exists to have incidents, not to be impressive.
 
@@ -99,5 +99,5 @@ carries `trace_id`, so any Port node jumps to its SigNoz trace.
 ## Cuts that stand
 
 - ❌ class #3 (performance regression) as a live demo
-- ❌ any PartsRadar feature beyond one table and one timestamp
+- ❌ any GreenCrate feature beyond one table and one timestamp
 - ❌ auth, multi-user, persistence beyond a JSON file

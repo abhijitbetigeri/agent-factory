@@ -2,59 +2,55 @@
   {
     "components": [
       {
-        "product_name": "Mechanical Keyboard K8 Pro",
-        "sku_code": "KB-K8P-001",
+        "product_name": "Roma Tomatoes, 5kg case",
+        "sku_code": "PRD-TOM-005",
         "price_usd": {
-          "value": 109,
+          "value": 10.25,
           "currency": "USD",
           "symbol": "$"
         },
         "stock_status": "In stock"
       },
       {
-        "product_name": "Low-Profile Switch Set (110pc)",
-        "sku_code": "SW-LP-110",
+        "product_name": "Yellow Onions, 10kg sack",
+        "sku_code": "PRD-ONI-010",
         "price_usd": {
-          "value": 34.5,
+          "value": 12.4,
           "currency": "USD",
           "symbol": "$"
         },
         "stock_status": "In stock"
       },
       {
-        "product_name": "Aluminium Case — 75%",
-        "sku_code": "CS-AL-075",
+        "product_name": "Mozzarella Fior di Latte, 3kg",
+        "sku_code": "DRY-MOZ-003",
         "price_usd": {
-          "value": 189.99,
+          "value": 38.7,
           "currency": "USD",
           "symbol": "$"
         },
         "stock_status": "Backorder"
       },
       {
-        "product_name": "PBT Doubleshot Keycaps",
-        "sku_code": "KC-PBT-104",
+        "product_name": "Extra Virgin Olive Oil, 5L tin",
+        "sku_code": "OIL-EVO-005",
         "price_usd": {
-          "value": 59,
+          "value": 54.0,
           "currency": "USD",
           "symbol": "$"
         },
         "stock_status": "In stock"
       },
       {
-        "product_name": "Coiled USB-C Cable",
-        "sku_code": "CB-USBC-18",
+        "product_name": "Basil, 250g bunch box",
+        "sku_code": "HRB-BAS-250",
         "price_usd": {
-          "value": 24,
+          "value": 8.6,
           "currency": "USD",
           "symbol": "$"
         },
         "stock_status": "In stock"
       }
-    ],
-    "product_page_url": "https://abhijitbetigeri.github.io/agent-factory/mirror/",
-    "input": {
-      "url": "https://abhijitbetigeri.github.io/agent-factory/mirror/"
-    }
+    ]
   }
 ]
