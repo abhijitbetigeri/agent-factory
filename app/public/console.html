@@ -147,7 +147,10 @@ const $ = id => document.getElementById(id);
 /** Stream an SSE endpoint into a <pre>, colouring the lines that matter. */
 async function stream(url, body, target, onDone) {
   const el = $(target); el.textContent = '';
-  document.querySelectorAll('button').forEach(b => b.disabled = true);
+  const scope = el.closest('section') || document;
+  const lock = (v) => scope.querySelectorAll('button').forEach(b => b.disabled = v);
+  lock(true);
+  const failsafe = setTimeout(() => lock(false), 15 * 60 * 1000);
   try {
     const r = await fetch(url, { method: 'POST', headers: {'Content-Type':'application/json'},
                                  body: JSON.stringify(body || {}) });
@@ -168,7 +171,7 @@ async function stream(url, body, target, onDone) {
       }
     }
   } finally {
-    document.querySelectorAll('button').forEach(b => b.disabled = false);
+    clearTimeout(failsafe); lock(false);
     if (onDone) onDone();
   }
 }
