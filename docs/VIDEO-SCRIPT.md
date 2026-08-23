@@ -4,9 +4,10 @@ Covers the required sections: **About the project · Tech stack and architecture
 sponsor tools were used · Demo · Learning and growth.**
 
 **Before you roll**
-- Get the feed to the healthy side: panel 03 → **Change the source page** → wait ~90s →
-  **Re-scrape now** → the pill must read **feed healthy**.
-  (The labels invert after every heal — trust the pill, never the button text.)
+- Get the feed to the healthy side: panel 03 → either **redesign** button → wait ~90s →
+  **Re-check the feed** → the pill must read **feed healthy**.
+  (The collector adapts each time it is repaired, so neither markup is permanently
+  "broken" — the pill is the truth.)
 - Tabs open: `localhost:3000/console` · `app.us.port.io` · `localhost:8080/traces`
 - App must be started with `.env` sourced, or it silently runs in demo mode and exports
   no telemetry: `set -a && . ./.env && set +a && npm start`
@@ -74,9 +75,9 @@ sponsor tools were used · Demo · Learning and growth.**
 | 2:55 | Panel 02 → **Approve dispatch**, then 02b → **Load simulation** | You don't approve a JSON diff. This is generated from the dispatch that just ran. The human watches what the robot will do. |
 | 3:20 | Port tab — entity graph, then goals/risks/decisions | Every stage an entity, every entity carrying the trace id. |
 | 3:40 | SigNoz → traces → filter `factory-orchestrator` | One trace, every stage. `verify` is red — contract breached. |
-| 3:55 | Panel 03 → break the page · ⏸ **pause ~90s** · **Re-scrape now** | A real commit changes the page's markup. The collector falls over — `parse error: value must be finite number`. **We** caught that, not Bright Data. |
+| 3:55 | Panel 03 → **Supplier ships a redesign** · ⏸ **pause ~90s** · **Re-check the feed** | A real commit changes the page's markup. The collector falls over — `parse error: value must be finite number`. Nothing crashed. **We** caught that, not Bright Data. |
 | 4:15 | Panel 01 → **Trigger incident** | Null-rate 100%. Failing fields named. Release **SKIPPED**. |
-| 4:25 | **Repair with Bright Data** · ⏸ **pause** · resume on `RECOVERED` → **Trigger incident** | 100% to zero. Re-verify, release unblocks. |
+| 4:25 | **Repair the collector** · ⏸ **pause** · resume on `RECOVERED` → **Trigger incident** | Bright Data rewrites its extraction against the new structure — and we don't ask it to guess, we hand it the collector's own error. 100% to zero. Re-verify, release unblocks. |
 
 **⏸ Pause recording for both waits** (Pages ~90s, heal 3–10 min). Filming dead air is the
 fastest way to blow the 5-minute cap.
@@ -107,5 +108,5 @@ fastest way to blow the 5-minute cap.
 |---|---|
 | Console unresponsive | app died — `set -a && . ./.env && set +a && npm start` |
 | Panels show dashes | app started without `.env` → demo mode |
-| Feed pill says degraded when it should be healthy | click the *other* break button, wait 90s, **Re-scrape now** |
+| Feed pill says degraded when it should be healthy | click the *other* redesign button, wait ~90s, **Re-check the feed** |
 | Heal returns 409 | a refactor job is still running server-side — wait, don't retry |

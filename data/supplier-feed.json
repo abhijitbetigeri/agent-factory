@@ -1,60 +1,9 @@
 [
   {
-    "components": [
-      {
-        "product_name": "Roma Tomatoes, 5kg case",
-        "sku_code": "PRD-TOM-005",
-        "price_usd": {
-          "value": 10.25,
-          "currency": "USD",
-          "symbol": "$"
-        },
-        "stock_status": "In stock"
-      },
-      {
-        "product_name": "Yellow Onions, 10kg sack",
-        "sku_code": "PRD-ONI-010",
-        "price_usd": {
-          "value": 12.4,
-          "currency": "USD",
-          "symbol": "$"
-        },
-        "stock_status": "In stock"
-      },
-      {
-        "product_name": "Mozzarella Fior di Latte, 3kg",
-        "sku_code": "DRY-MOZ-003",
-        "price_usd": {
-          "value": 38.7,
-          "currency": "USD",
-          "symbol": "$"
-        },
-        "stock_status": "Backorder"
-      },
-      {
-        "product_name": "Extra Virgin Olive Oil, 5L tin",
-        "sku_code": "OIL-EVO-005",
-        "price_usd": {
-          "value": 54,
-          "currency": "USD",
-          "symbol": "$"
-        },
-        "stock_status": "In stock"
-      },
-      {
-        "product_name": "Basil, 250g bunch box",
-        "sku_code": "HRB-BAS-250",
-        "price_usd": {
-          "value": 8.6,
-          "currency": "USD",
-          "symbol": "$"
-        },
-        "stock_status": "In stock"
-      }
-    ],
-    "product_page_url": "https://abhijitbetigeri.github.io/agent-factory/mirror/",
     "input": {
       "url": "https://abhijitbetigeri.github.io/agent-factory/mirror/"
-    }
+    },
+    "error": "Parse error: value must be finite number",
+    "error_code": "parse_error"
   }
 ]
