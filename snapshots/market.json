@@ -1,0 +1,226 @@
+{
+ "totals": {
+  "restaurants": 16,
+  "branches": 53,
+  "dishes": 128,
+  "nulls": 72,
+  "ingredients": 297,
+  "nullRate": 0.5625
+ },
+ "cuisines": [
+  {
+   "cuisine": "Chinese",
+   "dishes": 16,
+   "nullPrices": 16,
+   "restaurants": [
+    {
+     "name": "P.F. Chang's",
+     "branches": 4,
+     "dishes": 8,
+     "nullPrices": 8
+    },
+    {
+     "name": "Panda Express",
+     "branches": 4,
+     "dishes": 8,
+     "nullPrices": 8
+    }
+   ]
+  },
+  {
+   "cuisine": "Indian",
+   "dishes": 16,
+   "nullPrices": 16,
+   "restaurants": [
+    {
+     "name": "Saravanaa Bhavan",
+     "branches": 4,
+     "dishes": 8,
+     "nullPrices": 8
+    },
+    {
+     "name": "Bawarchi Biryanis",
+     "branches": 4,
+     "dishes": 8,
+     "nullPrices": 8
+    }
+   ]
+  },
+  {
+   "cuisine": "Italian",
+   "dishes": 16,
+   "nullPrices": 16,
+   "restaurants": [
+    {
+     "name": "Maggiano's Little Italy",
+     "branches": 4,
+     "dishes": 8,
+     "nullPrices": 8
+    },
+    {
+     "name": "Biaggi's Ristorante Italiano",
+     "branches": 4,
+     "dishes": 8,
+     "nullPrices": 8
+    }
+   ]
+  },
+  {
+   "cuisine": "Mexican",
+   "dishes": 16,
+   "nullPrices": 16,
+   "restaurants": [
+    {
+     "name": "Abuelo's Mexican Restaurant",
+     "branches": 4,
+     "dishes": 8,
+     "nullPrices": 8
+    },
+    {
+     "name": "El Fenix",
+     "branches": 4,
+     "dishes": 8,
+     "nullPrices": 8
+    }
+   ]
+  },
+  {
+   "cuisine": "Burmese",
+   "dishes": 16,
+   "nullPrices": 8,
+   "restaurants": [
+    {
+     "name": "Burma Superstar",
+     "branches": 2,
+     "dishes": 8,
+     "nullPrices": 0
+    },
+    {
+     "name": "Top Burmese Restaurant Group",
+     "branches": 1,
+     "dishes": 8,
+     "nullPrices": 8
+    }
+   ]
+  },
+  {
+   "cuisine": "American",
+   "dishes": 16,
+   "nullPrices": 0,
+   "restaurants": [
+    {
+     "name": "The Cheesecake Factory",
+     "branches": 3,
+     "dishes": 8,
+     "nullPrices": 0
+    },
+    {
+     "name": "Chili's Grill & Bar",
+     "branches": 3,
+     "dishes": 8,
+     "nullPrices": 0
+    }
+   ]
+  },
+  {
+   "cuisine": "French",
+   "dishes": 16,
+   "nullPrices": 0,
+   "restaurants": [
+    {
+     "name": "Boucherie",
+     "branches": 3,
+     "dishes": 8,
+     "nullPrices": 0
+    },
+    {
+     "name": "Mon Ami Gabi",
+     "branches": 3,
+     "dishes": 8,
+     "nullPrices": 0
+    }
+   ]
+  },
+  {
+   "cuisine": "Middle Eastern",
+   "dishes": 16,
+   "nullPrices": 0,
+   "restaurants": [
+    {
+     "name": "Naf Naf Grill",
+     "branches": 3,
+     "dishes": 8,
+     "nullPrices": 0
+    },
+    {
+     "name": "Pita Inn",
+     "branches": 3,
+     "dishes": 8,
+     "nullPrices": 0
+    }
+   ]
+  }
+ ],
+ "topIngredients": [
+  {
+   "name": "garlic",
+   "demand": 15,
+   "core": 9
+  },
+  {
+   "name": "chicken",
+   "demand": 14,
+   "core": 14
+  },
+  {
+   "name": "butter",
+   "demand": 12,
+   "core": 8
+  },
+  {
+   "name": "sugar",
+   "demand": 11,
+   "core": 6
+  },
+  {
+   "name": "tomato",
+   "demand": 9,
+   "core": 6
+  },
+  {
+   "name": "soy sauce",
+   "demand": 9,
+   "core": 2
+  },
+  {
+   "name": "onion",
+   "demand": 7,
+   "core": 6
+  },
+  {
+   "name": "onions",
+   "demand": 7,
+   "core": 7
+  },
+  {
+   "name": "peanuts",
+   "demand": 7,
+   "core": 5
+  },
+  {
+   "name": "rice",
+   "demand": 7,
+   "core": 7
+  },
+  {
+   "name": "chicken breast",
+   "demand": 6,
+   "core": 6
+  },
+  {
+   "name": "mushrooms",
+   "demand": 6,
+   "core": 6
+  }
+ ]
+}
