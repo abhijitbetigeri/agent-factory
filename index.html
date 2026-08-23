@@ -293,3 +293,15 @@ release <span class="y">SKIPPED</span> (contract failed)</pre>
   </nav>
   <div style="margin-top:.6rem">Built for the Agentic Software Factory hackathon with Port, Bright Data and SigNoz.</div>
 </div></footer>
+<script>
+// The console is served by the local app (node app/server.js). On the published static
+// page there is nothing at /console, so point visitors at the runbook instead.
+(function () {
+  var a = document.getElementById('consoleCta');
+  if (!a) return;
+  var local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  // On Vercel the console is an exhibit that replays recorded runs; it is a real page,
+  // so leave the link alone.
+  void local;
+})();
+</script>

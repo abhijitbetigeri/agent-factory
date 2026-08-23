@@ -137,13 +137,14 @@
       <div><span>contract</span><b id="kOk">—</b></div>
     </div>
     <div class="row">
-      <button class="danger" onclick="feed('break')">Change the source page</button>
-      <button onclick="feed('restore')">Restore it</button>
-      <button onclick="rescrape()">Re-scrape now</button>
-      <button class="ok" onclick="heal()">Repair with Bright Data</button>
+      <button class="danger" onclick="feed('break')">Supplier ships a redesign</button>
+      <button onclick="feed('restore')">Ship the other redesign</button>
+      <button onclick="rescrape()">Re-check the feed</button>
+      <button class="ok" onclick="heal()">Repair the collector</button>
     </div>
-    <p class="sub" style="margin:.2rem 0 0">Page edits publish through GitHub Pages and take ~90s to go live.
-      Re-scrape after that to see the contract flip.</p>
+    <p class="sub" style="margin:.2rem 0 0">Either redesign changes the source page for real, via a commit. GitHub Pages
+      takes ~90s to publish. Re-check the feed after that. <b>The pill above is the truth</b> —
+      the collector adapts each time it is repaired, so neither markup is permanently "broken".</p>
     <pre id="feedOut"></pre>
   </section>
 </main>
@@ -165,11 +166,13 @@ async function stream(url, body, target, onDone) {
   const key = url === '/api/run' ? `/api/run:${(body||{}).mode || 'brief'}` : url;
   const file = SNAPSHOT[key];
   const el = $(target); el.textContent = '';
-  document.querySelectorAll('button').forEach(b => b.disabled = true);
+  const scope = el.closest('section') || document;
+  const lock = (v) => scope.querySelectorAll('button').forEach(b => b.disabled = v);
+  lock(true);
+  const failsafe = setTimeout(() => lock(false), 15 * 60 * 1000);
   if (!file) {
     el.textContent = 'This action changes the source page and only runs in the local console.';
-    document.querySelectorAll('button').forEach(b => b.disabled = false);
-    if (onDone) onDone(); return;
+    lock(false); if (onDone) onDone(); return;
   }
   const text = await (await fetch(file)).text();
   for (const line of text.split('\n')) {
@@ -186,7 +189,10 @@ async function stream(url, body, target, onDone) {
 
 async function _unusedLiveStream(url, body, target, onDone) {
   const el = $(target); el.textContent = '';
-  document.querySelectorAll('button').forEach(b => b.disabled = true);
+  const scope = el.closest('section') || document;
+  const lock = (v) => scope.querySelectorAll('button').forEach(b => b.disabled = v);
+  lock(true);
+  const failsafe = setTimeout(() => lock(false), 15 * 60 * 1000);
   try {
     const r = await fetch(url, { method: 'POST', headers: {'Content-Type':'application/json'},
                                  body: JSON.stringify(body || {}) });
@@ -207,7 +213,7 @@ async function _unusedLiveStream(url, body, target, onDone) {
       }
     }
   } finally {
-    document.querySelectorAll('button').forEach(b => b.disabled = false);
+    clearTimeout(failsafe); lock(false);
     if (onDone) onDone();
   }
 }
