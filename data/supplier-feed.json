@@ -35,7 +35,7 @@
         "product_name": "Extra Virgin Olive Oil, 5L tin",
         "sku_code": "OIL-EVO-005",
         "price_usd": {
-          "value": 54.0,
+          "value": 54,
           "currency": "USD",
           "symbol": "$"
         },
@@ -51,6 +51,10 @@
         },
         "stock_status": "In stock"
       }
-    ]
+    ],
+    "product_page_url": "https://abhijitbetigeri.github.io/agent-factory/mirror/",
+    "input": {
+      "url": "https://abhijitbetigeri.github.io/agent-factory/mirror/"
+    }
   }
 ]
