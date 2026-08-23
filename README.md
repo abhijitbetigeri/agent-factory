@@ -2,6 +2,24 @@
 
 **Agentic Software Factory hackathon · Port × Bright Data × SigNoz**
 
+### ▶ Live
+
+| | |
+|---|---|
+| **Site + console** | **https://abhijitbetigeri.github.io/agent-factory/** |
+| Console direct | https://abhijitbetigeri.github.io/agent-factory/console.html |
+| Supplier feed (the page that gets redesigned) | https://abhijitbetigeri.github.io/agent-factory/mirror/ |
+
+The published console is an **exhibit**: it replays runs recorded against the live
+system, because the real one shells out to the Bright Data CLI, commits to git and
+exports to a self-hosted SigNoz. To drive the actual factory, run it locally — no
+accounts needed:
+
+```bash
+git clone https://github.com/abhijitbetigeri/agent-factory
+cd agent-factory && npm install && npm start     # then localhost:3000/console
+```
+
 > The app is the test run. The factory is the deliverable.
 
 Mise OS routes a unit of physical work — a restock, an inter-branch transfer, a
